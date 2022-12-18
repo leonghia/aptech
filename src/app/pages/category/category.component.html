@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <h1>{{name}}</h1>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-3" *ngFor="let c of cat">
+          <div class="card mb-4">
+              <img [src]="c.thumbnail" class="img-fluid my-thumb" />
+              <div class="card-body">
+                  <h3><a routerLink="/categories/{{ this.name }}/{{c.id}}">{{c.title}}</a></h3>
+                  <p class="text-danger fw-bold">${{c.price}}</p>
+                  <button class="btn btn-outline-danger">Add to cart</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
