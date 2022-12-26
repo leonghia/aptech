@@ -1,0 +1,16 @@
+.container {
+    padding: 6rem;
+}
+
+.row {
+    display: flex;
+    column-gap: 10px;
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-75 {
+    width: 75%;
+}
