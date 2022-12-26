@@ -1,16 +1,19 @@
 .container {
-    padding: 6rem;
+    margin-top: 8rem;
 }
 
 .row {
-    display: flex;
-    column-gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.col-25 {
-    width: 25%;
+.row>* {
+    padding-left: 0;
 }
 
-.col-75 {
-    width: 75%;
+.col-3 {
+    padding-right: 0;
+}
+
+.col-9 {
+    padding-left: 0;
 }
