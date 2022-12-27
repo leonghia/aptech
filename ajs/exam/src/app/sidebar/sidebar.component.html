@@ -1,0 +1,37 @@
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                aria-controls="panelsStayOpen-collapseOne">
+                Favourites
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+                <a routerLink=""><div [routerLinkActive]="['highlight']" [routerLinkActiveOptions]="{ exact: true }">Inbox</div></a>
+                <a routerLink="/favorites_sent"><div [routerLinkActive]="['highlight']">Sent Items</div></a>  
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
+                aria-controls="panelsStayOpen-collapseTwo">
+                John
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+            aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+                <a routerLink="john_inbox"><div [routerLinkActive]="['highlight']">Inbox</div></a>
+                <a routerLink="john_drafts"><div [routerLinkActive]="['highlight']">Drafts</div></a>
+                <a routerLink="john_deleted"><div [routerLinkActive]="['highlight']">Deleted Items</div></a>
+                <a routerLink="john_sent"><div [routerLinkActive]="['highlight']">Sent Items</div></a>
+                <a routerLink="john_outbox"><div [routerLinkActive]="['highlight']">Outbox</div></a>
+            </div>
+        </div>
+    </div>
+</div>

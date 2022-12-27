@@ -1,0 +1,19 @@
+.container {
+    margin-top: 8rem;
+}
+
+.row {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.row>* {
+    padding-left: 0;
+}
+
+.col-3 {
+    padding-right: 0;
+}
+
+.col-9 {
+    padding-left: 0;
+}
