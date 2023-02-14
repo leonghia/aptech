@@ -4,13 +4,13 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output, 
   selector: '[enterTheViewportNotifier]'
 })
 export class EnterTheViewportNotifierDirective implements AfterViewInit, OnDestroy {
-  @Output() visibilityChange = new EventEmitter<'VISIBLE' | 'HIDDEN'>();
+  @Output() visibilityChange = new EventEmitter<true | false>();
   private _observer!: IntersectionObserver;
 
   constructor(@Host() private _elementRef: ElementRef) { }
 
   ngAfterViewInit(): void {
-    const options = {root: null, rootMargin: '0px', threshold: 0.0};
+    const options = {root: null, rootMargin: '0px', threshold: 0.2};
     this._observer = new IntersectionObserver(this._callback, options);
     this._observer.observe(this._elementRef.nativeElement);
   }
@@ -20,8 +20,9 @@ export class EnterTheViewportNotifierDirective implements AfterViewInit, OnDestr
   }
 
   private _callback = (entries: any) => {
-    entries.forEach((entry: any) => 
-      this.visibilityChange.emit(entry.isIntersecting ? 'VISIBLE' : 'HIDDEN'));
+    entries.forEach((entry: any) =>
+      this.visibilityChange.emit(entry.isIntersecting ? true : false));
+
   }
 
 }
