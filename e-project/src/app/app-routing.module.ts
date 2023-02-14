@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BridgeComponent } from './bridge/bridge.component';
+import { BridgeComponent } from './pages/bridge/bridge.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FaqComponent } from './pages/faq/faq.component';
