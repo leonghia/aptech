@@ -4,7 +4,7 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output, 
   selector: '[enterTheViewportNotifier]'
 })
 export class EnterTheViewportNotifierDirective implements AfterViewInit, OnDestroy {
-  @Output() visibilityChange = new EventEmitter<true | false>();
+  @Output() visibilityChange = new EventEmitter<boolean>();
   private _observer!: IntersectionObserver;
 
   constructor(@Host() private _elementRef: ElementRef) { }
