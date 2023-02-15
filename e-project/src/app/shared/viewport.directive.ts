@@ -10,7 +10,7 @@ export class EnterTheViewportNotifierDirective implements AfterViewInit, OnDestr
   constructor(@Host() private _elementRef: ElementRef) { }
 
   ngAfterViewInit(): void {
-    const options = {root: null, rootMargin: '0px', threshold: 0.2};
+    const options = {root: null, rootMargin: '0px', threshold: 0.6};
     this._observer = new IntersectionObserver(this._callback, options);
     this._observer.observe(this._elementRef.nativeElement);
   }

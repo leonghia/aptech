@@ -8,9 +8,21 @@ import { fadeRight, fadeLeft } from 'src/app/shared/animations';
   styleUrls: ['./alternating-feature.component.css']
 })
 export class AlternatingFeatureComponent implements OnInit {
+  enterViewportTop: boolean = false;
+  enterViewportBottom: boolean = false;
 
   ngOnInit(): void {
     
+  }
+
+  onVisibilityChangeTop(status: boolean): void {
+    if (status)
+      this.enterViewportTop = status;
+  }
+
+  onVisibilityChangeBottom(status: boolean): void {
+    if (status)
+      this.enterViewportBottom = status;
   }
 
 }

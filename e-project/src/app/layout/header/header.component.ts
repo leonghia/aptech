@@ -9,6 +9,8 @@ export class HeaderComponent {
   @ViewChild('featuresMenuBtn') featuresMenuBtn!: ElementRef;
   @ViewChild('featuresMenu') featuresMenu!: ElementRef;
   featuresMenuToggled: boolean = false;
+  topBarShown: boolean = true;
+  mobileMenuStatus: boolean = false;
 
   constructor(private renderer: Renderer2) {
     /**
@@ -29,5 +31,17 @@ export class HeaderComponent {
 
   onClickFeaturesMenu() {
     this.featuresMenuToggled = !this.featuresMenuToggled;
+  }
+
+  onDismissTopBar() {
+    this.topBarShown = false;
+  }
+
+  onOpenMobileMenu() {
+    this.mobileMenuStatus = true;
+  }
+
+  onCloseMobileMenu() {
+    this.mobileMenuStatus = false;
   }
 }
