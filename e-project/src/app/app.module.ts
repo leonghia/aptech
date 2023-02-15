@@ -17,6 +17,7 @@ import { PageHeadingComponent } from './shared/page-heading/page-heading.compone
 import { FaqComponent } from './pages/faq/faq.component';
 import { AboutComponent } from './pages/about/about.component';
 import { BridgeComponent } from './bridge/bridge.component';
+import { GallerysComponent } from './gallerys/gallerys.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BridgeComponent } from './bridge/bridge.component';
     PageHeadingComponent,
     FaqComponent,
     AboutComponent,
-    BridgeComponent
+    BridgeComponent,
+    GallerysComponent,
   ],
   imports: [
     BrowserModule,
