@@ -5,7 +5,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { HomeComponent } from './pages/home/home.component';
-import { GallerysComponent } from './gallerys/gallerys.component';
+import { GallerysComponent } from './layout/gallerys/gallerys.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
