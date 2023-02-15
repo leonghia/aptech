@@ -18,7 +18,7 @@ import { FaqComponent } from './pages/faq/faq.component';
 import { AboutComponent } from './pages/about/about.component';
 import { BridgeComponent } from './pages/bridge/bridge.component';
 import { EnterTheViewportNotifierDirective } from './shared/viewport.directive';
-import { GallerysComponent } from './layout/gallerys/gallerys.component';
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { GallerysComponent } from './layout/gallerys/gallerys.component';
     AboutComponent,
     BridgeComponent,
     EnterTheViewportNotifierDirective,
-    GallerysComponent
+    GalleryComponent
   ],
   imports: [
     BrowserModule,
