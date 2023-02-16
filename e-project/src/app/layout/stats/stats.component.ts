@@ -9,6 +9,7 @@ import { fadeRight } from 'src/app/shared/animations';
 })
 export class StatsComponent implements OnInit {
   enterViewport: boolean = false;
+  fadedDone: boolean = false;
 
   ngOnInit(): void {
 
@@ -21,6 +22,7 @@ export class StatsComponent implements OnInit {
 
   animatedCounter(event: any, element: HTMLElement, ceiling: number, interval: number, sign: string): void {
     if (event.toState === 'faded') {
+      this.fadedDone = true;
       let counter = 0;
       const animatedCounterInterval = setInterval(() => {
         element.innerHTML = ++counter + sign;

@@ -25,25 +25,25 @@
         enthusiast, or simply interested in bridges, this is the ideal place that you can find on the internet.</p>
       <div class="mt-12 grid grid-cols-1 gap-y-12 gap-x-6 sm:grid-cols-2">
         <p>
-          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, bridges, 100, 30, '+')" class="block text-2xl font-bold text-white" #bridges>0</span>
+          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, bridges, 100, 30, '+')" [ngStyle]="{'visibility' : fadedDone ? 'visible' : 'hidden'}" class="block text-2xl font-bold text-white" #bridges>0</span>
           <span class="mt-1 block text-base text-gray-300"><span class="font-medium text-white">Bridges</span> collected
             from every trusted sources all around the world.</span>
         </p>
 
         <p>
-          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, users, 5, 100, '+')" class="block text-2xl font-bold text-white" #users>0</span>
+          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, users, 50, 60, '+')" [ngStyle]="{'visibility' : fadedDone ? 'visible' : 'hidden'}" class="block text-2xl font-bold text-white" #users>0</span>
           <span class="mt-1 block text-base text-gray-300"><span class="font-medium text-white">Certified Travel
               Users</span> acquired and become expert in bridges.</span>
         </p>
 
         <p>
-          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, visitors, 98, 30, '%')" class="block text-2xl font-bold text-white" #visitors>0</span>
+          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, visitors, 98, 30, '%')" [ngStyle]="{'visibility' : fadedDone ? 'visible' : 'hidden'}" class="block text-2xl font-bold text-white" #visitors>0</span>
           <span class="mt-1 block text-base text-gray-300"><span class="font-medium text-white">Visitors
               satisfaction</span> based on positive reviews from posts and comments.</span>
         </p>
 
         <p>
-          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, issues, 45, 60, '+')" class="block text-2xl font-bold text-white" #issues>0</span>
+          <span [@fadeRight]="enterViewport ? 'faded' : 'default'" (@fadeRight.done)="animatedCounter($event, issues, 45, 60, '+')" [ngStyle]="{'visibility' : fadedDone ? 'visible' : 'hidden'}" class="block text-2xl font-bold text-white" #issues>0</span>
           <span class="mt-1 block text-base text-gray-300"><span class="font-medium text-white">Issues resolved</span>
             record thanks to Amazing Bridges website.</span>
         </p>
