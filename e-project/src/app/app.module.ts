@@ -21,6 +21,7 @@ import { EnterTheViewportNotifierDirective } from './shared/viewport.directive';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { LoginComponent } from './layout/login/login.component';
 import { Gallery2Component } from './pages/gallery2/gallery2.component';
+import { SignupComponent } from './layout/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { Gallery2Component } from './pages/gallery2/gallery2.component';
     EnterTheViewportNotifierDirective,
     GalleryComponent,
     LoginComponent,
-    Gallery2Component
+    Gallery2Component,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
