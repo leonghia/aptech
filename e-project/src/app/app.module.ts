@@ -20,6 +20,7 @@ import { BridgeComponent } from './pages/bridge/bridge.component';
 import { EnterTheViewportNotifierDirective } from './shared/viewport.directive';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { LoginComponent } from './layout/login/login.component';
+import { Gallery2Component } from './pages/gallery2/gallery2.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LoginComponent } from './layout/login/login.component';
     BridgeComponent,
     EnterTheViewportNotifierDirective,
     GalleryComponent,
-    LoginComponent
+    LoginComponent,
+    Gallery2Component
   ],
   imports: [
     BrowserModule,

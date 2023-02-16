@@ -1,13 +1,11 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeRight, fadeLeft } from 'src/app/shared/animations';
-
 @Component({
-  selector: 'app-gallery',
-  animations: [fadeRight, fadeLeft],
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.css']
+  selector: 'app-gallery2',
+  templateUrl: './gallery2.component.html',
+  styleUrls: ['./gallery2.component.css']
 })
-export class GalleryComponent implements OnInit {
+export class Gallery2Component implements OnInit {
   enterViewportTop: boolean = false;
   enterViewportBottom: boolean = false;
 
