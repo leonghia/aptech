@@ -9,30 +9,26 @@ import { fadeRight } from 'src/app/shared/animations';
 })
 export class StatsComponent implements OnInit {
   enterViewport: boolean = false;
-  enteredViewport = new EventEmitter<void>();
 
   ngOnInit(): void {
-    
+
   }
 
   onVisibilityChange(status: boolean): void {
-    if (status) {
+    if (status)
       this.enterViewport = status;
-      this.enteredViewport.emit();
+  }
+
+  animatedCounter(event: any, element: HTMLElement, ceiling: number, interval: number, sign: string): void {
+    if (event.toState === 'faded') {
+      let counter = 0;
+      const animatedCounterInterval = setInterval(() => {
+        element.innerHTML = ++counter + sign;
+        if (counter === ceiling)
+          clearInterval(animatedCounterInterval);
+      }, interval)
     }
-  }
 
-  animatedCounter(ceiling: number, interval: number): void {
-    let counter = 0;
-    const animatedCounterInterval = setInterval(() => {
-      console.log(++counter);
-      if (counter === ceiling)
-        clearInterval(animatedCounterInterval);
-    }, interval)
-  }
-
-  onEventFired() {
-    console.log('Event Fired !');
   }
 
 }
