@@ -1,11 +1,11 @@
-import { Component, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, ViewChild, Renderer2, HostListener,OnInit ,} from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @ViewChild('featuresMenuBtn') featuresMenuBtn!: ElementRef;
   @ViewChild('featuresMenu') featuresMenu!: ElementRef;
   featuresMenuToggled: boolean = false;
@@ -44,4 +44,20 @@ export class HeaderComponent {
   onCloseMobileMenu() {
     this.mobileMenuStatus = false;
   }
+
+  ngOnInit() {
+    
+  }
+
+  header_variable= false;
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(){
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0 ){
+      this.header_variable=true;
+    }
+    else{
+      this.header_variable=false;
+    }
+  }
 }
+
