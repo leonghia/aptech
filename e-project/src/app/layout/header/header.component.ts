@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   topBarShown: boolean = true;
   mobileMenuStatus: boolean = false;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private el: ElementRef) {
     /**
      * This events get called by all clicks on the page
      */
@@ -27,6 +27,10 @@ export class HeaderComponent implements OnInit {
       if (e.target !== this.featuresMenuBtn.nativeElement)
         this.featuresMenuToggled = false;
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   onClickFeaturesMenu() {
@@ -45,19 +49,5 @@ export class HeaderComponent implements OnInit {
     this.mobileMenuStatus = false;
   }
 
-  ngOnInit() {
-    
-  }
-
-  header_variable= false;
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll(){
-    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0 ){
-      this.header_variable=true;
-    }
-    else{
-      this.header_variable=false;
-    }
-  }
 }
 
