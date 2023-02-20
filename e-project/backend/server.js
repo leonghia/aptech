@@ -1,7 +1,10 @@
 const express = require('express');
+const mysql = require('mysql');
 const app = express();
+
 const PORT = process.env.PORT || 5000;
 
+// Config and create a MySQL connection
 const configDB = {
     host: 'localhost',
     port: 3306,
@@ -10,24 +13,23 @@ const configDB = {
     database: 'amazing_bridges',
     multipleStatements: true
 };
-
-const mysql = require('mysql2');
 const conn = mysql.createConnection(configDB);
 
-app.listen(PORT, function() {
-    console.log('Server is running...');
-})
-
-app.get('/', function(req, res) {
-    res.send('Hello World');
-})
-
-app.get('/api/bridges', function(req, res) {
-    let sql = "select * from nhom1_bridges";
-    conn.query(sql, function(err, data) {
-        if (err)
-            res.send('404 not found');
+// Define a route for getting all bridges
+app.get('/api/bridges', (req, res) => {
+    conn.query('SELECT * FROM nhom1_bridges', (error, data) => {
+        if (error)
+            res.send('Sorry ! 404 not found');
         else
             res.send(data);
     });
+})
+
+// Define a route for getting a specific bridge by its ID
+
+
+
+// Start the server
+app.listen(PORT, function() {
+    console.log('Server is running...');
 })

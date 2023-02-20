@@ -20,8 +20,9 @@ import { BridgeComponent } from './pages/bridge/bridge.component';
 import { EnterTheViewportNotifierDirective } from './shared/viewport.directive';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { LoginComponent } from './layout/login/login.component';
-import { Gallery2Component } from './pages/gallery2/gallery2.component';
 import { SignupComponent } from './layout/signup/signup.component';
+import { BridgesComponent } from './pages/bridges/bridges.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +43,9 @@ import { SignupComponent } from './layout/signup/signup.component';
     EnterTheViewportNotifierDirective,
     GalleryComponent,
     LoginComponent,
-    Gallery2Component,
-    SignupComponent
+    SignupComponent,
+    BridgesComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
