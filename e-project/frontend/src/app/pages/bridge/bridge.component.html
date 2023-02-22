@@ -17,26 +17,48 @@
   ```
 -->
 
-<main class="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
-  <!-- Product -->
-  <div class="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
-    <!-- Product image -->
+<main (visibilityChange)="onVisibilityChange($event)" class="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8" enterTheViewportNotifier>
+  <!-- Bridge -->
+  <div [@fadeIn]="enterViewport" class="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
+    <!-- Bridge images -->
     <div class="lg:row-end-1 lg:col-span-4">
-      <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-        <img src="../../assets/images/vietnam-golden-bridge.jpg"
-          alt="Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles."
-          class="object-center object-cover">
+       <!-- Image gallery -->
+      <div class="flex flex-col-reverse">
+        <!-- Image selector -->
+        <div class="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
+          <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
+            <button *ngFor="let image of bridgeImages" class="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50" aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
+              <span class="sr-only"> Angled view </span>
+              <span class="absolute inset-0 rounded-md overflow-hidden">
+                <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
+              </span>
+              <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+              <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'" class="absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
+            </button>
+
+            <!-- More images... -->
+          </div>
+        </div>
+
+        <div class="w-full aspect-w-4 aspect-h-3">
+          <!-- Tab panel, show/hide based on tab state. -->
+          <div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
+            <img [src]="selectedImage.src" [alt]="selectedImage.alt" class="w-full h-full object-center object-cover sm:rounded-lg">
+          </div>
+
+          <!-- More images... -->
+        </div>
       </div>
     </div>
 
-    <!-- Product details -->
+    <!-- Bridge details -->
     <div class="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3">
       <div class="flex flex-col-reverse">
         <div class="mt-4">
-          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Danang Golden Bridge</h1>
+          <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">{{ bridge.name }}</h1>
 
-          <h2 id="information-heading" class="sr-only">Product information</h2>
-          <p class="text-sm text-gray-500 mt-2">Danang, Vietnam</p>
+          <h2 id="information-heading" class="sr-only">Bridge information</h2>
+          <p class="text-sm text-gray-500 mt-2"><span>{{ bridge.city }}</span>,<span> {{ bridge.country }}</span></p>
         </div>
 
         <div>
@@ -85,30 +107,26 @@
         </div>
       </div>
 
-      <p class="text-gray-500 mt-6">Danang Golden Bridge perches on a prime location inside the Ba Na Hills, a
-        fascinating entertainment and tourism complex of Danang City. At the height of 1400m above sea level, the bridge
-        is a masterpiece with golden-hue gilded railing frames.</p>
+      <p class="text-gray-500 mt-6">{{ (bridge.intro | slice:0:243) + '. . . . .' }}</p>
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <button type="button"
-          class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Visit
-          now</button>
+          class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to favorite</button>
         <button type="button"
-          class="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">See
-          options</button>
+          class="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Compare bridge</button>
       </div>
 
       <div class="border-t border-gray-200 mt-10 pt-10">
         <h3 class="text-sm font-medium text-gray-900">Characteristics</h3>
         <div class="mt-4 prose prose-sm text-gray-500">
           <ul role="list">
-            <li>Length: 150m</li>
+            <li>Length: {{ bridge.length ? bridge.length + ' m' : 'N/A'}}</li>
 
-            <li>Width: 5m</li>
+            <li>Width: {{ bridge.width ? bridge.width + ' m' : 'N/A'}}</li>
 
-            <li>Height: N/A</li>
+            <li>Height: {{ bridge.height ? bridge.height + ' m' : 'N/A'}}</li>
 
-            <li>Built in: July 2017</li>
+            <li>Built in: {{ bridge.built_in ? (bridge.built_in | customDate) : 'N/A' }}</li>
           </ul>
         </div>
       </div>
@@ -311,8 +329,7 @@
             </div>
             <div class="lg:col-span-5 mt-10">
               <h3 class="text-lg font-medium text-gray-900">Share your thoughts</h3>
-              <p class="mt-1 text-sm text-gray-600">If you’ve used this product, share your thoughts with other
-                customers</p>
+              <p class="mt-1 text-sm text-gray-600">If you’ve visited this bridge, please share your thoughts with other users.</p>
 
               <a href="#"
                 class="mt-6 inline-flex w-full bg-white border border-gray-300 rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full">Write
@@ -656,55 +673,29 @@
           <div class="prose prose-sm max-w-none text-gray-500">
             <h4>Overview</h4>
 
-            <p>Taking high ranking continuously on many architectural charts since its opening day and owning several
-              magical and majestic short online videos also contribute to the fact that Golden Bridge is becoming a
-              must-go place with the tourists who plan to visit Da Nang, Vietnam in the upcoming tourism season.</p>
-            <img src="https://d13jio720g7qcs.cloudfront.net/images/guides/origin/5f11616694579.jpg" alt=""
-              class="rounded-lg">
-            <p>In the last few years, the Golden Bridge (Da Nang, Vietnam) has been creating a fever throughout the
-              world with its appearance on not only many world-known channels and newspapers such as CNN, BBC, The
-              Guardian, Times, etc. but also the most popular social networks and forums like Instagram, Facebook,
-              Twitter, BuzzFeed, Reddit, etc.</p>
+            <p>{{ bridge.intro }}</p>
 
             <h4>History</h4>
-            <p>The Golden Bridge (Vietnam) is new architectural construction, which sets the location inside the Bana
-              Hills entertainment - tourism complex. This bridge was built at the height of 1.400m above sea level and
-              stretches about 150m long. The root of the name “Golden Bridge” comes from its gilded railing frame. More
-              than being a pure architecture piece, Golden Bridge has been asserting itself as a new symbol of Da Nang's
-              tourism since its opening in June 2018.</p>
-            <img src="https://d13jio720g7qcs.cloudfront.net/images/guides/origin/5f116166946c4.jpg" class="rounded-lg">
-            <p>Tourists flock here to take some pictures at the place where journalists and travel bloggers around the
-              world are praising that being majestic and impressive as a scene in “Game of Thrones” or “The Lords of the
-              Rings”. The image of a huge couple of ancient hands (which is like the hands of the Mountain God) lifting
-              the bridge as a shining golden silk strip, toward the high blue sky with deep green forests below,
-              actually is not inferior to any blockbuster scenes.</p>
+            <p>{{ bridge.history ? bridge.history : 'Updating......' }}</p>
 
-            <h4>What you can do with it</h4>
+            <h4>Construction</h4>
 
-            <ul role="list">
-              <li>Use them freely in your personal and professional work.</li>
-              <li>Make them your own. Change the colors to suit your project or brand.</li>
-            </ul>
+            <p>{{ bridge.construction ? bridge.construction : 'Updating......' }}</p>
 
-            <h4>What you can't do with it</h4>
+            <h4>Design</h4>
 
-            <ul role="list">
-              <li>Don't be greedy. Selling or distributing these icons in their original or modified state is
-                prohibited.</li>
-              <li>Don't be evil. These icons cannot be used on websites or applications that promote illegal or immoral
-                beliefs or activities.</li>
-            </ul>
+            <p>{{ bridge.design ? bridge.design : 'Updating......' }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Related products -->
+  <!-- Related bridges -->
   <div class="max-w-2xl mx-auto mt-24 sm:mt-32 lg:max-w-none">
     <div class="flex items-center justify-between space-x-4">
       <h2 class="text-lg font-medium text-gray-900">Other users also viewed</h2>
-      <a href="#" class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
+      <a routerLink="/all-bridges" class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
           aria-hidden="true"> &rarr;</span></a>
     </div>
     <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
@@ -721,14 +712,14 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="#">
+            <a href="/bridge/1">
               <span aria-hidden="true" class="absolute inset-0"></span>
               The Golden Gate Bridge
             </a>
           </h3>
           <p></p>
         </div>
-        <p class="mt-1 text-sm text-gray-500">San Fransisco</p>
+        <p class="mt-1 text-sm text-gray-500">San Francisco, USA</p>
       </div>
 
       <div class="relative group">
@@ -744,14 +735,14 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="#">
+            <a href="/bridge/2">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Akashi Kaykio
             </a>
           </h3>
           <p></p>
         </div>
-        <p class="mt-1 text-sm text-gray-500">Japan</p>
+        <p class="mt-1 text-sm text-gray-500">Kobe, Japan</p>
       </div>
 
       <div class="relative group">
@@ -767,14 +758,14 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="#">
+            <a href="/bridge/4">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Tower Bridge
             </a>
           </h3>
           <p></p>
         </div>
-        <p class="mt-1 text-sm text-gray-500">United Kingdom</p>
+        <p class="mt-1 text-sm text-gray-500">London, UK</p>
       </div>
 
       <div class="relative group">
@@ -790,14 +781,14 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="#">
+            <a href="/bridge/8">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Sydney Harbor
             </a>
           </h3>
           <p></p>
         </div>
-        <p class="mt-1 text-sm text-gray-500">Australia</p>
+        <p class="mt-1 text-sm text-gray-500">Sydney, Australia</p>
       </div>
       <!-- More bridges... -->
     </div>

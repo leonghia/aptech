@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,8 +22,9 @@ import { EnterTheViewportNotifierDirective } from './shared/viewport.directive';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { LoginComponent } from './layout/login/login.component';
 import { SignupComponent } from './layout/signup/signup.component';
-import { BridgesComponent } from './pages/bridges/bridges.component';
-import { CategoryComponent } from './pages/category/category.component';
+import { AllComponent } from './pages/all/all.component';
+import { CategorizedComponent } from './pages/categorized/categorized.component';
+import { CustomDatePipe } from './shared/date.pipe';
 
 @NgModule({
   declarations: [
@@ -44,11 +46,13 @@ import { CategoryComponent } from './pages/category/category.component';
     GalleryComponent,
     LoginComponent,
     SignupComponent,
-    BridgesComponent,
-    CategoryComponent
+    AllComponent,
+    CategorizedComponent,
+    CustomDatePipe
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

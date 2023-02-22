@@ -10,7 +10,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getBridges(): Observable<any> {
-    return this.http.get(`${this.BASE_URL}/bridges`);
+  getBridges(criteria: string): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/bridges/${criteria}`);
+  }
+
+  sortBridges(sort: string, order: string): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/bridges?sort=${sort}&order=${order}`);
+  }
+
+  getBridge(id: string): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/bridge/${id}`);
+  }
+
+  getImages(criteria: string): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/bridge-images/${criteria}`);
   }
 }

@@ -12,7 +12,7 @@ export class AlternatingFeatureComponent implements OnInit {
   enterViewportBottom: boolean = false;
 
   ngOnInit(): void {
-    
+
   }
 
   onVisibilityChangeTop(status: boolean): void {

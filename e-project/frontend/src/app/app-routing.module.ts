@@ -6,13 +6,14 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { HomeComponent } from './pages/home/home.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
-import { BridgesComponent } from './pages/bridges/bridges.component';
-import { CategoryComponent } from './pages/category/category.component';
+import { AllComponent } from './pages/all/all.component';
+import { CategorizedComponent } from './pages/categorized/categorized.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'all-bridges', component: BridgesComponent},
-  {path: 'bridge', component: BridgeComponent},
+  {path: 'all-bridges', component: AllComponent},
+  {path: 'longest-bridges', component: CategorizedComponent},
+  {path: 'bridge/:id', component: BridgeComponent},
   {path: 'gallery', component: GalleryComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
