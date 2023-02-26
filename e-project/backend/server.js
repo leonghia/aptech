@@ -6,11 +6,11 @@ const PORT = process.env.PORT || 5000;
 
 // Config and create a MySQL connection
 const configDB = {
-    host: 'localhost',
+    host: '139.180.186.20',
     port: 3306,
-    user: 'root',
-    password: '',
-    database: 'amazing_bridges',
+    user: 'demo',
+    password: 's(20A5Q.Mvk(bvoP',
+    database: 'demo_s1',
     multipleStatements: true
 };
 const conn = mysql.createConnection(configDB);
@@ -23,95 +23,116 @@ app.use((req, res, next) => {
     next();
 });
 
-// Define a route for getting categorized bridges
-app.get('/api/bridges/:criteria', (req, res) => {
-    const sortBy = req.params.criteria;
-    let sql = 'SELECT * FROM nhom1_bridges';
-
-    if (sortBy === 'longest')
-        sql += ' ORDER BY length DESC LIMIT 5';
-    if (sortBy === 'highest')
-        sql += ' ORDER BY height DESC LIMIT 5';
-    if (sortBy === 'oldest')
-        sql += ' WHERE built_in IS NULL UNION SELECT * FROM nhom1_bridges ORDER BY built_in LIMIT 5';
-
-    conn.query(sql, (error, results) => {
-        if (error)
-            // Return an error if the query failed
-            res.status(500).json({ error: 'Error getting bridges from database' });
-        else
-            // Return all the bridges if the query succeeds
-            res.json(results);
-    });
-})
-
-// Define a route for getting sorted bridges
+// Define the endpoint for fetching bridges
 app.get('/api/bridges', (req, res) => {
-    let sql = 'SELECT * FROM nhom1_bridges';
 
-    // Check if the 'sort' query parameter is present
-    if (req.query.sort) {
-        // Add an 'ORDER BY' clause to the SQL query to sort by parameter
-        sql += ` ORDER BY ${req.query.sort}`;
+    // Get the query parameters from the request
+    const id = req.query.id;
+    const continent = req.query.continent;
+    const country = req.query.country;
+    const material = req.query.material;
+    const style = req.query.style;
+    const sortBy = req.query.sort;
+    const sortOrder = req.query.order || 'asc';
+    
+    // Construct the SQL query based on the query parameters
+    let sql = 'SELECT * FROM nhom1_bridges WHERE 1 = 1';
 
-        // Check if the 'order' query parameter is present and set the sorting order
-        if (req.query.order)
-            sql += ` ${req.query.order}`;
+    if (id) {
+        sql += ` AND id = ${id}`;
     }
-
+    if (continent && continent.length !== 0) {
+        sql += ` AND continent = '${continent}'`;
+    }         
+    if (country && country.length !== 0) {
+        sql += ` AND country = '${country}'`;
+    }
+    if (material && material.length !== 0) {
+        const materialArr = material.split(',');
+        sql += ` AND material IN (${materialArr.map(m => `'${m}'`).join(',')})`;
+    }
+    if (style && style.length !== 0) {
+        const styleArr = style.split(',');
+        sql += ` AND style IN (${styleArr.map(s => `'${s}'`).join(',')})`;
+    } 
+    if (sortBy) {
+        sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
+    }  
+    
+    // Execute the SQL query using the connection
     conn.query(sql, (error, results) => {
-        if (error)
-            // Return an error if the query failed
-            res.status(500).json({ error: 'Error getting bridges from database' });
-        else
-            // Return bridges  if the query succeeds
-            res.json(results);
-    });
-});
-
-// Define a route for getting a specific bridge by its ID
-app.get('/api/bridge/:id', (req, res) => {
-    const bridgeID = req.params.id;
-
-    // Execute a MySQL query to get the bridge with the specified ID
-    conn.query('SELECT * FROM nhom1_bridges WHERE id = ?', [bridgeID], (error, results) => {
         if (error) {
-            // Return an error if the query failed
-            res.status(500).json({ error: 'Error getting bridge from database' });
-        } else if (results.length === 0) {
-            // Return a 404 error if the bridge was not found
-            res.status(404).json({ error: `Bridge with ID ${bridgeID} not found` });
-        } else {
-            // Return the bridge if it was found
+            res.status(500).json({error: 'Error fetching bridges from database'});
+        } else if (id) {
             res.json(results[0]);
+        } else {
+            res.json(results);
         }
     })
 })
 
-// Define a route for getting images
-app.get('/api/bridge-images/:criteria', (req, res) => {
-    const filterBy = req.params.criteria;
-    let sql = 'SELECT * FROM nhom1_bridges_images';
-
-    if (filterBy !== 'all')
-        sql += ` WHERE bridge_id = ${filterBy}`;
+// Define the endpoint for fetching images
+app.get('/api/images', (req, res) => {
+    const bridgeId = req.query.bridge_id;
+    let sql = `SELECT * FROM nhom1_bridges_images WHERE bridge_id = ${bridgeId}`;
 
     conn.query(sql, (error, results) => {
-        if (error)
-            // Return an error if the query failed
-            res.status(500).json({ error: 'Error getting bridges from database' });
-        else if (results.length === 0)
-            // Return a 404 error if the images were not found
-            res.status(404).json({ error: 'Images could not be found' });
-        else
-            // Return the images if the query succeeds
+        if (error) {
+            res.status(500).json({error: 'Error fetching images from database'});
+        } else if (results.length === 0) {
+            res.status(404).json({error: 'Could not find images with the specified ID'});
+        } else {
             res.json(results);
+        }   
     })
-    
 })
 
+// Define the endpoint for fetching continents
+app.get('/api/continents', (req, res) => {
+    let sql = 'SELECT DISTINCT continent FROM nhom1_bridges ORDER BY continent';
+    conn.query(sql, (error, results) => {
+        if (error)
+            res.status(500).json({error: 'Error fetching continents from database'});
+        else
+            res.json(results);
+    })
+})
+
+// Define the endpoint for fetching countries
+app.get('/api/countries', (req, res) => {
+    const continent = req.query.continent;
+    let sql = `SELECT DISTINCT country FROM nhom1_bridges WHERE continent = '${continent}' ORDER BY country`;
+    conn.query(sql, (error, results) => {
+        if (error)
+            res.status(500).json({error: 'Error fetching countries from database'});
+        else
+            res.json(results);
+    })
+})
+
+// Define the endpoint for fetching materials
+app.get('/api/materials', (req, res) => {
+    let sql = 'SELECT DISTINCT material FROM nhom1_bridges ORDER BY material';
+    conn.query(sql, (error, results) => {
+        if (error)
+            res.status(500).json({error: 'Error fetching materials from database'});
+        else
+            res.json(results);
+    })
+})
+
+// Define the endpoint for fetching styles
+app.get('/api/styles', (req, res) => {
+    let sql = 'SELECT DISTINCT style FROM nhom1_bridges ORDER BY style';
+    conn.query(sql, (error, results) => {
+        if (error)
+            res.status(500).json({error: 'Error fetching styles from database'});
+        else
+            res.json(results);
+    })
+})
 
 // Start the server
 app.listen(PORT, function () {
-    console.log('Server is running...');
+    console.log(`Server is running on port ${PORT}`);
 })
