@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { fadeLeft } from 'src/app/shared/animations';
+
+declare var window: any;
 
 @Component({
   selector: 'app-cta',
@@ -7,11 +9,18 @@ import { fadeLeft } from 'src/app/shared/animations';
   templateUrl: './cta.component.html',
   styleUrls: ['./cta.component.css']
 })
-export class CtaComponent implements OnInit {
+export class CtaComponent implements OnInit, AfterViewInit {
   enterViewport: boolean = false;
+
 
   ngOnInit(): void {
     
+  }
+
+  ngAfterViewInit(): void {
+    if (window.FlowBite) {
+      window.FlowBite.init();
+    }
   }
 
   onVisibilityChange(status: boolean): void {

@@ -23,7 +23,7 @@ export class BridgeComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.bridgeID = params['id'];
     });
-    this.apiService.getBridge(this.bridgeID).subscribe(data => {
+    this.apiService.getBridges({ id: this.bridgeID}).subscribe((data: any) => {
       this.bridge = data;
     });
     this.apiService.getImages(this.bridgeID).subscribe(data => {

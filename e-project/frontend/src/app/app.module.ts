@@ -25,6 +25,10 @@ import { SignupComponent } from './layout/signup/signup.component';
 import { AllComponent } from './pages/all/all.component';
 import { CategorizedComponent } from './pages/categorized/categorized.component';
 import { CustomDatePipe } from './shared/date.pipe';
+import { FormsModule } from '@angular/forms';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { SearchResultComponent } from './pages/search-result/search-result.component';
+import { SuccessModalComponent } from './layout/success-modal/success-modal.component';
 
 @NgModule({
   declarations: [
@@ -48,10 +52,14 @@ import { CustomDatePipe } from './shared/date.pipe';
     SignupComponent,
     AllComponent,
     CategorizedComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    NotFoundComponent,
+    SearchResultComponent,
+    SuccessModalComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule

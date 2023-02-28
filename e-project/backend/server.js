@@ -1,10 +1,20 @@
 const express = require('express');
 const mysql = require('mysql');
 const app = express();
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5000;
 
 // Config and create a MySQL connection
+// const configDB = {
+//     host: 'localhost',
+//     port: 3306,
+//     user: 'root',
+//     password: '',
+//     database: 'amazing_bridges',
+//     multipleStatements: true
+// };
+
 const configDB = {
     host: '139.180.186.20',
     port: 3306,
@@ -23,6 +33,9 @@ app.use((req, res, next) => {
     next();
 });
 
+// Parse JSON data in the request body
+app.use(bodyParser.json());
+
 // Define the endpoint for fetching bridges
 app.get('/api/bridges', (req, res) => {
 
@@ -30,10 +43,12 @@ app.get('/api/bridges', (req, res) => {
     const id = req.query.id;
     const continent = req.query.continent;
     const country = req.query.country;
+    const q = req.query.q;
     const material = req.query.material;
     const style = req.query.style;
-    const sortBy = req.query.sort;
+    const sortBy = req.query.sort || 'name';
     const sortOrder = req.query.order || 'asc';
+    const limit = req.query.limit;
     
     // Construct the SQL query based on the query parameters
     let sql = 'SELECT * FROM nhom1_bridges WHERE 1 = 1';
@@ -41,22 +56,28 @@ app.get('/api/bridges', (req, res) => {
     if (id) {
         sql += ` AND id = ${id}`;
     }
-    if (continent && continent.length !== 0) {
+    if (continent) {
         sql += ` AND continent = '${continent}'`;
     }         
-    if (country && country.length !== 0) {
+    if (country) {
         sql += ` AND country = '${country}'`;
     }
-    if (material && material.length !== 0) {
+    if (q) {
+        sql += ` AND name LIKE '%${q}%'`;
+    }
+    if (material) {
         const materialArr = material.split(',');
         sql += ` AND material IN (${materialArr.map(m => `'${m}'`).join(',')})`;
     }
-    if (style && style.length !== 0) {
+    if (style) {
         const styleArr = style.split(',');
         sql += ` AND style IN (${styleArr.map(s => `'${s}'`).join(',')})`;
     } 
     if (sortBy) {
         sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
+    }
+    if (limit) {
+        sql += ` LIMIT ${limit}`;
     }  
     
     // Execute the SQL query using the connection
@@ -129,6 +150,19 @@ app.get('/api/styles', (req, res) => {
             res.status(500).json({error: 'Error fetching styles from database'});
         else
             res.json(results);
+    })
+})
+
+// Define the endpont for adding new user
+app.post('/users', (req, res) => {
+    const user = req.body;
+    const { username, email, password, first_name, last_name } = user;
+    const sql = `INSERT INTO nhom1_users (username, email, password, first_name, last_name) VALUES (?, ?, ?, ?, ?)`;
+
+    conn.query(sql, [username, email, password, first_name, last_name], (err, results) => {
+        if (err) throw err;
+        console.log('User added to the database!');
+        res.send('User added to the database');
     })
 })
 

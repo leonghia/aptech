@@ -15,36 +15,43 @@
   ```
 -->
 <div class="bg-white">
-    <div class="max-w-2xl mx-auto py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Protect your device</h2>
-        <p class="mt-4 text-gray-500">As a digital creative, your laptop or tablet is at the center of your work. Keep your device safe with a fabric sleeve that matches in quality and looks.</p>
+  <div class="max-w-2xl mx-auto py-24 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl capitalize">{{ header }} bridges</h2>
+      <div [ngSwitch]="header">
+        <p *ngSwitchCase="'longest'" class="mt-4 text-gray-500">As engineering and technology have advanced, bridges have become longer and more complex, allowing us to overcome obstacles that once seemed insurmountable.</p>
+        <p *ngSwitchCase="'widest'" class="mt-4 text-gray-500">Bridges are not only measured by their length but also by their width, which is a crucial factor in determining their capacity to handle traffic flow and accommodate pedestrians.</p>
+        <p *ngSwitchCase="'highest'" class="mt-4 text-gray-500">The highest bridges in the world are the ones that soar above the ground, providing breathtaking views and connecting remote regions that were once difficult to access.</p>
+        <p *ngSwitchCase="'oldest'" class="mt-4 text-gray-500">Some of these bridges have stood the test of time and have become iconic structures that have inspired awe and admiration, survived for centuries and historical significance.</p>
+        <p *ngSwitchCase="'united states'" class="mt-4 text-gray-500">While there are thousands of bridges in the United States of different sizes, some are more famous than others. Here are the most famous within the country you need to know.</p>
+        <p *ngSwitchCase="'england'" class="mt-4 text-gray-500">England is a country of many rivers. From early times rivers were a means of communication and many towns in the country are located on rivers where they could be easily bridged.</p>
+        <p *ngSwitchCase="'chinese'" class="mt-4 text-gray-500">Chinese people have built tens of thousands bridges over past thousands of years. The bridges have become an important symbol of Chinese ancient civilization.</p>
+        <p *ngSwitchCase="'japanese'" class="mt-4 text-gray-500">Japanese bridges are not as cold and gray as they usually seem. From awe-inspiring aesthetic views to engineering and architectural marvels or even religious.</p>
       </div>
-  
-      <div class="mt-16 space-y-16">
-        <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center">
-          <div class="mt-6 lg:mt-0 lg:row-start-1 lg:col-span-5 xl:col-span-4 lg:col-start-1">
-            <h3 class="text-lg font-medium text-gray-900">Minimal and thoughtful</h3>
-            <p class="mt-2 text-sm text-gray-500">Our laptop sleeve is compact and precisely fits 13&quot; devices. The zipper allows you to access the interior with ease, and the front pouch provides a convenient place for your charger cable.</p>
+      
+    </div>
+
+    <div class="mt-16 space-y-16">
+      <div (visibilityChange)="onVisibilityChange($event, i)"  *ngFor="let bridge of bridges; let i = index" class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center" enterTheViewportNotifier>
+        <div [@fadeRight]="enterViewport[i] && i % 2 === 0 ? 'faded' : 'default'" [@fadeLeft]="enterViewport[i] && i % 2 !== 0 ? 'faded' : 'default'" [ngClass]="i % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-8 xl:col-start-9'" class="mt-6 lg:mt-0 lg:row-start-1 lg:col-span-5 xl:col-span-4">
+          <h3 [routerLink]="['/bridge', bridge.id]" role="link" class="cursor-pointer text-lg font-medium text-gray-900 mb-2">{{ bridge.name }} </h3>
+          <div [ngSwitch]="header">
+            <span *ngSwitchCase="'longest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.length }}m long</span>
+            <span *ngSwitchCase="'widest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.width }}m wide</span>
+            <span *ngSwitchCase="'highest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.height }}m high</span>
+            <span *ngSwitchCase="'oldest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.built_in | customDate }}</span>
+            <span *ngSwitchDefault class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.city }}, {{ bridge.country }}</span>
           </div>
-          <div class="flex-auto lg:row-start-1 lg:col-span-7 xl:col-span-8 lg:col-start-6 xl:col-start-5">
-            <div class="aspect-w-5 aspect-h-2 rounded-lg bg-gray-100 overflow-hidden">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-feature-07-detail-01.jpg" alt="White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull." class="object-center object-cover">
-            </div>
+          <p class="mt-3 text-sm text-gray-500">{{ (bridge.intro | slice:0:200) + '. . . . .' }}</p>
+        </div>
+        <div [@fadeLeft]="enterViewport[i] && i % 2 === 0 ? 'faded' : 'default'" [@fadeRight]="enterViewport[i] && i % 2 !== 0 ? 'faded' : 'default'" [ngClass]="i % 2 == 0 ? 'lg:col-start-6 xl:col-start-5' : 'lg:col-start-1'" class="flex-auto lg:row-start-1 lg:col-span-7 xl:col-span-8">
+          <div class="aspect-w-5 aspect-h-2 rounded-lg bg-gray-100 overflow-hidden">
+            <img [src]="bridge.thumbnail" [alt]="bridge.name" class="object-center object-cover">
           </div>
         </div>
-  
-        <div class="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center">
-          <div class="mt-6 lg:mt-0 lg:row-start-1 lg:col-span-5 xl:col-span-4 lg:col-start-8 xl:col-start-9">
-            <h3 class="text-lg font-medium text-gray-900">Refined details</h3>
-            <p class="mt-2 text-sm text-gray-500">We design every detail with the best materials and finishes. This laptop sleeve features durable canvas with double-stitched construction, a felt interior, and a high quality zipper that hold up to daily use.</p>
-          </div>
-          <div class="flex-auto lg:row-start-1 lg:col-span-7 xl:col-span-8 lg:col-start-1">
-            <div class="aspect-w-5 aspect-h-2 rounded-lg bg-gray-100 overflow-hidden">
-              <img src="https://tailwindui.com/img/ecommerce-images/product-feature-07-detail-02.jpg" alt="Detail of zipper pull with tan leather and silver rivet." class="object-center object-cover">
-            </div>
-          </div>
-        </div>
       </div>
+
+      
     </div>
   </div>
+</div>

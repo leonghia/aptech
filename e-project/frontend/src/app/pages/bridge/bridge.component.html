@@ -17,7 +17,7 @@
   ```
 -->
 
-<main (visibilityChange)="onVisibilityChange($event)" class="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8" enterTheViewportNotifier>
+<main (visibilityChange)="onVisibilityChange($event)" class="mx-auto pt-14 px-4 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8" enterTheViewportNotifier>
   <!-- Bridge -->
   <div [@fadeIn]="enterViewport" class="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
     <!-- Bridge images -->
@@ -125,6 +125,10 @@
             <li>Width: {{ bridge.width ? bridge.width + ' m' : 'N/A'}}</li>
 
             <li>Height: {{ bridge.height ? bridge.height + ' m' : 'N/A'}}</li>
+
+            <li>Material: {{ bridge.material }}</li>
+
+            <li>Style: {{ bridge.style ? bridge.style : 'N/A' }}</li>
 
             <li>Built in: {{ bridge.built_in ? (bridge.built_in | customDate) : 'N/A' }}</li>
           </ul>
@@ -673,18 +677,18 @@
           <div class="prose prose-sm max-w-none text-gray-500">
             <h4>Overview</h4>
 
-            <p>{{ bridge.intro }}</p>
+            <p class="whitespace-pre-line">{{ bridge.intro }}</p>
 
             <h4>History</h4>
-            <p>{{ bridge.history ? bridge.history : 'Updating......' }}</p>
+            <p class="whitespace-pre-line">{{ bridge.history ? bridge.history : 'Updating......' }}</p>
 
             <h4>Construction</h4>
 
-            <p>{{ bridge.construction ? bridge.construction : 'Updating......' }}</p>
+            <p class="whitespace-pre-line">{{ bridge.construction ? bridge.construction : 'Updating......' }}</p>
 
             <h4>Design</h4>
 
-            <p>{{ bridge.design ? bridge.design : 'Updating......' }}</p>
+            <p class="whitespace-pre-line">{{ bridge.design ? bridge.design : 'Updating......' }}</p>
           </div>
         </div>
       </div>
@@ -692,7 +696,7 @@
   </div>
 
   <!-- Related bridges -->
-  <div class="max-w-2xl mx-auto mt-24 sm:mt-32 lg:max-w-none">
+  <div class="max-w-2xl mx-auto mt-24 sm:mt-16 lg:max-w-none">
     <div class="flex items-center justify-between space-x-4">
       <h2 class="text-lg font-medium text-gray-900">Other users also viewed</h2>
       <a routerLink="/all-bridges" class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
@@ -701,7 +705,7 @@
     <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
       <div class="relative group">
         <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-          <img src="https://www.amazingbridges.ml/IMAGES/gold.jpg"
+          <img src="../../../assets/images/2023-02/the-golden-gate-bridge-1.jpg"
             alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
             class="object-center object-cover">
           <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">
@@ -724,7 +728,7 @@
 
       <div class="relative group">
         <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-          <img src="https://www.amazingbridges.ml/IMAGES/akashi%20bridge.jpg"
+          <img src="../../../assets/images/2023-02/akashi-kaikyo-bridge-1.jpg"
             alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
             class="object-center object-cover">
           <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">
@@ -747,7 +751,7 @@
 
       <div class="relative group">
         <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-          <img src="https://www.amazingbridges.ml/IMAGES/TOWER%20BRIDGEE.jpg"
+          <img src="../../../assets/images/2023-02/tower-bridge-0.jpg"
             alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
             class="object-center object-cover">
           <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">
@@ -770,7 +774,7 @@
 
       <div class="relative group">
         <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
-          <img src="https://www.amazingbridges.ml/IMAGES/SYDNEY%20HARBOR%20BRIDGE.jpg"
+          <img src="../../../assets/images/2023-02/syndey-harbour-bridge-1.jpg"
             alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
             class="object-center object-cover">
           <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">

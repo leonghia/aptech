@@ -14,7 +14,8 @@
           <p class="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">Welcome to Amazing Bridges! Our website is very dedicated to exploring the most iconic, beautiful and historic bridges from around the globe.</p>
           <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
             <div class="max-w-lg w-full lg:max-w-md">
-              <label for="search" class="sr-only">Search</label>
+              <form (submit)="onSubmit(searchTerm)">
+                <label for="search" class="sr-only">Search</label>
               <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <!-- Heroicon name: solid/search -->
@@ -22,8 +23,10 @@
                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                   </svg>
                 </div>
-                <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl" placeholder="Search" type="search">
+                <input [(ngModel)]="searchTerm" id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-xl" placeholder="Search" type="text">
               </div>
+              </form>
+              
             </div>
           </div>
         </div>
