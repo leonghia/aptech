@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { fadeIn } from 'src/app/shared/animations';
 import { ApiService } from 'src/app/shared/api.service';
 
+// Import Swiper core and required modules
+import SwiperCore, { SwiperOptions } from 'swiper';
+
 @Component({
   selector: 'app-bridge',
   animations: [fadeIn],
@@ -19,6 +22,11 @@ export class BridgeComponent implements OnInit {
   selectedImage!: any;
   enterViewport: boolean = false;
   modalShown: boolean = false;
+
+  config: SwiperOptions = {
+    slidesPerView: 4,
+    spaceBetween: 15,
+  };
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {}
 
@@ -58,5 +66,5 @@ export class BridgeComponent implements OnInit {
     this.modalShown = false;
     this.modal.nativeElement.classList.add('hidden');
   }
-  
+
 }

@@ -17,24 +17,31 @@
   ```
 -->
 
-<main (visibilityChange)="onVisibilityChange($event)" class="mx-auto pt-14 px-4 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8" enterTheViewportNotifier>
+<main (visibilityChange)="onVisibilityChange($event)" class="mx-auto pt-14 px-4 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8"
+  enterTheViewportNotifier>
   <!-- Bridge -->
   <div [@fadeIn]="enterViewport" class="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
     <!-- Bridge images -->
     <div class="lg:row-end-1 lg:col-span-4">
-       <!-- Image gallery -->
+      <!-- Image gallery -->
       <div class="flex flex-col-reverse">
         <!-- Image selector -->
         <div class="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-          <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
-            <button *ngFor="let image of bridgeImages" class="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50" aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
-              <span class="sr-only"> Angled view </span>
-              <span class="absolute inset-0 rounded-md overflow-hidden">
-                <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
-              </span>
-              <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
-              <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'" class="absolute inset-0 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
-            </button>
+          <div class="" aria-orientation="horizontal" role="tablist">
+            <swiper [config]="config" class="h-28">
+              <ng-template swiperSlide *ngFor="let image of bridgeImages" class="">
+                <button class="h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50" aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
+                  <span class="sr-only"> Angled view </span>
+                  <span class="absolute inset-1 rounded-md overflow-hidden">
+                    <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
+                  </span>
+                  <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+                  <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'" class="absolute inset-1 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
+                </button>
+              </ng-template>
+              
+            </swiper>
+
 
             <!-- More images... -->
           </div>
@@ -42,28 +49,33 @@
 
         <div class="w-full aspect-w-4 aspect-h-3">
           <!-- Tab panel, show/hide based on tab state. -->
-          <div class="overflow-hidden sm:rounded-lg" id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-            <img (click)="onShowModal(selectedImage.src)" [src]="selectedImage.src" [alt]="selectedImage.alt" [ngClass]="{'scale-125': modalShown}" class="w-full h-full object-center object-cover sm:rounded-lg hover:scale-125 ease-in duration-500 cursor-zoom-in">
+          <div class="overflow-hidden sm:rounded-lg" id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel"
+            tabindex="0">
+            <img (click)="onShowModal(selectedImage.src)" [src]="selectedImage.src" [alt]="selectedImage.alt"
+              [ngClass]="{'scale-105': modalShown}"
+              class="w-full h-full object-center object-cover sm:rounded-lg hover:scale-105 ease-in duration-500 cursor-zoom-in">
           </div>
 
           <!-- More images... -->
         </div>
       </div>
       <!-- The lightbox -->
-      <div class="hidden fixed top-0 left-0 z-80 w-screen h-screen bg-black/70 flex justify-center items-center" #modal>
+      <div class="hidden fixed top-0 left-0 z-[80] w-screen h-screen bg-black/70 flex justify-center items-center" #modal>
         <div class="flex flex-col gap-y-5">
           <div class="flex justify-center">
             <a (click)="onCloseModal()" class="z-90 text-white text-5xl font-bold cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
-                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
-              </svg>          
+                <path fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+              </svg>
             </a>
           </div>
-          
-          <img class="max-w-[800px] max-h-[600px] object-cover" #modalImg/>
-          
-        </div>  
-        
+
+          <img class="max-w-[800px] max-h-[600px] object-cover" #modalImg />
+
+        </div>
+
       </div>
     </div>
 
@@ -127,9 +139,11 @@
 
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <button type="button"
-          class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add to favorite</button>
+          class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add
+          to favorite</button>
         <button type="button"
-          class="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Compare bridge</button>
+          class="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Compare
+          bridge</button>
       </div>
 
       <div class="border-t border-gray-200 mt-10 pt-10">
@@ -349,7 +363,8 @@
             </div>
             <div class="lg:col-span-5 mt-10">
               <h3 class="text-lg font-medium text-gray-900">Share your thoughts</h3>
-              <p class="mt-1 text-sm text-gray-600">If you’ve visited this bridge, please share your thoughts with other users.</p>
+              <p class="mt-1 text-sm text-gray-600">If you’ve visited this bridge, please share your thoughts with other
+                users.</p>
 
               <a href="#"
                 class="mt-6 inline-flex w-full bg-white border border-gray-300 rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full">Write
@@ -715,7 +730,8 @@
   <div class="max-w-2xl mx-auto mt-24 sm:mt-16 lg:max-w-none">
     <div class="flex items-center justify-between space-x-4">
       <h2 class="text-lg font-medium text-gray-900">Other users also viewed</h2>
-      <a routerLink="/all-bridges" class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
+      <a routerLink="/all-bridges"
+        class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
           aria-hidden="true"> &rarr;</span></a>
     </div>
     <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
