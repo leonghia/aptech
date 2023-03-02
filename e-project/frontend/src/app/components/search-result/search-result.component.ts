@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/shared/api.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-search-result',
@@ -24,19 +24,19 @@ export class SearchResultComponent implements OnInit {
   orderText!: string;
   loading: boolean = true;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
+  constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.apiService.getMaterials().subscribe(data => {
+    this.dataService.getMaterials().subscribe(data => {
       this.materials = data;
     });
-    this.apiService.getStyles().subscribe(data => {
+    this.dataService.getStyles().subscribe(data => {
       this.styles = data;
     });
     this.searchTerm = this.route.snapshot.queryParamMap.get('q');
     setTimeout(() => {
-      this.apiService.getBridges({q: this.searchTerm, sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+      this.dataService.getBridges({q: this.searchTerm, sort: this.sortBy, order: this.orderBy}).subscribe(data => {
         this.bridges = data;
         this.loading = false;
         this.searchResultLength = this.bridges.length;
@@ -58,7 +58,7 @@ export class SearchResultComponent implements OnInit {
       this.selectedMaterials.splice(index, 1);
     }
     setTimeout(() => {
-      this.apiService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+      this.dataService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
         this.loading = false;
       })
@@ -75,7 +75,7 @@ export class SearchResultComponent implements OnInit {
       this.selectedStyles.splice(index, 1);
     }
     setTimeout(() => {
-      this.apiService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+      this.dataService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
         this.loading = false;
       })
@@ -97,7 +97,7 @@ export class SearchResultComponent implements OnInit {
     this.orderBy = order;
     this.orderText = order;
     this.orderBtnState = false;
-    this.apiService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+    this.dataService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
     })
   }

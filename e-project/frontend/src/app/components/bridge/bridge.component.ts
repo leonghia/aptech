@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { fadeIn } from 'src/app/shared/animations';
-import { ApiService } from 'src/app/shared/api.service';
+import { fadeIn } from 'src/app/animations/fade';
+import { DataService } from 'src/app/services/data.service';
 
 // Import Swiper core and required modules
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
@@ -34,7 +34,7 @@ export class BridgeComponent implements OnInit {
     },
   };
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService) {}
+  constructor(private route: ActivatedRoute, private dataService: DataService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -46,13 +46,13 @@ export class BridgeComponent implements OnInit {
   }
 
   loadBridge(bridgeId: string) {
-    this.apiService.getBridges({id: bridgeId}).subscribe((data: any) => {
+    this.dataService.getBridges({id: bridgeId}).subscribe((data: any) => {
       this.bridge = data;
     })
   }
 
   loadImages(bridgeId: string) {
-    this.apiService.getImages(bridgeId).subscribe((data: any[]) => {
+    this.dataService.getImages(bridgeId).subscribe((data: any[]) => {
       this.bridgeImages = data;
       this.selectedImage = this.bridgeImages[0];
     })

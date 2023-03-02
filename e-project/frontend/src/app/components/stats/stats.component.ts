@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { fadeRight } from 'src/app/shared/animations';
+import { fadeRight } from 'src/app/animations/fade';
 
 @Component({
   selector: 'app-stats',

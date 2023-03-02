@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { fadeIn } from 'src/app/shared/animations';
-import { ApiService } from 'src/app/shared/api.service';
+import { fadeIn } from 'src/app/animations/fade';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-all',
@@ -35,21 +35,21 @@ export class AllComponent implements OnInit {
   firstLoad: boolean = true;
   loading: boolean = true;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.apiService.getMaterials().subscribe(data => {
+    this.dataService.getMaterials().subscribe(data => {
       this.materials = data;
     });
-    this.apiService.getStyles().subscribe(data => {
+    this.dataService.getStyles().subscribe(data => {
       this.styles = data;
     })
-    this.apiService.getBridges({sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+    this.dataService.getBridges({sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
       this.loading = false;
       this.firstLoad = false;
     });
-    this.apiService.getContinents().subscribe(data => {
+    this.dataService.getContinents().subscribe(data => {
       this.continents = data;
     });
   }
@@ -73,7 +73,7 @@ export class AllComponent implements OnInit {
       this.defaultContinentText = 'All continents';
       this.countries = [];
       setTimeout(() => {
-        this.apiService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+        this.dataService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
           this.bridges = data;
           this.loading = false;
         });
@@ -82,13 +82,13 @@ export class AllComponent implements OnInit {
       
     } else {
       setTimeout(() => {
-        this.apiService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+        this.dataService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
           this.bridges = data;
           this.loading = false;
         });
         
       }, 1000);
-      this.apiService.getCountries(this.selectedContinent).subscribe(data => {
+      this.dataService.getCountries(this.selectedContinent).subscribe(data => {
         this.countries = data;
       });
     }
@@ -106,7 +106,7 @@ export class AllComponent implements OnInit {
     if (country === '') {
       this.defaultCountryText = 'All countries';
       setTimeout(() => {
-        this.apiService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+        this.dataService.getBridges({continent: this.selectedContinent, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
           this.bridges = data;
           this.loading = false;
         })
@@ -114,7 +114,7 @@ export class AllComponent implements OnInit {
       
     } else {
       setTimeout(() => {
-        this.apiService.getBridges({country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+        this.dataService.getBridges({country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
           this.bridges = data;
           this.loading = false;
         })
@@ -133,7 +133,7 @@ export class AllComponent implements OnInit {
       this.selectedMaterials.splice(index, 1);
     }
     setTimeout(() => {
-      this.apiService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+      this.dataService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
         this.loading = false;
       })
@@ -150,7 +150,7 @@ export class AllComponent implements OnInit {
       this.selectedStyles.splice(index, 1);
     }
     setTimeout(() => {
-      this.apiService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
+      this.dataService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
         this.loading = false;
       })
@@ -172,7 +172,7 @@ export class AllComponent implements OnInit {
     this.orderBy = order;
     this.orderText = order;
     this.orderBtnState = false;
-    this.apiService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+    this.dataService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
     })
   }
@@ -186,7 +186,7 @@ export class AllComponent implements OnInit {
     this.selectedMaterials = [];
     this.selectedStyles = [];
     this.loading = true;
-    this.apiService.getBridges({sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+    this.dataService.getBridges({sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
       this.loading = false;
     });

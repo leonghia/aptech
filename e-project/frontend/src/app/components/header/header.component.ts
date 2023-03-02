@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, Renderer2, HostListener,OnInit ,} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',

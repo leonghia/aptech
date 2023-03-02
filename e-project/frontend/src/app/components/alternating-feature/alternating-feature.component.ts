@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fadeRight, fadeLeft } from 'src/app/shared/animations';
+import { fadeRight, fadeLeft } from 'src/app/animations/fade';
 
 @Component({
   selector: 'app-alternating-feature',

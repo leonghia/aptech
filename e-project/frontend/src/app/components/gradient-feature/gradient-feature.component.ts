@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fadeUp } from 'src/app/shared/animations';
+import { fadeUp } from 'src/app/animations/fade';
 
 @Component({
   selector: 'app-gradient-feature',

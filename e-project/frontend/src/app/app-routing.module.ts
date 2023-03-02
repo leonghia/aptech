@@ -1,16 +1,16 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BridgeComponent } from './pages/bridge/bridge.component';
-import { AboutComponent } from './pages/about/about.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { FaqComponent } from './pages/faq/faq.component';
-import { HomeComponent } from './pages/home/home.component';
-import { GalleryComponent } from './pages/gallery/gallery.component';
-import { AllComponent } from './pages/all/all.component';
-import { CategorizedComponent } from './pages/categorized/categorized.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { SearchResultComponent } from './pages/search-result/search-result.component';
-import { SuccessModalComponent } from './layout/success-modal/success-modal.component';
+import { BridgeComponent } from './components/bridge/bridge.component';
+import { AboutComponent } from './components/about/about.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { HomeComponent } from './components/home/home.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { AllComponent } from './components/all/all.component';
+import { CategorizedComponent } from './components/categorized/categorized.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { SearchResultComponent } from './components/search-result/search-result.component';
+import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
