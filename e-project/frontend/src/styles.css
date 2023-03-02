@@ -3,3 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 @import 'swiper/css/bundle';
+
+.swiper-wrapper {
+    height: 7rem;
+}
+
+.swiper-pagination {
+    bottom: 0px!important;
+}

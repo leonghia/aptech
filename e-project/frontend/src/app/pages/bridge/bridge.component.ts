@@ -4,7 +4,10 @@ import { fadeIn } from 'src/app/shared/animations';
 import { ApiService } from 'src/app/shared/api.service';
 
 // Import Swiper core and required modules
-import SwiperCore, { SwiperOptions } from 'swiper';
+import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+
+// Install Swiper modules
+SwiperCore.use([Pagination]);
 
 @Component({
   selector: 'app-bridge',
@@ -26,6 +29,9 @@ export class BridgeComponent implements OnInit {
   config: SwiperOptions = {
     slidesPerView: 4,
     spaceBetween: 15,
+    pagination: {
+      clickable: true 
+    },
   };
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) {}
@@ -33,14 +39,23 @@ export class BridgeComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.bridgeID = params['id'];
+      this.loadBridge(this.bridgeID);
+      this.loadImages(this.bridgeID);
+      this.enterViewport = false;
     });
-    this.apiService.getBridges({ id: this.bridgeID}).subscribe((data: any) => {
+  }
+
+  loadBridge(bridgeId: string) {
+    this.apiService.getBridges({id: bridgeId}).subscribe((data: any) => {
       this.bridge = data;
-    });
-    this.apiService.getImages(this.bridgeID).subscribe(data => {
+    })
+  }
+
+  loadImages(bridgeId: string) {
+    this.apiService.getImages(bridgeId).subscribe((data: any[]) => {
       this.bridgeImages = data;
       this.selectedImage = this.bridgeImages[0];
-    });
+    })
   }
 
   onVisibilityChange(status: boolean): void {

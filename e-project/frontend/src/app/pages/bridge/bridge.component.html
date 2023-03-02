@@ -27,24 +27,20 @@
       <div class="flex flex-col-reverse">
         <!-- Image selector -->
         <div class="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-          <div class="" aria-orientation="horizontal" role="tablist">
-            <swiper [config]="config" class="h-28">
+            <swiper [config]="config" class="h-40 relative">
               <ng-template swiperSlide *ngFor="let image of bridgeImages" class="">
                 <button class="h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50" aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
                   <span class="sr-only"> Angled view </span>
                   <span class="absolute inset-1 rounded-md overflow-hidden">
                     <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
                   </span>
-                  <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+                  
                   <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'" class="absolute inset-1 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
                 </button>
               </ng-template>
               
             </swiper>
 
-
-            <!-- More images... -->
-          </div>
         </div>
 
         <div class="w-full aspect-w-4 aspect-h-3">
@@ -727,7 +723,7 @@
   </div>
 
   <!-- Related bridges -->
-  <div class="max-w-2xl mx-auto mt-24 sm:mt-16 lg:max-w-none">
+  <div class="max-w-2xl mx-auto mt-24 sm:mt-24 lg:max-w-none">
     <div class="flex items-center justify-between space-x-4">
       <h2 class="text-lg font-medium text-gray-900">Other users also viewed</h2>
       <a routerLink="/all-bridges"
@@ -748,7 +744,7 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="/bridge/1">
+            <a routerLink="/bridge/1">
               <span aria-hidden="true" class="absolute inset-0"></span>
               The Golden Gate Bridge
             </a>
@@ -771,7 +767,7 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="/bridge/2">
+            <a routerLink="/bridge/2">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Akashi Kaykio
             </a>
@@ -794,7 +790,7 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="/bridge/4">
+            <a routerLink="/bridge/4">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Tower Bridge
             </a>
@@ -817,7 +813,7 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a href="/bridge/8">
+            <a routerLink="/bridge/8">
               <span aria-hidden="true" class="absolute inset-0"></span>
               Sydney Harbor
             </a>
