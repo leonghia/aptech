@@ -30,6 +30,7 @@ import { CustomDatePipe } from './pipes/date.pipe';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { SuccessModalComponent } from './components/success-modal/success-modal.component';
+import { RelatedComponent } from './components/related/related.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { SuccessModalComponent } from './components/success-modal/success-modal.
     CustomDatePipe,
     NotFoundComponent,
     SearchResultComponent,
-    SuccessModalComponent
+    SuccessModalComponent,
+    RelatedComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,36 @@
+<!-- Related bridges -->
+<div class="max-w-2xl mx-auto mt-24 mb-24 lg:max-w-none">
+    <div class="flex items-center justify-between space-x-4">
+      <h2 class="text-lg font-medium text-gray-900">Other users also viewed</h2>
+      <a routerLink="/all-bridges"
+        class="whitespace-nowrap text-sm font-medium text-indigo-600 hover:text-indigo-500">View all<span
+          aria-hidden="true"> &rarr;</span></a>
+    </div>
+    <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
+      <div *ngFor="let bridge of relatedBridges" class="relative group">
+        <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
+          <img [src]="bridge.thumbnail"
+            alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background."
+            class="object-center object-cover">
+          <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">
+            <div
+              class="w-full bg-white bg-opacity-75 backdrop-filter backdrop-blur py-2 px-4 rounded-md text-sm font-medium text-gray-900 text-center">
+              View Bridge</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
+          <h3>
+            <a routerLink="/bridge/1">
+              <span aria-hidden="true" class="absolute inset-0"></span>
+              {{ bridge.name }}
+            </a>
+          </h3>
+          <p></p>
+        </div>
+        <p class="mt-1 text-sm text-gray-500">{{ bridge.city }}, {{ bridge.country }}</p>
+      </div>
+
+      
+      
+    </div>
+  </div>

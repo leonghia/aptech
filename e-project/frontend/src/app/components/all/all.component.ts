@@ -169,11 +169,13 @@ export class AllComponent implements OnInit {
   }
 
   onSortAndOrder(order: string): void {
+    this.loading = true;
     this.orderBy = order;
     this.orderText = order;
     this.orderBtnState = false;
     this.dataService.getBridges({continent: this.selectedContinent, country: this.selectedCountry, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
+      this.loading = false;
     })
   }
 
