@@ -22,15 +22,14 @@ import { AboutComponent } from './components/about/about.component';
 import { BridgeComponent } from './components/bridge/bridge.component';
 import { EnterTheViewportNotifierDirective } from './directives/viewport.directive';
 import { GalleryComponent } from './components/gallery/gallery.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { AllComponent } from './components/all/all.component';
 import { CategorizedComponent } from './components/categorized/categorized.component';
 import { CustomDatePipe } from './pipes/date.pipe';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
-import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 import { RelatedComponent } from './components/related/related.component';
+import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { SignupModalComponent } from './components/signup-modal/signup-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,15 +49,14 @@ import { RelatedComponent } from './components/related/related.component';
     BridgeComponent,
     EnterTheViewportNotifierDirective,
     GalleryComponent,
-    LoginComponent,
-    SignupComponent,
     AllComponent,
     CategorizedComponent,
     CustomDatePipe,
     NotFoundComponent,
     SearchResultComponent,
-    SuccessModalComponent,
-    RelatedComponent
+    RelatedComponent,
+    LoginModalComponent,
+    SignupModalComponent
   ],
   imports: [
     BrowserModule,

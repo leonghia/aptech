@@ -153,7 +153,7 @@ app.get('/api/styles', (req, res) => {
     })
 })
 
-// Define the endpont for adding new user
+// Define the endpont for adding a new user
 app.post('/users', (req, res) => {
     const user = req.body;
     const { username, email, password, first_name, last_name } = user;

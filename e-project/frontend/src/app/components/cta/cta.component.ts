@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeLeft } from 'src/app/animations/fade';
+import { SignupService } from '../signup-modal/signup.service';
 
 @Component({
   selector: 'app-cta',
@@ -10,6 +11,7 @@ import { fadeLeft } from 'src/app/animations/fade';
 export class CtaComponent implements OnInit {
   enterViewport: boolean = false;
 
+  constructor(private signupService: SignupService) {}
 
   ngOnInit(): void {
     
@@ -18,5 +20,9 @@ export class CtaComponent implements OnInit {
   onVisibilityChange(status: boolean): void {
     if (status)
       this.enterViewport = status;
+  }
+
+  onOpenSignupModal() {
+    this.signupService.openSignupModal();
   }
 }

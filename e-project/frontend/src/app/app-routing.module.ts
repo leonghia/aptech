@@ -10,7 +10,6 @@ import { AllComponent } from './components/all/all.component';
 import { CategorizedComponent } from './components/categorized/categorized.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
-import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,7 +21,6 @@ const routes: Routes = [
   {path: 'contact', component: ContactComponent},
   {path: 'faq', component: FaqComponent},
   {path: 'search', component: SearchResultComponent},
-  {path: 'success', component: SuccessModalComponent},
   {path: 'categorized/:sort', component: CategorizedComponent},
   
   // Wildcard route for 404 not found
