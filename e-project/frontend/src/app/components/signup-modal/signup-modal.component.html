@@ -42,68 +42,141 @@
             <div class="px-6 py-2 lg:px-2">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Sign up to Amazing Bridges</h3>
 
-                <form class="space-y-6">
+                <form [formGroup]="signupForm" class="space-y-6" name="signup_form" (ngSubmit)="onSubmit()">
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label for="first_name"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                            <input type="text" id="first_name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="John" required>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <input [formControlName]="'first_name'" type="text" id="first_name" [ngClass]="touchedAndErrors('first_name') ? errorFieldCSS : validFieldCSS "
+                                class="block w-full sm:text-sm rounded-md"
+                                name="first_name" placeholder="John">
+                                <div *ngIf="touchedAndErrors('first_name')" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <!-- Heroicon name: solid/exclamation-circle -->
+                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                  </div>
+                            </div>
+                            <p *ngIf="touchedAndErrors('first_name', 'required')" class="mt-2 text-sm text-red-600">Please enter first name.</p>
+                            
                         </div>
                         <div>
                             <label for="last_name"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                            <input type="text" id="last_name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Doe" required>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <input [formControlName]="'last_name'" type="text" id="last_name" [ngClass]="touchedAndErrors('last_name') ? errorFieldCSS : validFieldCSS"
+                                class="block w-full sm:text-sm rounded-md"
+                                name="last_name" placeholder="Doe">
+                                <div *ngIf="touchedAndErrors('last_name')" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <!-- Heroicon name: solid/exclamation-circle -->
+                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                  </div>
+                            </div>
+                            <p *ngIf="touchedAndErrors('last_name', 'required')" class="mt-2 text-sm text-red-600">Please enter last name.</p>
                         </div>
 
                     </div>
                     <div class="mb-6">
-                        <label for="signup_username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username
-                            </label>
-                        <input type="text" id="signup_username"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="johndoe123" required>
+                        <label for="signup_username"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username
+                        </label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input [formControlName]="'username'" type="text" id="signup_username" [ngClass]="touchedAndErrors('username') || usernameInUse ? errorFieldCSS : validFieldCSS"
+                                class="block w-full sm:text-sm rounded-md"
+                                name="signup_username" placeholder="johndoe123">
+                            <div *ngIf="touchedAndErrors('username') || usernameInUse" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <!-- Heroicon name: solid/exclamation-circle -->
+                                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                  </svg>
+                            </div>
+                        </div>
+                        <p *ngIf="touchedAndErrors('username', 'required')" class="mt-2 text-sm text-red-600">Please enter username.</p>
+                        <p *ngIf="touchedAndErrors('username', 'minlength')" class="mt-2 text-sm text-red-600">Username must be at least 3 characters.</p>
+                        <p *ngIf="touchedAndErrors('username', 'maxlength')" class="mt-2 text-sm text-red-600">Username must not exceeding 20 characters.</p>
+                        <p *ngIf="usernameInUse" class="mt-2 text-sm text-red-600">Sorry ! This username is already in used.</p>  
                     </div>
                     <div class="mb-6">
-                        <label for="signup_email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
+                        <label for="signup_email"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
                             address</label>
-                        <input type="email" id="signup_email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="john.doe@company.com" required>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input [formControlName]="'email'" type="email" id="signup_email" [ngClass]="touchedAndErrors('email') || emailInUse ? errorFieldCSS : validFieldCSS"
+                            class="block w-full sm:text-sm rounded-md" name="signup_email" placeholder="johndoe@example.com">
+                            <div *ngIf="touchedAndErrors('email') || emailInUse" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <!-- Heroicon name: solid/exclamation-circle -->
+                                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                  </svg>
+                            </div>
+                        </div>
+                        <p *ngIf="touchedAndErrors('email', 'required')" class="mt-2 text-sm text-red-600">Please enter email.</p> 
+                        <p *ngIf="touchedAndErrors('email', 'email')" class="mt-2 text-sm text-red-600">The email you entered is not valid.</p> 
+                        <p *ngIf="emailInUse" class="mt-2 text-sm text-red-600">Sorry ! This email is already in used.</p> 
                     </div>
                     <div class="mb-6">
                         <label for="signup_password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" id="signup_password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="•••••••••" required>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input [formControlName]="'password'" type="password" id="signup_password" [ngClass]="touchedAndErrors('password') ? errorFieldCSS : validFieldCSS"
+                            class="block w-full sm:text-sm rounded-md" name="signup_password" [(ngModel)]="enteredPassword" placeholder="••••••••">
+                            <div *ngIf="touchedAndErrors('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <!-- Heroicon name: solid/exclamation-circle -->
+                                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                  </svg>
+                            </div>
+                        </div>
+                        <p *ngIf="touchedAndErrors('password', 'required')" class="mt-2 text-sm text-red-600">Please enter password.</p>
+                        <p *ngIf="touchedAndErrors('password', 'minlength')" class="mt-2 text-sm text-red-600">Password must be at least 6 characters.</p>
+                        <p *ngIf="touchedAndErrors('password', 'maxlength')" class="mt-2 text-sm text-red-600">Password must not exceeding 20 characters.</p> 
+                        
                     </div>
                     <div class="mb-6">
                         <label for="confirm_password"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm
                             password</label>
-                        <input type="password" id="confirm_password"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="•••••••••" required>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input [formControlName]="'confirm_password'" type="password" id="confirm_password" [ngClass]="touchedAndErrors('confirm_password') ? errorFieldCSS : validFieldCSS"
+                            class="block w-full sm:text-sm rounded-md" name="confirm_password" placeholder="••••••••">
+                            <div *ngIf="touchedAndErrors('confirm_password')" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <!-- Heroicon name: solid/exclamation-circle -->
+                                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                  </svg>
+                            </div>
+                        </div>
+                        <p *ngIf="touchedAndErrors('confirm_password', 'required')" class="mt-2 text-sm text-red-600">Please confirm password.</p>
+                        <p *ngIf="touchedAndErrors('confirm_password', 'passwordConfirmNotMatched')" class="mt-2 text-sm text-red-600">The confirmed password does not match with the password you entered.</p>
+                        
                     </div>
                     <div class="flex items-start mb-6">
                         <div class="flex items-center h-5">
-                            <input id="agree" type="checkbox" value=""
-                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                                required>
+                            <input [formControlName]="'agree'" id="agree" type="checkbox"
+                                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
                         </div>
                         <label for="agree" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree
                             with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
                                 conditions</a>.</label>
+                        
                     </div>
-                    <button type="submit"
-                        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Sign up for
+                    <p *ngIf="touchedAndErrors('agree', 'required')" class="mt-2 text-sm text-red-600">Please check the terms and conditions before signing up.</p>
+                    <button type="submit" [ngClass]="isLoading ? buttonLoadingCSS : buttonNotLoadingCSS"
+                        class="">
+                        <svg *ngIf="isLoading" aria-hidden="true" role="status" class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-purple-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                            </svg>
+                        Sign
+                        up for
                         your new account</button>
+                        
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                        Already registered? <a (click)="onOpenLoginModal()" class="cursor-pointer text-blue-700 hover:underline dark:text-blue-500">Login
+                        Already registered? <a (click)="onOpenLoginModal()"
+                            class="cursor-pointer text-blue-700 hover:underline dark:text-blue-500">Login
                             now</a>
                     </div>
                 </form>

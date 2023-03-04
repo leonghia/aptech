@@ -36,9 +36,9 @@
         <div [@fadeRight]="enterViewport[i] && i % 2 === 0 ? 'faded' : 'default'" [@fadeLeft]="enterViewport[i] && i % 2 !== 0 ? 'faded' : 'default'" [ngClass]="i % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-8 xl:col-start-9'" class="mt-6 lg:mt-0 lg:row-start-1 lg:col-span-5 xl:col-span-4">
           <h3 class="text-lg font-medium text-gray-900 mb-2">{{ bridge.name }} </h3>
           <div [ngSwitch]="header">
-            <span *ngSwitchCase="'longest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.length }}m long</span>
-            <span *ngSwitchCase="'widest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.width }}m wide</span>
-            <span *ngSwitchCase="'highest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.height }}m high</span>
+            <span *ngSwitchCase="'longest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.length | number:'1.0-0' }}m long</span>
+            <span *ngSwitchCase="'widest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.width | number:'1.0-0' }}m wide</span>
+            <span *ngSwitchCase="'highest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.height | number:'1.0-0' }}m high</span>
             <span *ngSwitchCase="'oldest'" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.built_in | customDate }}</span>
             <span *ngSwitchDefault class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-green-100 text-green-800"> {{ bridge.city }}, {{ bridge.country }}</span>
           </div>

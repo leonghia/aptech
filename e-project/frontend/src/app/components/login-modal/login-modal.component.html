@@ -41,19 +41,48 @@
       </button>
       <div class="px-6 py-2 lg:px-2">
         <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Sign in to Amazing Bridges</h3>
-        <form class="space-y-6" action="#">
+        <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" class="space-y-6" #f="ngForm"
+          novalidate>
           <div>
-            <label for="login_email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-            <input type="email" name="login_email" id="login_email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name@company.com" required>
+            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+              username</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <input type="text" name="username" [(ngModel)]="form.username" id="username"
+                [ngClass]="username.errors && f.submitted || usernameInvalid ? errorFieldCSS : validFieldCSS" class="block w-full sm:text-sm rounded-md"
+                placeholder="johndoe123" required #username="ngModel">
+              <div *ngIf="username.errors && f.submitted || usernameInvalid" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <!-- Heroicon name: solid/exclamation-circle -->
+                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+            </div>
+
+            <p *ngIf="username.errors && f.submitted" class="mt-2 text-sm text-red-600">Username is required !</p>
+            <p *ngIf="usernameInvalid && username.valid" class="mt-2 text-sm text-red-600">Username is not found !</p>
           </div>
           <div>
-            <label for="login_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
               password</label>
-            <input type="password" name="login_password" id="login_password" placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required>
+            <div class="mt-1 relative rounded-md shadow-sm">
+              <input type="password" name="password" id="password" placeholder="••••••••" [(ngModel)]="form.password" [ngClass]="password.errors && f.submitted || passwordInvalid ? errorFieldCSS : validFieldCSS"
+              class="block w-full sm:text-sm rounded-md"
+              required minlength="6" #password="ngModel">
+              <div *ngIf="password.errors && f.submitted || passwordInvalid" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <!-- Heroicon name: solid/exclamation-circle -->
+                <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+            </div>
+            <p *ngIf="password.errors && f.submitted" class="mt-2 text-sm text-red-600">Password is required !</p>
+            <p *ngIf="passwordInvalid && password.valid" class="mt-2 text-sm text-red-600">Password is not correct !</p>
           </div>
           <div class="flex justify-between">
             <div class="flex items-start">
@@ -65,13 +94,17 @@
               <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
                 me</label>
             </div>
-            <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
+            <!--
+              <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
+            -->
+
           </div>
           <button type="submit"
             class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">Login
             to your account</button>
           <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-            Not registered? <a (click)="onOpenSignupModal()" class="cursor-pointer text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+            Not registered? <a (click)="onOpenSignupModal()"
+              class="cursor-pointer text-blue-700 hover:underline dark:text-blue-500">Create account</a>
           </div>
         </form>
       </div>

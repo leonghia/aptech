@@ -146,11 +146,11 @@
         <h3 class="text-sm font-medium text-gray-900">Characteristics</h3>
         <div class="mt-4 prose prose-sm text-gray-500">
           <ul role="list">
-            <li>Length: {{ bridge.length ? bridge.length + ' m' : 'N/A'}}</li>
+            <li>Length: {{ bridge.length ? (bridge.length | number:'1.0-0') + ' m' : 'N/A'}}</li>
 
-            <li>Width: {{ bridge.width ? bridge.width + ' m' : 'N/A'}}</li>
+            <li>Width: {{ bridge.width ? (bridge.width | number:'1.0-0') + ' m' : 'N/A'}}</li>
 
-            <li>Height: {{ bridge.height ? bridge.height + ' m' : 'N/A'}}</li>
+            <li>Height: {{ bridge.height ? (bridge.height | number:'1.0-0') + ' m' : 'N/A'}}</li>
 
             <li>Material: {{ bridge.material }}</li>
 

@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SwiperModule } from 'swiper/angular';
+
+import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +32,9 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { RelatedComponent } from './components/related/related.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { SignupModalComponent } from './components/signup-modal/signup-modal.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { BoardUserComponent } from './components/board-user/board-user.component';
+import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +61,10 @@ import { SignupModalComponent } from './components/signup-modal/signup-modal.com
     SearchResultComponent,
     RelatedComponent,
     LoginModalComponent,
-    SignupModalComponent
+    SignupModalComponent,
+    ProfileComponent,
+    BoardUserComponent,
+    SuccessModalComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +72,10 @@ import { SignupModalComponent } from './components/signup-modal/signup-modal.com
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SwiperModule
+    SwiperModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

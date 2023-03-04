@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
-  private BASE_URL = 'http://localhost:5000/api';
+export class BridgeService {
+  private BASE_URL = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) { }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { fadeLeft, fadeRight } from 'src/app/animations/fade';
-import { DataService } from 'src/app/services/data.service';
+import { BridgeService } from 'src/app/services/bridge.service';
 
 @Component({
   selector: 'app-categorized',
@@ -17,7 +17,7 @@ export class CategorizedComponent implements OnInit {
   bridges!: any[];
   enterViewport: boolean[] = [];
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) {
+  constructor(private bridgeService: BridgeService, private route: ActivatedRoute) {
     
   }
 
@@ -77,11 +77,11 @@ export class CategorizedComponent implements OnInit {
 
   onRouteChange(countryBy: string, sortBy: string, orderBy: string) {
     if (this.country === '') {
-      this.dataService.getBridges({sort: sortBy, order: orderBy, limit: '5'}).subscribe(data => {
+      this.bridgeService.getBridges({sort: sortBy, order: orderBy, limit: '5'}).subscribe(data => {
         this.bridges = data;
       });
     } else {
-      this.dataService.getBridges({country: countryBy, sort: sortBy, order: orderBy}).subscribe(data => {
+      this.bridgeService.getBridges({country: countryBy, sort: sortBy, order: orderBy}).subscribe(data => {
         this.bridges = data;
       });
     } 
@@ -93,6 +93,5 @@ export class CategorizedComponent implements OnInit {
     if (status) {
       this.enterViewport[i] = true;
     }
-    console.log(this.enterViewport);
   }
 }

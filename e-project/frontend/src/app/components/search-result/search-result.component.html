@@ -541,9 +541,9 @@
                     </svg>
                     
                     <div class="flex items-center divide-x divide-gray-200">
-                      <div class="pr-2 relative inline-block text-left">Len: {{ bridge.length }}m</div>
-                      <div class="px-2 relative inline-block text-left">Wid: {{ bridge.width }}m</div>
-                      <div class="px-2 relative inline-block text-left">Hei: {{ bridge.height }}m</div>
+                      <div class="pr-2 relative inline-block text-left">Len: {{ bridge.length | number:'1.0-0' }}m</div>
+                      <div class="px-2 relative inline-block text-left">Wid: {{ bridge.width | number:'1.0-0' }}m</div>
+                      <div class="px-2 relative inline-block text-left">Hei: {{ bridge.height | number:'1.0-0' }}m</div>
                     </div>
                   </li>
                   <li class="flex items-center">

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
+import { SuccessService } from '../success-modal/success.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +14,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   mobileMenuStatus: boolean = false;
   loginModalState: boolean = false;
   signupModalState: boolean = false;
+  successModalState: boolean = false;
   private loginModalStateChangeSub!: Subscription;
   private signupModalStateChangeSub!: Subscription;
+  private successModalStateChangeSub!: Subscription;
 
-  constructor(private loginService: LoginService, private signupService: SignupService) {}
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService) {}
 
   ngOnInit(): void {
     this.loginModalStateChangeSub = this.loginService.loginModalStateChanged.subscribe((state: boolean) => {
@@ -24,6 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.signupModalStateChangeSub = this.signupService.signupModalStateChanged.subscribe((state: boolean) => {
       this.signupModalState = state;
+    });
+    this.successModalStateChangeSub = this.successService.successModalStateChanged.subscribe((status: boolean) => {
+      this.successModalState = status;
     })
   }
 
@@ -50,6 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.loginModalStateChangeSub.unsubscribe();
     this.signupModalStateChangeSub.unsubscribe();
+    this.successModalStateChangeSub.unsubscribe();
   }
 
 }
