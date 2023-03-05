@@ -35,6 +35,8 @@ import { SignupModalComponent } from './components/signup-modal/signup-modal.com
 import { ProfileComponent } from './components/profile/profile.component';
 import { BoardUserComponent } from './components/board-user/board-user.component';
 import { SuccessModalComponent } from './components/success-modal/success-modal.component';
+import { CompareComponent } from './components/compare/compare.component';
+import { CompareNotiComponent } from './components/compare/compare-noti/compare-noti.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { SuccessModalComponent } from './components/success-modal/success-modal.
     SignupModalComponent,
     ProfileComponent,
     BoardUserComponent,
-    SuccessModalComponent
+    SuccessModalComponent,
+    CompareComponent,
+    CompareNotiComponent
   ],
   imports: [
     BrowserModule,

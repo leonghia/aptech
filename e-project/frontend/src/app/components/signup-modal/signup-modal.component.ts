@@ -26,6 +26,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   usernameInUse!: boolean;
   emailInUse!: boolean;
+  submittedUsername!: string;
+  submittedEmail!: string;
   private successModalStateChangeSub!: Subscription;
 
   constructor(private signupService: SignupService, private loginService: LoginService, private authService: AuthService, private successService: SuccessService) { }
@@ -96,8 +98,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
           this.signupService.closeSignupModal();
           this.successService.openSuccessModal();
         }, (err: any) => {
+          this.isLoading = false;
           this.errorMessage = err.error.message;
-          console.log(this.errorMessage);
           if (this.errorMessage.includes('username')) {
             this.usernameInUse = true;
           }
@@ -105,6 +107,8 @@ export class SignupModalComponent implements OnInit, OnDestroy {
             this.emailInUse = true;
           }
           this.isSignupFailed = true;
+          this.submittedUsername = username;
+          this.submittedEmail = email;
         })
       }, 2000);
     }

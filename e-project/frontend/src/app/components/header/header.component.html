@@ -3,11 +3,9 @@
   <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
     <div class="pr-16 sm:text-center sm:px-16">
       <p class="font-medium text-white">
-        <span class="md:hidden"> We announced a new product! </span>
-        <span class="hidden md:inline"> Big news! We're excited to announce new compare feature. </span>
-        <span class="block sm:ml-2 sm:inline-block">
-          <a href="#" class="text-white font-bold underline"> Learn more <span aria-hidden="true">&rarr;</span></a>
-        </span>
+        <span class="md:hidden"> We announced a new feature! </span>
+        <span class="hidden md:inline"> Big news! We're excited to announce a new feature that allow you to compare bridges. </span>
+        
       </p>
     </div>
     <div class="absolute inset-y-0 right-0 pt-1 pr-1 flex items-start sm:pt-1 sm:pr-2 sm:items-start">
@@ -21,6 +19,7 @@
     </div>
   </div>
 </div>
+
 <header id="header">
     <div class="relative bg-white" >
       <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
@@ -48,6 +47,16 @@
           <a routerLink="categorized/oldest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Oldest </a>
         </nav>
         <div *ngIf="!isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+          <a (click)="onOpenCompareModal()" class="cursor-pointer relative ml-5 mr-6 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="sr-only">View compare</span>
+            <!-- Heroicon name -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+            </svg>            
+                     
+            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{ comparisonLength }}</div>            
+          </a>
+          <app-compare *ngIf="compareModalState"></app-compare>
           <button (click)="onOpenLoginModal()" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Sign in </button>
           <app-login-modal *ngIf="loginModalState"></app-login-modal>
           <button (click)="onOpenSignupModal()" class="ml-8 whitespace-nowrap inline-flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700"> Sign up </button>
@@ -55,15 +64,23 @@
           <app-success-modal *ngIf="successModalState"></app-success-modal>
         </div>
         <div *ngIf="isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-          <a class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="">{{ first_name }} {{ last_name }}</span>
-            
+          <a (click)="onOpenCompareModal()" class="cursor-pointer relative ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="sr-only">View compare</span>
+            <!-- Heroicon name -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+            </svg>            
+            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{ comparisonLength }}</div>            
+          </a>
+          <app-compare *ngIf="compareModalState"></app-compare>
+          <a class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <span class="">Hello, {{ first_name }} !</span>
           </a>
   
           <!-- Profile dropdown -->
           <div class="flex-shrink-0 relative ml-5">
             <div>
-              <button type="button" class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <button (click)="openProfileDropdownMenu()" type="button" class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="sr-only">Open user menu</span>
                 <img class="h-8 w-8 rounded-full" [src]="avatar" alt="">
               </button>
@@ -78,10 +95,20 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
+            <div *ngIf="profileDropdownMenuState" class="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+              <!-- Active: "bg-gray-100", Not Active: "" -->
+              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+  
+              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Favorite list</a>
+  
+              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Comments</a>
+
+              <a (click)="logout()" class="cursor-pointer hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+            </div>
             
           </div>
   
-          <a (click)="logout()" class="cursor-pointer ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-indigo-700 bg-indigo-50 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"> Signs out </a>
+          
         </div>
       </div>
       
@@ -175,3 +202,4 @@
       </div>
     </div>
   </header>
+<app-compare-noti *ngIf="compareNotiState"></app-compare-noti>

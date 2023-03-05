@@ -27,19 +27,23 @@
       <div class="flex flex-col-reverse">
         <!-- Image selector -->
         <div class="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-            <swiper [config]="config" class="h-40 relative">
-              <ng-template swiperSlide *ngFor="let image of bridgeImages" class="">
-                <button class="h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50" aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
-                  <span class="sr-only"> Angled view </span>
-                  <span class="absolute inset-1 rounded-md overflow-hidden">
-                    <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
-                  </span>
-                  
-                  <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'" class="absolute inset-1 rounded-md ring-2 ring-offset-2 pointer-events-none" aria-hidden="true"></span>
-                </button>
-              </ng-template>
-              
-            </swiper>
+          <swiper [config]="config" class="h-40 relative">
+            <ng-template swiperSlide *ngFor="let image of bridgeImages" class="">
+              <button
+                class="h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50"
+                aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="onClickImage(image)">
+                <span class="sr-only"> Angled view </span>
+                <span class="absolute inset-1 rounded-md overflow-hidden">
+                  <img [src]="image.src" alt="" class="w-full h-full object-center object-cover">
+                </span>
+
+                <span [ngClass]="image.src === selectedImage.src ? 'ring-indigo-500' : 'ring-transparent'"
+                  class="absolute inset-1 rounded-md ring-2 ring-offset-2 pointer-events-none"
+                  aria-hidden="true"></span>
+              </button>
+            </ng-template>
+
+          </swiper>
 
         </div>
 
@@ -56,7 +60,8 @@
         </div>
       </div>
       <!-- The lightbox -->
-      <div class="hidden fixed top-0 left-0 z-[80] w-screen h-screen bg-black/70 flex justify-center items-center" #modal>
+      <div class="hidden fixed top-0 left-0 z-[80] w-screen h-screen bg-black/70 flex justify-center items-center"
+        #modal>
         <div class="flex flex-col gap-y-5">
           <div class="flex justify-center">
             <a (click)="onCloseModal()" class="z-90 text-white text-5xl font-bold cursor-pointer">
@@ -133,17 +138,17 @@
 
       <p class="text-gray-500 mt-6">{{ (bridge.intro | slice:0:243) + '. . . . .' }}</p>
 
-      <!-- 
-        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
         <button type="button"
           class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Add
           to favorite</button>
-        <button type="button"
+        <button (click)="onAddBridgeToCompare(bridge)" type="button"
           class="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">Compare
           bridge</button>
       </div>
-       -->
-      
+
+
 
       <div class="border-t border-gray-200 mt-10 pt-10">
         <h3 class="text-sm font-medium text-gray-900">Characteristics</h3>
@@ -610,59 +615,7 @@
           </div>
 
           <!-- More reviews... -->
-          <!-- This example requires Tailwind CSS v2.0+ -->
-          <nav class="border-t border-gray-200 px-4 flex items-center justify-between sm:px-0">
-            <div class="-mt-px w-0 flex-1 flex">
-              <a href="#"
-                class="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                <!-- Heroicon name: solid/arrow-narrow-left -->
-                <svg class="mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                  fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-                Previous
-              </a>
-            </div>
-            <div class="hidden md:-mt-px md:flex">
-              <a href="#"
-                class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                1 </a>
-              <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-              <a href="#"
-                class="border-indigo-500 text-indigo-600 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium"
-                aria-current="page"> 2 </a>
-              <a href="#"
-                class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                3 </a>
-              <span
-                class="border-transparent text-gray-500 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                ... </span>
-              <a href="#"
-                class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                8 </a>
-              <a href="#"
-                class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                9 </a>
-              <a href="#"
-                class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
-                10 </a>
-            </div>
-            <div class="-mt-px w-0 flex-1 flex justify-end">
-              <a href="#"
-                class="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                Next
-                <!-- Heroicon name: solid/arrow-narrow-right -->
-                <svg class="ml-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                  fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd"
-                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </a>
-            </div>
-          </nav>
+          
         </div>
 
         <!-- 'FAQ' panel, show/hide based on tab state -->
@@ -670,30 +623,24 @@
           role="tabpanel" tabindex="0">
           <h3 class="sr-only">Frequently Asked Questions</h3>
 
-          <dt class="mt-10 font-medium text-gray-900">What format are these icons?</dt>
+          <dt class="mt-10 font-medium text-gray-900">Where do your site get information about {{ bridge.name }} ?</dt>
           <dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-            <p>The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of
-              choice and used directly in code.</p>
+            <p>Most of our sources come from Wikipedia. It is a multilingual free online encyclopedia written and maintained by a community of volunteers and is the largest and most-read reference work in history. Therefore you can totally trust our sources.</p>
           </dd>
 
-          <dt class="mt-10 font-medium text-gray-900">Can I use the icons at different sizes?</dt>
+          <dt class="mt-10 font-medium text-gray-900">Can I use the content of {{ bridge.name }} for my purpose (non-commercially)?</dt>
           <dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-            <p>Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as
-              needed. We don&#039;t recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and
-              visual balance.</p>
+            <p>Yes. Since our site is a public information site, users are entitled to use our site content for their own use. Of course we would be appreciate if you could credit and link back to us.</p>
           </dd>
 
-          <dt class="mt-10 font-medium text-gray-900">What format are these icons?</dt>
+          <dt class="mt-10 font-medium text-gray-900">What are the sources of the images of {{ bridge.name }} ?</dt>
           <dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-            <p>The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of
-              choice and used directly in code.</p>
+            <p>Those images of {{ bridge.name }} are taken free-royalty from some famouse websites like Unplash, Pexels and so on. You could find more beautiful images of {{ bridge.name }} from other sources such as Instagram, Pinterest.</p>
           </dd>
 
-          <dt class="mt-10 font-medium text-gray-900">Can I use the icons at different sizes?</dt>
+          <dt class="mt-10 font-medium text-gray-900">Can I download those images and use them in my work ?</dt>
           <dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-            <p>Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as
-              needed. We don&#039;t recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and
-              visual balance.</p>
+            <p>Unlike the text content, we don't grant the use for images because they can be digital assets of some authors. Therefore, you need to search a specific image of {{ bridge.name }} that you want to use, reach out to the author of that image and ask for his/her permission.</p>
           </dd>
 
           <!-- More FAQs... -->

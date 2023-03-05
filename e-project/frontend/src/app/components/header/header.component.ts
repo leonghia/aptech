@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { CompareService } from '../compare/compare.service';
 import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
 import { SuccessService } from '../success-modal/success.service';
@@ -16,9 +17,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loginModalState: boolean = false;
   signupModalState: boolean = false;
   successModalState: boolean = false;
+  profileDropdownMenuState: boolean = false;
+  compareModalState: boolean = false;
+  compareNotiState: boolean = false;
+  comparisonLength: number = 0;
   private loginModalStateChangeSub!: Subscription;
   private signupModalStateChangeSub!: Subscription;
   private successModalStateChangeSub!: Subscription;
+  private compareModalStateChangeSub!: Subscription;
+  private comparisonLengthChangeSub!: Subscription;
+  private compareNotiStateChangeSub!: Subscription;
 
   private roles: string[] = [];
   isLoggedIn: boolean = false;
@@ -26,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   last_name?: string;
   avatar?: string;
 
-  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private tokenStorageService: TokenStorageService) { }
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -46,9 +54,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.signupModalStateChangeSub = this.signupService.signupModalStateChanged.subscribe((state: boolean) => {
       this.signupModalState = state;
     });
-    this.successModalStateChangeSub = this.successService.successModalStateChanged.subscribe((status: boolean) => {
-      this.successModalState = status;
-    })
+    this.successModalStateChangeSub = this.successService.successModalStateChanged.subscribe((state: boolean) => {
+      this.successModalState = state;
+    });
+    this.compareModalStateChangeSub = this.compareService.compareModalStateChanged.subscribe((state: boolean) => {
+      this.compareModalState = state;
+    });
+    this.comparisonLengthChangeSub = this.compareService.comparedBridgesLengthChanged.subscribe((length: number) => {
+      this.comparisonLength = length;
+    });
+    this.compareService.compareNotiStateChanged.subscribe((state: boolean) => {
+      this.compareNotiState = state;
+    });
   }
 
   onDismissTopBar() {
@@ -71,6 +88,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.signupService.openSignupModal();
   }
 
+  openProfileDropdownMenu() {
+    this.profileDropdownMenuState = !this.profileDropdownMenuState;
+  }
+
+  onOpenCompareModal () {
+    this.compareService.openCompareModal();
+  }
+
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
@@ -80,6 +105,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.loginModalStateChangeSub.unsubscribe();
     this.signupModalStateChangeSub.unsubscribe();
     this.successModalStateChangeSub.unsubscribe();
+    this.compareModalStateChangeSub.unsubscribe();
+    this.compareNotiStateChangeSub.unsubscribe();
   }
 
 }

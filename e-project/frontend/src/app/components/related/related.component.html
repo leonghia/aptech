@@ -20,7 +20,7 @@
         </div>
         <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
           <h3>
-            <a routerLink="/bridge/1">
+            <a [routerLink]="['/bridge', bridge.id]">
               <span aria-hidden="true" class="absolute inset-0"></span>
               {{ bridge.name }}
             </a>

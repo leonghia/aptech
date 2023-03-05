@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { fadeIn } from 'src/app/animations/fade';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { CompareService } from '../compare/compare.service';
 
 @Component({
   selector: 'app-all',
@@ -35,7 +36,7 @@ export class AllComponent implements OnInit {
   firstLoad: boolean = true;
   loading: boolean = true;
 
-  constructor(private bridgeService: BridgeService) {}
+  constructor(private bridgeService: BridgeService, private compareService: CompareService) {}
 
   ngOnInit(): void {
     this.bridgeService.getMaterials().subscribe(data => {
@@ -52,6 +53,7 @@ export class AllComponent implements OnInit {
     this.bridgeService.getContinents().subscribe(data => {
       this.continents = data;
     });
+    
   }
 
   onVisibilityChange(status: boolean): void {
@@ -192,6 +194,14 @@ export class AllComponent implements OnInit {
       this.bridges = data;
       this.loading = false;
     });
+  }
+
+  onAddBridgeToCompare(bridge: any) {
+    this.compareService.addBridgeToComparison(bridge);
+  }
+
+  onAddBridgeToFavorite() {
+    
   }
 
 }

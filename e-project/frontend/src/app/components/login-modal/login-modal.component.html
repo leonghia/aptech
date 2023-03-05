@@ -86,21 +86,7 @@
             <p *ngIf="password.errors && f.submitted" class="mt-2 text-sm text-red-600">Password is required !</p>
             <p *ngIf="passwordInvalid && password.valid" class="mt-2 text-sm text-red-600">Password is not correct !</p>
           </div>
-          <div class="flex justify-between">
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input id="remember" type="checkbox" value=""
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                  required>
-              </div>
-              <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
-                me</label>
-            </div>
-            <!--
-              <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
-            -->
-
-          </div>
+          
           <button type="submit" [ngClass]="isLoading ? buttonLoadingCSS : buttonNotLoadingCSS" class="">
             <svg *ngIf="isLoading" aria-hidden="true" role="status"
               class="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-purple-600"

@@ -5,6 +5,7 @@ import { BridgeService } from 'src/app/services/bridge.service';
 
 // Import Swiper core and required modules
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+import { CompareService } from '../compare/compare.service';
 
 // Install Swiper modules
 SwiperCore.use([Pagination]);
@@ -34,7 +35,7 @@ export class BridgeComponent implements OnInit {
     },
   };
 
-  constructor(private route: ActivatedRoute, private bridgeService: BridgeService) {}
+  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -80,6 +81,10 @@ export class BridgeComponent implements OnInit {
   onCloseModal(): void {
     this.modalShown = false;
     this.modal.nativeElement.classList.add('hidden');
+  }
+
+  onAddBridgeToCompare(bridge: any): void {
+    this.compareService.addBridgeToComparison(bridge);
   }
 
 }
