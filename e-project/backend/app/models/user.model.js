@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         password: {
            type: DataTypes.STRING
+        },
+        avatar: {
+            type: DataTypes.STRING
         }
     }, {
         tableName: 'nhom1_users',

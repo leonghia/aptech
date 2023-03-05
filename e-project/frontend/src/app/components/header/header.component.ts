@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
 import { SuccessService } from '../success-modal/success.service';
@@ -19,9 +20,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private signupModalStateChangeSub!: Subscription;
   private successModalStateChangeSub!: Subscription;
 
-  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService) {}
+  private roles: string[] = [];
+  isLoggedIn: boolean = false;
+  first_name?: string;
+  last_name?: string;
+  avatar?: string;
+
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.first_name = user.first_name;
+      this.last_name = user.last_name;
+      this.avatar = user.avatar;
+    }
+
     this.loginModalStateChangeSub = this.loginService.loginModalStateChanged.subscribe((state: boolean) => {
       this.loginModalState = state;
     });
@@ -51,6 +69,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onOpenSignupModal() {
     this.signupService.openSignupModal();
+  }
+
+  logout(): void {
+    this.tokenStorageService.signOut();
+    window.location.reload();
   }
 
   ngOnDestroy(): void {

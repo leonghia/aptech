@@ -1,8 +1,8 @@
 module.exports = {
     secret: 'amazingbridges-secret-key',
 
-    jwtExpiration: 3600, // 1 hour
-    jwtRefreshExpiration: 86400, // 24 hour
+    jwtExpiration: 604800, // 7 days
+    jwtRefreshExpiration: 2592000, // 30 days
 
     /* for test */
     // jwtExpiration: 60,          // 1 minute
