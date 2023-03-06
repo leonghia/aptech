@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 02, 2023 at 05:11 PM
--- Server version: 10.3.31-MariaDB-0ubuntu0.20.04.1
--- PHP Version: 7.4.23
+-- Host: 127.0.0.1
+-- Generation Time: Mar 06, 2023 at 03:17 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `demo_s1`
+-- Database: `amazing_bridges`
 --
 
 -- --------------------------------------------------------
@@ -647,31 +647,104 @@ INSERT INTO `nhom1_bridges_images` (`id`, `bridge_id`, `src`, `alt`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nhom1_roles`
+--
+
+CREATE TABLE `nhom1_roles` (
+  `id` int(11) NOT NULL,
+  `name` char(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nhom1_roles`
+--
+
+INSERT INTO `nhom1_roles` (`id`, `name`) VALUES
+(1, 'admin'),
+(2, 'moderator'),
+(3, 'user');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nhom1_users`
 --
 
 CREATE TABLE `nhom1_users` (
   `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `avatar_src` varchar(255) DEFAULT '../../assets/images/user-default-avatar.jpg'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `avatar` varchar(255) NOT NULL DEFAULT '../../assets/images/2023-02/default-user-avatar.jpg',
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nhom1_users`
+--
+
+INSERT INTO `nhom1_users` (`id`, `first_name`, `last_name`, `username`, `email`, `password`, `avatar`, `createdAt`, `updatedAt`) VALUES
+(14, 'Nghia', 'La', 'leonghia1998', 'leonghiacnn@gmail.com', '$2a$08$PWlh6SdTFCOMTij3Sis02ev4Rc9Lo/4LkfM0trusOlie5r/J.rn9u', '../../assets/images/2023-02/default-user-avatar.jpg', '2023-03-05 05:24:54', '2023-03-05 05:24:54');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhom1_users_reviews`
+-- Table structure for table `nhom1_users_roles`
 --
 
-CREATE TABLE `nhom1_users_reviews` (
+CREATE TABLE `nhom1_users_roles` (
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nhom1_users_roles`
+--
+
+INSERT INTO `nhom1_users_roles` (`createdAt`, `updatedAt`, `role_id`, `user_id`) VALUES
+('2023-03-05 05:24:54', '2023-03-05 05:24:54', 3, 14);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `refreshtokens`
+--
+
+CREATE TABLE `refreshtokens` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `bridge_id` int(11) NOT NULL,
-  `rating` decimal(3,2) NOT NULL CHECK (`rating` > 0),
-  `review` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `token` varchar(255) DEFAULT NULL,
+  `expiryDate` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `refreshtokens`
+--
+
+INSERT INTO `refreshtokens` (`id`, `token`, `expiryDate`, `createdAt`, `updatedAt`, `user_id`) VALUES
+(2, '7d6ab2d5-a431-48f5-a605-0af233350f0d', '2023-03-03 15:51:30', '2023-03-03 15:49:30', '2023-03-03 15:49:30', NULL),
+(3, '757517e1-a966-4313-8916-8bc18357f52f', '2023-03-06 03:46:02', '2023-03-05 03:46:02', '2023-03-05 03:46:02', NULL),
+(4, 'da550d08-ded3-40b6-9996-b767605ef97f', '2023-03-06 03:51:36', '2023-03-05 03:51:36', '2023-03-05 03:51:36', NULL),
+(5, 'a5d7ea70-0dc1-4248-a77b-482848cd0701', '2023-03-06 03:53:30', '2023-03-05 03:53:30', '2023-03-05 03:53:30', NULL),
+(6, 'c88e2420-d637-470d-ab3e-f438c482ad2d', '2023-03-06 03:59:42', '2023-03-05 03:59:42', '2023-03-05 03:59:42', NULL),
+(7, 'b077c180-9d3e-4334-8b90-79e34031f00f', '2023-03-06 04:01:06', '2023-03-05 04:01:06', '2023-03-05 04:01:06', NULL),
+(8, '8bf42869-2ee4-4d27-b6bb-7b8a05d39c05', '2023-03-06 04:02:02', '2023-03-05 04:02:02', '2023-03-05 04:02:02', NULL),
+(9, '720f42ff-5ac0-44ca-831c-284e31412c52', '2023-03-06 04:06:33', '2023-03-05 04:06:33', '2023-03-05 04:06:33', NULL),
+(10, '63b8cf19-3890-4786-a9b6-203ccdf86d70', '2023-03-06 04:08:04', '2023-03-05 04:08:04', '2023-03-05 04:08:04', NULL),
+(11, 'c4f2bad4-8c27-44c0-9ebf-55bb64c404e6', '2023-03-06 04:11:45', '2023-03-05 04:11:45', '2023-03-05 04:11:45', NULL),
+(12, '43eb1da5-753d-4dfb-8c23-1b40396b92cc', '2023-03-06 04:12:55', '2023-03-05 04:12:55', '2023-03-05 04:12:55', NULL),
+(13, 'f3e4ebce-11ca-4fea-8917-3f3ffbd8f7cb', '2023-04-04 05:25:42', '2023-03-05 05:25:42', '2023-03-05 05:25:42', NULL),
+(14, '1378ad61-37aa-4c2e-bc80-0e8c93c70693', '2023-04-04 06:14:27', '2023-03-05 06:14:27', '2023-03-05 06:14:27', NULL),
+(15, '4eebcd72-68d3-49fd-a106-1a56c4ff863a', '2023-04-04 06:57:09', '2023-03-05 06:57:09', '2023-03-05 06:57:09', NULL),
+(16, '37a0c600-4fec-4d98-bc3d-af85cc4cc18b', '2023-04-04 06:58:26', '2023-03-05 06:58:26', '2023-03-05 06:58:26', NULL),
+(17, '18a977ff-1b73-4db8-937d-4f716407833e', '2023-04-04 18:09:00', '2023-03-05 18:09:00', '2023-03-05 18:09:00', NULL);
 
 --
 -- Indexes for dumped tables
@@ -692,6 +765,13 @@ ALTER TABLE `nhom1_bridges_images`
   ADD KEY `bridge_id` (`bridge_id`);
 
 --
+-- Indexes for table `nhom1_roles`
+--
+ALTER TABLE `nhom1_roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `nhom1_users`
 --
 ALTER TABLE `nhom1_users`
@@ -700,12 +780,18 @@ ALTER TABLE `nhom1_users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `nhom1_users_reviews`
+-- Indexes for table `nhom1_users_roles`
 --
-ALTER TABLE `nhom1_users_reviews`
+ALTER TABLE `nhom1_users_roles`
+  ADD PRIMARY KEY (`role_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `refreshtokens`
+--
+ALTER TABLE `refreshtokens`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `bridge_id` (`bridge_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -718,6 +804,24 @@ ALTER TABLE `nhom1_bridges_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
+-- AUTO_INCREMENT for table `nhom1_roles`
+--
+ALTER TABLE `nhom1_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `nhom1_users`
+--
+ALTER TABLE `nhom1_users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `refreshtokens`
+--
+ALTER TABLE `refreshtokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -728,11 +832,17 @@ ALTER TABLE `nhom1_bridges_images`
   ADD CONSTRAINT `nhom1_bridges_images_ibfk_1` FOREIGN KEY (`bridge_id`) REFERENCES `nhom1_bridges` (`id`);
 
 --
--- Constraints for table `nhom1_users_reviews`
+-- Constraints for table `nhom1_users_roles`
 --
-ALTER TABLE `nhom1_users_reviews`
-  ADD CONSTRAINT `nhom1_users_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `nhom1_users` (`id`),
-  ADD CONSTRAINT `nhom1_users_reviews_ibfk_2` FOREIGN KEY (`bridge_id`) REFERENCES `nhom1_bridges` (`id`);
+ALTER TABLE `nhom1_users_roles`
+  ADD CONSTRAINT `nhom1_users_roles_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `nhom1_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `nhom1_users_roles_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `nhom1_users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `refreshtokens`
+--
+ALTER TABLE `refreshtokens`
+  ADD CONSTRAINT `refreshtokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `nhom1_users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
