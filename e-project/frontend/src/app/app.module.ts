@@ -37,6 +37,9 @@ import { BoardUserComponent } from './components/board-user/board-user.component
 import { SuccessModalComponent } from './components/success-modal/success-modal.component';
 import { CompareComponent } from './components/compare/compare.component';
 import { CompareNotiComponent } from './components/compare/compare-noti/compare-noti.component';
+import { TermsComponent } from './components/terms/terms.component';
+import { SitemapComponent } from './components/sitemap/sitemap.component';
+import { ReviewModalComponent } from './components/review-modal/review-modal.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { CompareNotiComponent } from './components/compare/compare-noti/compare-
     BoardUserComponent,
     SuccessModalComponent,
     CompareComponent,
-    CompareNotiComponent
+    CompareNotiComponent,
+    TermsComponent,
+    SitemapComponent,
+    ReviewModalComponent
   ],
   imports: [
     BrowserModule,

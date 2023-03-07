@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { filter } from 'rxjs';
 import { CompareService } from '../compare/compare.service';
 import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
@@ -21,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   compareModalState: boolean = false;
   compareNotiState: boolean = false;
   comparisonLength: number = 0;
+  favoriteLength: number = 0;
   private loginModalStateChangeSub!: Subscription;
   private signupModalStateChangeSub!: Subscription;
   private successModalStateChangeSub!: Subscription;
@@ -33,12 +36,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   first_name?: string;
   last_name?: string;
   avatar?: string;
+  isHomePage?: boolean;
 
-  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService) { }
+  searchTerm!: string;
+
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private router: Router) { }
 
   ngOnInit(): void {
+    this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event: any) => {
+      this.isHomePage = event.url === '/' || event.url === '';
+    });
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
@@ -99,6 +109,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  onSubmit(searchTerm: string): void {
+    this.router.navigate(['/search'], { queryParams: { q: searchTerm } });
+    
   }
 
   ngOnDestroy(): void {

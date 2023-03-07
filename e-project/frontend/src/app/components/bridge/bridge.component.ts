@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { fadeIn } from 'src/app/animations/fade';
 import { BridgeService } from 'src/app/services/bridge.service';
@@ -35,7 +36,7 @@ export class BridgeComponent implements OnInit {
     },
   };
 
-  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService) {}
+  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -49,7 +50,12 @@ export class BridgeComponent implements OnInit {
   loadBridge(bridgeId: string) {
     this.bridgeService.getBridges({id: bridgeId}).subscribe((data: any) => {
       this.bridge = data;
+      this.bridge.map = this.getSafeUrl(this.bridge.map);
     })
+  }
+
+  getSafeUrl(url: string): any {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   loadImages(bridgeId: string) {

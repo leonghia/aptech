@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { CompareService } from '../compare/compare.service';
 
 @Component({
   selector: 'app-search-result',
@@ -24,7 +25,7 @@ export class SearchResultComponent implements OnInit {
   orderText!: string;
   loading: boolean = true;
 
-  constructor(private bridgeService: BridgeService, private route: ActivatedRoute) {}
+  constructor(private bridgeService: BridgeService, private route: ActivatedRoute, private compareService: CompareService) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -35,13 +36,18 @@ export class SearchResultComponent implements OnInit {
       this.styles = data;
     });
     this.searchTerm = this.route.snapshot.queryParamMap.get('q');
-    setTimeout(() => {
-      this.bridgeService.getBridges({q: this.searchTerm, sort: this.sortBy, order: this.orderBy}).subscribe(data => {
-        this.bridges = data;
-        this.loading = false;
-        this.searchResultLength = this.bridges.length;
-      });
-    }, 1000);
+    this.route.queryParamMap.subscribe(params => {
+      this.bridges = [];
+      this.loading = true;
+      this.searchTerm = params.get('q');
+      setTimeout(() => {
+        this.bridgeService.getBridges({q: this.searchTerm, sort: this.sortBy, order: this.orderBy}).subscribe(data => {
+          this.bridges = data;
+          this.loading = false;
+          this.searchResultLength = this.bridges.length;
+        });
+      }, 1000);
+    })
   }
 
   onVisibilityChange(status: boolean): void {
@@ -60,6 +66,7 @@ export class SearchResultComponent implements OnInit {
     setTimeout(() => {
       this.bridgeService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
+        this.searchResultLength = this.bridges.length;
         this.loading = false;
       })
     }, 100);
@@ -77,6 +84,7 @@ export class SearchResultComponent implements OnInit {
     setTimeout(() => {
       this.bridgeService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), order: this.orderBy, sort: this.sortBy}).subscribe(data => {
         this.bridges = data;
+        this.searchResultLength = this.bridges.length;
         this.loading = false;
       })
     }, 100);
@@ -100,5 +108,13 @@ export class SearchResultComponent implements OnInit {
     this.bridgeService.getBridges({q: this.searchTerm, material: this.selectedMaterials.join(','), style: this.selectedStyles.join(','), sort: this.sortBy, order: this.orderBy}).subscribe(data => {
       this.bridges = data;
     })
+  }
+
+  onAddBridgeToCompare(bridge: any) {
+    this.compareService.addBridgeToComparison(bridge);
+  }
+
+  onAddBridgeToFavorite() {
+    
   }
 }

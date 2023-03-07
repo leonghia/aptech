@@ -560,7 +560,7 @@
               <div class="hidden sm:flex sm:items-baseline sm:space-x-8">
 
 
-                <div id="menu" class="relative z-10 inline-block text-left">
+                <div id="menu" class="relative z-9 inline-block text-left">
                   <div>
                     <button (click)="onToggleSortBtn()" type="button"
                       class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -588,7 +588,7 @@
                       To: "transform opacity-0 scale-95"
                   -->
                   <div *ngIf="sortBtnState"
-                    class="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    class="z-10 origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <form class="space-y-4">
                       <div class="flex items-center">
                         <input (click)="sortBy = 'length'" [(ngModel)]="sortText" id="filter-color-0" name="color[]" value="length" type="radio"
@@ -632,7 +632,7 @@
                   </div>
                 </div>
 
-                <div id="menu" class="relative z-10 inline-block text-left">
+                <div id="menu" class="relative z-9 inline-block text-left">
                   <div>
                     <button (click)="onToggleOrderBtn()" type="button"
                       class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -660,7 +660,7 @@
                       To: "transform opacity-0 scale-95"
                   -->
                   <div *ngIf="orderBtnState"
-                    class="origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    class="z-10 origin-top-right absolute right-0 mt-2 bg-white rounded-md shadow-2xl p-4 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <form class="space-y-4">
                       <div class="flex items-center">
                         <input (click)="onSortAndOrder('asc')" id="filter-sizes-0" name="order" value="asce" type="radio"
@@ -689,8 +689,10 @@
             
             <div *ngFor="let bridge of bridges" class="group">
               <div class="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-w-3 sm:aspect-h-2">
-                <img [src]="bridge.thumbnail" [alt]="bridge.name"
+                <a [routerLink]="['/bridge', bridge.id]">
+                  <img [src]="bridge.thumbnail" [alt]="bridge.name"
                   class="w-full h-full object-center object-cover group-hover:opacity-75">
+                </a>
               </div>
 
               <div class="mt-1 flex items-center justify-between text-base font-medium text-gray-900">
@@ -735,8 +737,8 @@
                 <div class="mt-4 flex justify-end gap-2 items-center">
                   <button (click)="onAddBridgeToCompare(bridge)" type="button" class="inline-flex items-center px-2 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                    </svg>                    
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>                                      
                     
                     
                   </button>

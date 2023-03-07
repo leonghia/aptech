@@ -32,11 +32,15 @@ db.sequelize.sync();
 
 // Importing routes
 const bridgeRoutes = require('./app/routes/bridges.routes');
+const reviewRoutes = require('./app/routes/reviews.routes');
 require('./app/routes/auth.routes')(app);
 require('./app/routes/users.routes')(app);
 
 // Call the bridgeRoutes function with the app object
 app.use(bridgeRoutes);
+
+// Call the reviewRoutes function with the app object
+app.use(reviewRoutes);
 
 // Set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -11,6 +11,14 @@ export class CompareService {
   comparedBridgesLengthChanged = new Subject<number>();
   isNotified = new BehaviorSubject<{status: string, bridge?: string}>({status: '', bridge: undefined});
   private comparedBridges: any = [];
+  longestBridge!: any;
+  longestBridgeChanged = new BehaviorSubject<any>({});
+  widestBridge!: any;
+  widestBridgeChanged = new BehaviorSubject<any>({});
+  highestBridge!: any;
+  highestBridgeChanged = new BehaviorSubject<any>({});
+  oldestBridge!: any;
+  oldestBridgeChanged = new BehaviorSubject<any>({});
 
   constructor() { }
 
@@ -46,14 +54,36 @@ export class CompareService {
     this.comparedBridgesLengthChanged.next(this.comparedBridges.length);
   }
 
-  removeBridgeFromComparison(bridgeToRemoved: any) {
-    const bridgeToRemovedId = bridgeToRemoved.id;
-    this.comparedBridges = this.comparedBridges.filter((bridge: any) => bridge.id !== bridgeToRemovedId);
+  removeBridgeFromComparison(bridgeId: number) {
+    this.comparedBridges = this.comparedBridges.filter((bridge: any) => bridge.id != bridgeId);
     this.comparedBridgesChanged.next(this.comparedBridges.slice());
+    this.comparedBridgesLengthChanged.next(this.comparedBridges.length);
+    if (this.comparedBridges.length === 0) {
+      this.clearComparision();
+    }
   }
 
   getComparedBridges() {
     return this.comparedBridges.slice();
+  }
+
+  compareBridges() {
+    this.longestBridge = this.comparedBridges.reduce((prev: any, current: any) => {
+      return (+prev.length > +current.length) ? prev: current
+    });
+    this.widestBridge = this.comparedBridges.reduce((prev: any, current: any) => {
+      return (+prev.width > +current.width) ? prev : current
+    });
+    this.highestBridge = this.comparedBridges.reduce((prev: any, current: any) => {
+      return (+prev.height > +current.height) ? prev : current
+    });
+    this.oldestBridge = this.comparedBridges.reduce((prev: any, current: any) => {
+      return (new Date(prev.built_in) < new Date(current.built_in)) ? prev : current
+    });
+    this.longestBridgeChanged.next(this.longestBridge);
+    this.widestBridgeChanged.next(this.widestBridge);
+    this.highestBridgeChanged.next(this.highestBridge);
+    this.oldestBridgeChanged.next(this.oldestBridge);
   }
 
   closeCompareNoti() {
@@ -64,5 +94,13 @@ export class CompareService {
     this.comparedBridges = [];
     this.comparedBridgesChanged.next(this.comparedBridges.slice());
     this.comparedBridgesLengthChanged.next(this.comparedBridges.length);
+    this.longestBridge = null;
+    this.widestBridge = null;
+    this.highestBridge = null;
+    this.oldestBridge = null;
+    this.longestBridgeChanged.next(this.longestBridge);
+    this.widestBridgeChanged.next(this.widestBridge);
+    this.highestBridgeChanged.next(this.highestBridge);
+    this.oldestBridgeChanged.next(this.oldestBridge);
   }
 }

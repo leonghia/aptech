@@ -1,92 +1,462 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
-<div *ngIf="topBarShown" class="relative bg-indigo-600">
-  <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-    <div class="pr-16 sm:text-center sm:px-16">
-      <p class="font-medium text-white">
-        <span class="md:hidden"> We announced a new feature! </span>
-        <span class="hidden md:inline"> Big news! We're excited to announce a new feature that allow you to compare bridges. </span>
-        
-      </p>
-    </div>
-    <div class="absolute inset-y-0 right-0 pt-1 pr-1 flex items-start sm:pt-1 sm:pr-2 sm:items-start">
-      <button (click)="onDismissTopBar()" type="button" class="flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white">
-        <span class="sr-only">Dismiss</span>
-        <!-- Heroicon name: outline/x -->
-        <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<header id="header">
-    <div class="relative bg-white" >
-      <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
-        <div class="flex justify-start lg:w-0 lg:flex-1">
-          <a routerLink="">
-            <span class="sr-only">Workflow</span>
-            <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-purple-600-to-indigo-600.svg" alt="">
-          </a>
-        </div>
-        <div class="-mr-2 -my-2 md:hidden">
-          <button (click)="onOpenMobileMenu()" type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
-            <span class="sr-only">Open menu</span>
-            <!-- Heroicon name: outline/menu -->
-            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-        <nav class="hidden md:flex space-x-10" >
-          <a routerLink="" class="text-base font-medium text-gray-500 hover:text-gray-900"> Home </a>
-          <a routerLink="all-bridges" class="text-base font-medium text-gray-500 hover:text-gray-900"> All Bridges </a>
-          <a routerLink="categorized/longest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Longest </a>
-          <a routerLink="categorized/widest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Widest </a>
-          <a routerLink="categorized/highest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Highest </a>
-          <a routerLink="categorized/oldest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Oldest </a>
-        </nav>
-        <div *ngIf="!isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-          <a (click)="onOpenCompareModal()" class="cursor-pointer relative ml-5 mr-6 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="sr-only">View compare</span>
-            <!-- Heroicon name -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-            </svg>            
-                     
-            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{ comparisonLength }}</div>            
-          </a>
-          <app-compare *ngIf="compareModalState"></app-compare>
-          <button (click)="onOpenLoginModal()" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Sign in </button>
-          <app-login-modal *ngIf="loginModalState"></app-login-modal>
-          <button (click)="onOpenSignupModal()" class="ml-8 whitespace-nowrap inline-flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700"> Sign up </button>
-          <app-signup-modal *ngIf="signupModalState"></app-signup-modal>
-          <app-success-modal *ngIf="successModalState"></app-success-modal>
-        </div>
-        <div *ngIf="isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-          <a (click)="onOpenCompareModal()" class="cursor-pointer relative ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="sr-only">View compare</span>
-            <!-- Heroicon name -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-            </svg>            
-            <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">{{ comparisonLength }}</div>            
-          </a>
-          <app-compare *ngIf="compareModalState"></app-compare>
-          <a class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <span class="">Hello, {{ first_name }} !</span>
-          </a>
+<!--
+  This example requires Tailwind CSS v2.0+ 
   
-          <!-- Profile dropdown -->
-          <div class="flex-shrink-0 relative ml-5">
-            <div>
-              <button (click)="openProfileDropdownMenu()" type="button" class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <span class="sr-only">Open user menu</span>
-                <img class="h-8 w-8 rounded-full" [src]="avatar" alt="">
-              </button>
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<header *ngIf="isLoggedIn" class="bg-gray-800 mb-8">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 sm:py-4 lg:divide-y lg:divide-gray-700 lg:px-8">
+    <div class="relative h-16 flex justify-between">
+      <div class="relative z-10 px-2 flex lg:px-0">
+        <div class="flex-shrink-0 flex items-center">
+          <img class="block h-8 w-auto" src="../../../assets/images/2023-02/amazing-bridge-logo-removebg-preview.png"
+            alt="Workflow">
+        </div>
+      </div>
+      <div *ngIf="!isHomePage" class="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
+        <div class="w-full sm:max-w-xs">
+          <form (submit)="onSubmit(searchTerm)">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                <!-- Heroicon name: solid/search -->
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input [(ngModel)]="searchTerm" id="search" name="search"
+                class="block w-full bg-gray-700 border border-transparent rounded-md py-2 pl-10 pr-3 text-sm text-gray-400 placeholder-gray-400 focus:outline-none focus:border-gray-400 focus:ring-gray-400 focus:text-gray-400 focus:placeholder-gray-500 sm:text-sm"
+                placeholder="Search" type="search">
             </div>
-  
-            <!--
+          </form>
+        </div>
+      </div>
+      <div class="relative z-10 flex items-center lg:hidden">
+        <!-- Mobile menu button -->
+        <button type="button"
+          class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <!--
+            Icon when menu is closed.
+
+            Heroicon name: outline/menu
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!--
+            Icon when menu is open.
+
+            Heroicon name: outline/x
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
+          <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+        <button type="button" (click)="onOpenCompareModal()"
+          class="relative bg-gray-800 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none">
+          <span class="sr-only">View comparisons</span>
+          <!-- Heroicon name: shopping bag -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+          <div
+            class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -right-1 dark:border-gray-900">
+            {{ comparisonLength }}</div>          
+        </button>
+        <app-compare *ngIf="compareModalState"></app-compare>
+
+        <button type="button"
+          class="relative ml-4 bg-gray-800 flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none">
+          <span class="sr-only">View favourites</span>
+          <!-- Heroicon name: heart -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+          </svg>          
+          <div
+            class="absolute inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -right-1 dark:border-gray-900">
+            {{ favoriteLength }}</div>          
+        </button>
+
+        <!-- Profile dropdown -->
+        <div class="flex-shrink-0 relative ml-6">
+          <div>
+            <button type="button"
+              class="bg-gray-800 rounded-full flex text-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <span class="sr-only">Open user menu</span>
+              <img class="h-8 w-8 rounded-full"
+                [src]="avatar"
+                alt="">
+            </button>
+          </div>
+
+        </div>
+
+        <button (click)="logout()" href="#" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> Sign out </button>
+      </div>
+    </div>
+    <nav class="hidden lg:pt-3 lg:pb-1 lg:flex lg:space-x-8" aria-label="Global">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <a routerLink="" routerLinkActive="bg-gray-900 text-white" [routerLinkActiveOptions]="{exact:true}"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+        aria-current="page"> Home </a>
+
+      <a routerLink="all-bridges" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        All bridges </a>
+
+      <a routerLink="categorized/longest" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Longest </a>
+
+      <a routerLink="categorized/widest" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Widest </a>
+
+      <a routerLink="categorized/highest" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Highest </a>
+
+      <a routerLink="categorized/oldest" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Oldest </a>
+
+      <a routerLink="categorized/united-states" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        United States </a>
+
+      <a routerLink="categorized/england" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        England </a>
+
+      <a routerLink="categorized/japanese" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Japanese </a>
+
+      <a routerLink="categorized/chinese" routerLinkActive="bg-gray-900 text-white"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Chinese </a>
+    </nav>
+  </div>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <nav class="lg:hidden" aria-label="Global" id="mobile-menu">
+    <div class="pt-2 pb-3 px-2 space-y-1">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <a href="#" class="bg-gray-900 text-white block rounded-md py-2 px-3 text-base font-medium"
+        aria-current="page">Dashboard</a>
+
+      <a href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Team</a>
+
+      <a href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Projects</a>
+
+      <a href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Calendar</a>
+    </div>
+    <div class="border-t border-gray-700 pt-4 pb-3">
+      <div class="px-4 flex items-center">
+        <div class="flex-shrink-0">
+          <img class="h-10 w-10 rounded-full"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="">
+        </div>
+        <div class="ml-3">
+          <div class="text-base font-medium text-white">Tom Cook</div>
+          <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+        </div>
+        <button type="button"
+          class="ml-auto flex-shrink-0 bg-gray-800 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+          <span class="sr-only">View notifications</span>
+          <!-- Heroicon name: outline/bell -->
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-3 px-2 space-y-1">
+        <a href="#"
+          class="block rounded-md py-2 px-3 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
+          Profile</a>
+
+        <a href="#"
+          class="block rounded-md py-2 px-3 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
+
+        <a href="#"
+          class="block rounded-md py-2 px-3 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
+          out</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<header *ngIf="!isLoggedIn" class="bg-white">
+  <div class="max-w-7xl mx-auto px-2 sm:px-4 sm:py-4 lg:divide-y lg:divide-gray-200 lg:px-8">
+    <div class="relative h-16 flex justify-between">
+      <div class="relative z-10 px-2 flex lg:px-0">
+        <div class="flex-shrink-0 flex items-center">
+          <a routerLink="">
+            <img class="block h-8 w-auto" src="../../../assets/images/2023-02/amazing-bridge-logo.jpg" alt="Workflow">
+          </a>
+        </div>
+      </div>
+      <div *ngIf="!isHomePage" class="relative z-0 flex-1 px-2 flex items-center justify-center sm:absolute sm:inset-0">
+        <div class="w-full sm:max-w-xs">
+          <form (submit)="onSubmit(searchTerm)">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                <!-- Heroicon name: solid/search -->
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input [(ngModel)]="searchTerm" id="search" name="search"
+                class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                placeholder="Search" type="search">
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <div class="relative z-10 flex items-center lg:hidden">
+        <!-- Mobile menu button -->
+        <button type="button"
+          class="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <!--
+            Icon when menu is closed.
+
+            Heroicon name: outline/menu
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
+          <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <!--
+            Icon when menu is open.
+
+            Heroicon name: outline/x
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
+          <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+        <a (click)="onOpenCompareModal()"
+          class="cursor-pointer relative ml-5 mr-6 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="sr-only">View compare</span>
+          <!-- Heroicon name -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+
+
+          <div
+            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+            {{ comparisonLength }}</div>
+        </a>
+        <app-compare *ngIf="compareModalState"></app-compare>
+        <button (click)="onOpenLoginModal()"
+          class="whitespace-nowrap text-sm font-medium text-gray-500 hover:text-gray-900"> Sign in </button>
+        <app-login-modal *ngIf="loginModalState"></app-login-modal>
+        <button (click)="onOpenSignupModal()"
+          class="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Signing up </button>
+        <app-signup-modal *ngIf="signupModalState"></app-signup-modal>
+        <app-success-modal *ngIf="successModalState"></app-success-modal>
+
+
+      </div>
+    </div>
+    <nav class="hidden lg:pt-3 lg:pb-1 lg:flex lg:space-x-8" aria-label="Global">
+      <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-900 hover:bg-gray-50 hover:text-gray-900" -->
+      <a routerLink="" routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{exact:true}"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium"
+        aria-current="page"> Home </a>
+
+      <a routerLink="all-bridges" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        All bridges </a>
+
+      <a routerLink="categorized/longest" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Longest </a>
+
+      <a routerLink="categorized/widest" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Widest </a>
+
+      <a routerLink="categorized/highest" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Highest </a>
+
+      <a routerLink="categorized/oldest" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Oldest </a>
+
+      <a routerLink="/categorized/united-states" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        United States </a>
+
+      <a routerLink="/categorized/england" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        England </a>
+
+      <a routerLink="/categorized/japanese" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Japanese </a>
+
+      <a routerLink="/categorized/chinese" routerLinkActive="bg-gray-100"
+        class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 rounded-md py-2 px-3 inline-flex items-center text-sm font-medium">
+        Chinese </a>
+    </nav>
+  </div>
+</header>
+
+<header *ngIf="false" id="header">
+  <div class="relative bg-white">
+    <div
+      class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
+      <div class="flex justify-start lg:w-0 lg:flex-1">
+        <a routerLink="">
+          <span class="sr-only">Workflow</span>
+          <img class="h-8 w-auto sm:h-10" src="../../../assets/images/2023-02/amazing-bridge-logo.jpg" alt="">
+        </a>
+      </div>
+      <div class="-mr-2 -my-2 md:hidden">
+        <button (click)="onOpenMobileMenu()" type="button"
+          class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <!-- Heroicon name: outline/menu -->
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <nav class="hidden md:flex space-x-10">
+        <a routerLink="" class="text-base font-medium text-gray-500 hover:text-gray-900"> Home </a>
+        <a routerLink="all-bridges" class="text-base font-medium text-gray-500 hover:text-gray-900"> All Bridges </a>
+        <a routerLink="categorized/longest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Longest
+        </a>
+        <a routerLink="categorized/widest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Widest </a>
+        <a routerLink="categorized/highest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Highest
+        </a>
+        <a routerLink="categorized/oldest" class="text-base font-medium text-gray-500 hover:text-gray-900"> Oldest </a>
+      </nav>
+      <div *ngIf="!isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <a (click)="onOpenCompareModal()"
+          class="cursor-pointer relative ml-5 mr-6 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="sr-only">View compare</span>
+          <!-- Heroicon name -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+
+
+          <div
+            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+            {{ comparisonLength }}</div>
+        </a>
+        <app-compare *ngIf="compareModalState"></app-compare>
+        <button (click)="onOpenLoginModal()"
+          class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Sign in </button>
+        <app-login-modal *ngIf="loginModalState"></app-login-modal>
+        <button (click)="onOpenSignupModal()"
+          class="ml-8 whitespace-nowrap inline-flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
+          Sign up </button>
+        <app-signup-modal *ngIf="signupModalState"></app-signup-modal>
+        <app-success-modal *ngIf="successModalState"></app-success-modal>
+      </div>
+      <div *ngIf="isLoggedIn" class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <a (click)="onOpenCompareModal()"
+          class="cursor-pointer relative ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="sr-only">View compare</span>
+          <!-- Heroicon name -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+
+          <div
+            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+            {{ comparisonLength }}</div>
+        </a>
+        <a (click)="onOpenCompareModal()"
+          class="cursor-pointer relative ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="sr-only">View compare</span>
+          <!-- Heroicon name -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+          </svg>
+
+          <div
+            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+            {{ comparisonLength }}</div>
+        </a>
+        <app-compare *ngIf="compareModalState"></app-compare>
+        <a
+          class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="">Hello, {{ first_name }} !</span>
+        </a>
+
+        <!-- Profile dropdown -->
+        <div class="flex-shrink-0 relative ml-5">
+          <div>
+            <button (click)="openProfileDropdownMenu()" type="button"
+              class="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <span class="sr-only">Open user menu</span>
+              <img class="h-8 w-8 rounded-full" [src]="avatar" alt="">
+            </button>
+          </div>
+
+          <!--
               Dropdown menu, show/hide based on menu state.
               Entering: "transition ease-out duration-100"
                 From: "transform opacity-0 scale-95"
@@ -95,25 +465,31 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-            <div *ngIf="profileDropdownMenuState" class="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-              <!-- Active: "bg-gray-100", Not Active: "" -->
-              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
-  
-              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Favorite list</a>
-  
-              <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Comments</a>
+          <div *ngIf="profileDropdownMenuState"
+            class="origin-top-right absolute z-10 right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none"
+            role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <!-- Active: "bg-gray-100", Not Active: "" -->
+            <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1"
+              id="user-menu-item-0">Your profile</a>
 
-              <a (click)="logout()" class="cursor-pointer hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-            </div>
-            
+            <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1"
+              id="user-menu-item-1">Favorite list</a>
+
+            <a href="#" class="hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700" role="menuitem" tabindex="-1"
+              id="user-menu-item-2">Comments</a>
+
+            <a (click)="logout()" class="cursor-pointer hover:bg-gray-100 block py-2 px-4 text-sm text-gray-700"
+              role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
           </div>
-  
-          
-        </div>
-      </div>
-      
 
-      <!--
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <!--
         Mobile menu, show/hide based on mobile menu state.
 
         Entering: "duration-200 ease-out"
@@ -123,83 +499,101 @@
           From: "opacity-100 scale-100"
           To: "opacity-0 scale-95"
       -->
-      <div *ngIf="mobileMenuStatus" class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
-        <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-          <div class="pt-5 pb-6 px-5">
-            <div class="flex items-center justify-between">
-              <div>
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-purple-600-to-indigo-600.svg" alt="Workflow">
-              </div>
-              <div class="-mr-2">
-                <button (click)="onCloseMobileMenu()" type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                  <span class="sr-only">Close menu</span>
-                  <!-- Heroicon name: outline/x -->
-                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+    <div *ngIf="mobileMenuStatus"
+      class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+      <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+        <div class="pt-5 pb-6 px-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-purple-600-to-indigo-600.svg"
+                alt="Workflow">
             </div>
-            <div class="mt-6">
-              <nav class="grid grid-cols-1 gap-7">
-                <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                  <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                    <!-- Heroicon name: outline/inbox -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
-                  </div>
-                  <div class="ml-4 text-base font-medium text-gray-900">Inbox</div>
-                </a>
-
-                <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                  <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                    <!-- Heroicon name: outline/annotation -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                    </svg>
-                  </div>
-                  <div class="ml-4 text-base font-medium text-gray-900">Find Route</div>
-                </a>
-
-                <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                  <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                    <!-- Heroicon name: outline/chat-alt-2 -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
-                    </svg>
-                  </div>
-                  <div class="ml-4 text-base font-medium text-gray-900">Live Chat</div>
-                </a>
-
-                <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                  <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                    <!-- Heroicon name: outline/question-mark-circle -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div class="ml-4 text-base font-medium text-gray-900">Knowledge Base</div>
-                </a>
-              </nav>
+            <div class="-mr-2">
+              <button (click)="onCloseMobileMenu()" type="button"
+                class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                <span class="sr-only">Close menu</span>
+                <!-- Heroicon name: outline/x -->
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
           </div>
-          <div class="py-6 px-5">
-            <div class="grid grid-cols-2 gap-4">
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Pricing </a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Partners </a>
-              <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Company </a>
-            </div>
-            <div class="mt-6">
-              <a href="#" class="w-full flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700"> Sign up </a>
-              <p class="mt-6 text-center text-base font-medium text-gray-500">
-                Existing customer?
-                <a href="#" class="text-gray-900"> Sign in </a>
-              </p>
-            </div>
+          <div class="mt-6">
+            <nav class="grid grid-cols-1 gap-7">
+              <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
+                <div
+                  class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                  <!-- Heroicon name: outline/inbox -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                </div>
+                <div class="ml-4 text-base font-medium text-gray-900">Inbox</div>
+              </a>
+
+              <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
+                <div
+                  class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                  <!-- Heroicon name: outline/annotation -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                  </svg>
+                </div>
+                <div class="ml-4 text-base font-medium text-gray-900">Find Route</div>
+              </a>
+
+              <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
+                <div
+                  class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                  <!-- Heroicon name: outline/chat-alt-2 -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  </svg>
+                </div>
+                <div class="ml-4 text-base font-medium text-gray-900">Live Chat</div>
+              </a>
+
+              <a href="#" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
+                <div
+                  class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+                  <!-- Heroicon name: outline/question-mark-circle -->
+                  <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div class="ml-4 text-base font-medium text-gray-900">Knowledge Base</div>
+              </a>
+            </nav>
+          </div>
+        </div>
+        <div class="py-6 px-5">
+          <div class="grid grid-cols-2 gap-4">
+            <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Pricing </a>
+            <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Partners </a>
+            <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700"> Company </a>
+          </div>
+          <div class="mt-6">
+            <a href="#"
+              class="w-full flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
+              Sign up </a>
+            <p class="mt-6 text-center text-base font-medium text-gray-500">
+              Existing customer?
+              <a href="#" class="text-gray-900"> Sign in </a>
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 <app-compare-noti *ngIf="compareNotiState"></app-compare-noti>

@@ -172,23 +172,20 @@
       <div class="border-t border-gray-200 mt-10 pt-10">
         <h3 class="text-sm font-medium text-gray-900">Documentation</h3>
         <p class="mt-4 text-sm text-gray-500">The PDF documentation is available for personal and professional use. But
-          you cannot resell or redistribute our documentation in their original or modified state. <a href="#"
+          you cannot resell or redistribute our documentation in their original or modified state. <a href="../../../assets/document/bridge-document.pdf"
             class="font-medium text-indigo-600 hover:text-indigo-500">Download full PDF</a></p>
       </div>
 
       <div class="border-t border-gray-200 mt-10 pt-10">
         <h3 class="text-sm font-medium text-gray-900 mb-5">Map Location</h3>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d50124.77004189154!2d108.05176534038026!3d16.028460326754782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1676212025885!5m2!1sen!2s"
-          width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe [src]="bridge.map" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
 
       <div class="border-t border-gray-200 mt-10 pt-10">
         <h3 class="text-sm font-medium text-gray-900">Share</h3>
         <ul role="list" class="flex items-center space-x-6 mt-4">
           <li>
-            <a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
+            <a class="cursor-pointer flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
               <span class="sr-only">Share on Facebook</span>
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fill-rule="evenodd"
@@ -198,7 +195,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
+            <a class="cursor-pointer flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
               <span class="sr-only">Share on Instagram</span>
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill-rule="evenodd"
@@ -208,7 +205,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
+            <a class="cursor-pointer flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500">
               <span class="sr-only">Share on Twitter</span>
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path
@@ -370,9 +367,10 @@
               <p class="mt-1 text-sm text-gray-600">If you’ve visited this bridge, please share your thoughts with other
                 users.</p>
 
-              <a href="#"
+              <button type="button"
                 class="mt-6 inline-flex w-full bg-white border border-gray-300 rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto lg:w-full">Write
-                a review</a>
+                a review</button>
+              <app-review-modal></app-review-modal>
             </div>
           </div>
 
