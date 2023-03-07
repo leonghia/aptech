@@ -15,10 +15,10 @@ router.get('/api/bridges', (req, res) => {
     const limit = req.query.limit;
     
     // Construct the SQL query based on the query parameters
-    let sql = 'SELECT * FROM nhom1_bridges WHERE 1 = 1';
+    let sql = 'SELECT b.*, COUNT(r.id) AS review_count, ROUND(AVG(r.rating)) AS average_rating, SUM(r.rating = 1) AS one_star_reviews, SUM(r.rating = 2) AS two_star_reviews, SUM(r.rating = 3) AS three_star_reviews, SUM(r.rating = 4) AS four_star_reviews, SUM(r.rating = 5) AS five_star_reviews FROM nhom1_bridges b LEFT JOIN nhom1_reviews r ON b.id = r.bridge_id WHERE 1 = 1';
 
     if (id) {
-        sql += ` AND id = ${id}`;
+        sql += ` AND b.id = ${id}`;
     }
     if (continent) {
         sql += ` AND continent = '${continent}'`;
@@ -37,17 +37,21 @@ router.get('/api/bridges', (req, res) => {
         const styleArr = style.split(',');
         sql += ` AND style IN (${styleArr.map(s => `'${s}'`).join(',')})`;
     } 
+
+    sql += ' GROUP BY b.id';
+
     if (sortBy) {
         sql += ` ORDER BY ${sortBy} ${sortOrder.toUpperCase()}`;
     }
     if (limit) {
         sql += ` LIMIT ${limit}`;
-    }  
+    } 
+    
     
     // Execute the SQL query using the connection
     conn.query(sql, (error, results) => {
         if (error) {
-            res.status(500).json({error: 'Error fetching bridges from database'});
+            console.log(sql);
         } else if (id) {
             res.json(results[0]);
         } else {

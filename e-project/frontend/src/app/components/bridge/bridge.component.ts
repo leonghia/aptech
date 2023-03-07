@@ -1,12 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { fadeIn } from 'src/app/animations/fade';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { ReviewService } from 'src/app/services/review.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 // Import Swiper core and required modules
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
 import { CompareService } from '../compare/compare.service';
+import { LoginService } from '../login-modal/login.service';
+import { ReviewModalService } from '../review-modal/review-modal.service';
 
 // Install Swiper modules
 SwiperCore.use([Pagination]);
@@ -17,7 +22,7 @@ SwiperCore.use([Pagination]);
   templateUrl: './bridge.component.html',
   styleUrls: ['./bridge.component.css']
 })
-export class BridgeComponent implements OnInit {
+export class BridgeComponent implements OnInit, OnDestroy {
   @ViewChild('modal') modal!: ElementRef;
   @ViewChild('modalImg') modalImg!: ElementRef;
   selectedTab: string = 'tab-info';
@@ -28,6 +33,19 @@ export class BridgeComponent implements OnInit {
   enterViewport: boolean = false;
   modalShown: boolean = false;
 
+  reviews?: any[];
+
+  one_star_width_percent!: number;
+  two_star_width_percent!: number;
+  three_star_width_percent!: number;
+  four_star_width_percent!: number;
+  five_star_width_percent!: number;
+
+  reviewModalState: boolean = false;
+  reviewModalStateChangeSub!: Subscription;
+
+  isLoggedIn: boolean = false;
+
   config: SwiperOptions = {
     slidesPerView: 4,
     spaceBetween: 15,
@@ -36,7 +54,7 @@ export class BridgeComponent implements OnInit {
     },
   };
 
-  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService, private sanitizer: DomSanitizer, private tokenStorageService: TokenStorageService, private reviewModalService: ReviewModalService, private loginService: LoginService, private reviewService: ReviewService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -45,11 +63,29 @@ export class BridgeComponent implements OnInit {
       this.loadImages(this.bridgeID);
       this.enterViewport = false;
     });
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.isLoggedIn) {
+      
+    };
+
+    this.reviewModalStateChangeSub = this.reviewModalService.reviewModalStateChanged.subscribe((state: boolean) => {
+      this.reviewModalState = state;
+    });
+
+    this.reviewService.getReviews(this.bridgeID).subscribe((data: any[]) => {
+      this.reviews = data;
+    })
   }
 
   loadBridge(bridgeId: string) {
     this.bridgeService.getBridges({id: bridgeId}).subscribe((data: any) => {
       this.bridge = data;
+      this.one_star_width_percent = data.one_star_reviews ? +data.one_star_reviews / data.review_count : 0;
+      this.two_star_width_percent = data.two_star_reviews ? +data.two_star_reviews / data.review_count : 0;
+      this.three_star_width_percent = data.three_star_reviews ? +data.three_star_reviews / data.review_count : 0;
+      this.four_star_width_percent = data.four_star_reviews ? +data.four_star_reviews / data.review_count : 0;
+      this.five_star_width_percent = data.five_star_reviews ? +data.five_star_reviews / data.review_count : 0;
       this.bridge.map = this.getSafeUrl(this.bridge.map);
     })
   }
@@ -91,6 +127,19 @@ export class BridgeComponent implements OnInit {
 
   onAddBridgeToCompare(bridge: any): void {
     this.compareService.addBridgeToComparison(bridge);
+  }
+
+  onHitTheWriteReviewBtn() {
+    if (this.isLoggedIn) {
+      this.reviewModalService.openReviewModal();
+      this.selectedTab = 'tab-reviews';
+    } else {
+      this.loginService.openLoginModal();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.reviewModalStateChangeSub.unsubscribe();
   }
 
 }

@@ -8,10 +8,11 @@ router.post('/api/reviews', (req, res) => {
     const user_id = req.body.user_id;
     const rating = req.body.rating;
     const content = req.body.content;
+    const title = req.body.title;
 
     // Construct the SQL query based on the query parameters
-    let sql = 'INSERT INTO nhom1_reviews(bridge_id, user_id, rating, content) VALUES';
-    sql += `(${bridge_id}, ${user_id}, ${rating}, '${content}')`;
+    let sql = 'INSERT INTO nhom1_reviews(bridge_id, user_id, rating, content, title) VALUES';
+    sql += `(${bridge_id}, ${user_id}, ${rating}, '${content}', '${title}')`;
 
     // Execute the SQL query using the connection
     conn.query(sql, (error, results) => {
@@ -26,7 +27,7 @@ router.post('/api/reviews', (req, res) => {
 // Define the endpoint for viewing all reviews of a specific bridge
 router.get('/api/reviews', (req, res) => {
     const bridge_id = req.query.bridge_id;
-    let sql = `SELECT * FROM nhom1_reviews WHERE bridge_id = ${bridge_id}`;
+    let sql = `SELECT u.first_name, u.last_name, u.avatar, r.title, r.content, r.rating, r.createdAt FROM nhom1_reviews r JOIN nhom1_users u ON r.user_id = u.id WHERE r.bridge_id = ${bridge_id}`;
 
     conn.query(sql, (error, results) => {
         if (error) {

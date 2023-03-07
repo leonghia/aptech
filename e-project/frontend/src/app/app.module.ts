@@ -40,6 +40,7 @@ import { CompareNotiComponent } from './components/compare/compare-noti/compare-
 import { TermsComponent } from './components/terms/terms.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { ReviewModalComponent } from './components/review-modal/review-modal.component';
+import { FavoritesModalComponent } from './components/favorites-modal/favorites-modal.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ReviewModalComponent } from './components/review-modal/review-modal.com
     CompareNotiComponent,
     TermsComponent,
     SitemapComponent,
-    ReviewModalComponent
+    ReviewModalComponent,
+    FavoritesModalComponent
   ],
   imports: [
     BrowserModule,

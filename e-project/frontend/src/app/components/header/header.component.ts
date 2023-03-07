@@ -7,6 +7,7 @@ import { CompareService } from '../compare/compare.service';
 import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
 import { SuccessService } from '../success-modal/success.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
 
 @Component({
   selector: 'app-header',
@@ -40,7 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   searchTerm!: string;
 
-  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private router: Router) { }
+  user_id!: number;
+
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private router: Router, private favoritesService: FavoritesService) { }
 
   ngOnInit(): void {
     this.router.events
@@ -52,10 +55,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
-
+      this.user_id = user.id;
       this.first_name = user.first_name;
       this.last_name = user.last_name;
       this.avatar = user.avatar;
+      this.favoritesService.getFavorites(this.user_id).subscribe((bridges: any[]) => {
+        this.favoriteLength = bridges.length;
+      })
     }
 
     this.loginModalStateChangeSub = this.loginService.loginModalStateChanged.subscribe((state: boolean) => {

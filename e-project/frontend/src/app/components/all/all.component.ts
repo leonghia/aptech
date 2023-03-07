@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { fadeIn } from 'src/app/animations/fade';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { CompareService } from '../compare/compare.service';
 
 @Component({
@@ -36,7 +38,10 @@ export class AllComponent implements OnInit {
   firstLoad: boolean = true;
   loading: boolean = true;
 
-  constructor(private bridgeService: BridgeService, private compareService: CompareService) {}
+  user_id!: number;
+  isLoggedIn: boolean = false;
+
+  constructor(private bridgeService: BridgeService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private favoritesService: FavoritesService) {}
 
   ngOnInit(): void {
     this.bridgeService.getMaterials().subscribe(data => {
@@ -53,6 +58,12 @@ export class AllComponent implements OnInit {
     this.bridgeService.getContinents().subscribe(data => {
       this.continents = data;
     });
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.user_id = user.id;
+    };
     
   }
 
@@ -200,8 +211,12 @@ export class AllComponent implements OnInit {
     this.compareService.addBridgeToComparison(bridge);
   }
 
-  onAddBridgeToFavorite() {
-    
+  onAddBridgeToFavorite(bridge_id: string | number) {
+    this.favoritesService.addFavorite(this.user_id, bridge_id).subscribe(data => {
+
+    }, err => {
+
+    })
   }
 
 }

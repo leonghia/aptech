@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const REVIEW_API = 'http://localhost:8080/api/reviews';
+const FAVORITE_API = 'http://localhost:8080/api/favorites';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -11,24 +11,21 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class ReviewService {
+export class FavoritesService {
 
   constructor(private http: HttpClient) { }
 
-  postReview(user_id: number, bridge_id: number, rating: number, content: string, title: string): Observable<any> {
-    return this.http.post(REVIEW_API, {
+  addFavorite(user_id: number | string, bridge_id: number | string): Observable<any> {
+    return this.http.post(FAVORITE_API, {
       user_id,
       bridge_id,
-      rating,
-      content,
-      title
     }, httpOptions)
 
   }
 
-  getReviews(bridge_id: string): Observable<any> {
+  getFavorites(user_id: string | number): Observable<any> {
     let params: {[key: string]: any} = {};
-    params = { ...params, bridge_id };
-    return this.http.get<any>(REVIEW_API, { params });
+    params = { ...params, user_id };
+    return this.http.get<any>(FAVORITE_API, { params });
   }
 }
