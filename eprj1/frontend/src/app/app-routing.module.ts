@@ -12,7 +12,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
-import { FavoritesModalComponent } from './components/favorites-modal/favorites-modal.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: 'categorized/:sort', component: CategorizedComponent},
   {path: 'terms-conditions', component: TermsComponent},
   {path: 'sitemap', component: SitemapComponent},
-  {path: 'favorites', component: FavoritesModalComponent},
+  {path: 'favorites', component: FavoritesComponent},
   
   // Wildcard route for 404 not found
   {path: '**', pathMatch: 'full', component: NotFoundComponent},

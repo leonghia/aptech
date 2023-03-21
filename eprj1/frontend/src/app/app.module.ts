@@ -40,7 +40,8 @@ import { CompareNotiComponent } from './components/compare/compare-noti/compare-
 import { TermsComponent } from './components/terms/terms.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { ReviewModalComponent } from './components/review-modal/review-modal.component';
-import { FavoritesModalComponent } from './components/favorites-modal/favorites-modal.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
+import { FavoritesNotiComponent } from './components/favorites/favorites-noti/favorites-noti.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { FavoritesModalComponent } from './components/favorites-modal/favorites-
     TermsComponent,
     SitemapComponent,
     ReviewModalComponent,
-    FavoritesModalComponent
+    FavoritesComponent,
+    FavoritesNotiComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeIn } from 'src/app/animations/fade';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -44,7 +45,8 @@ export class BridgeComponent implements OnInit, OnDestroy {
   reviewModalState: boolean = false;
   reviewModalStateChangeSub!: Subscription;
 
-  isLoggedIn: boolean = false;
+  isLoggedIn!: boolean;
+  user_id!: number;
 
   config: SwiperOptions = {
     slidesPerView: 4,
@@ -54,7 +56,7 @@ export class BridgeComponent implements OnInit, OnDestroy {
     },
   };
 
-  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService, private sanitizer: DomSanitizer, private tokenStorageService: TokenStorageService, private reviewModalService: ReviewModalService, private loginService: LoginService, private reviewService: ReviewService) {}
+  constructor(private route: ActivatedRoute, private bridgeService: BridgeService, private compareService: CompareService, private sanitizer: DomSanitizer, private tokenStorageService: TokenStorageService, private reviewModalService: ReviewModalService, private loginService: LoginService, private reviewService: ReviewService, private favoritesService: FavoritesService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -66,7 +68,8 @@ export class BridgeComponent implements OnInit, OnDestroy {
 
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
-      
+      const user = this.tokenStorageService.getUser();
+      this.user_id = user.id;
     };
 
     this.reviewModalStateChangeSub = this.reviewModalService.reviewModalStateChanged.subscribe((state: boolean) => {
@@ -125,8 +128,16 @@ export class BridgeComponent implements OnInit, OnDestroy {
     this.modal.nativeElement.classList.add('hidden');
   }
 
-  onAddBridgeToCompare(bridge: any): void {
+  onAddBridgeToComparison(bridge: any): void {
     this.compareService.addBridgeToComparison(bridge);
+  }
+
+  onAddBridgeToFavorites(bridge_id: number | string, bridgeName: string): void {
+    this.favoritesService.addFavorite(this.user_id, bridge_id, bridgeName)!.subscribe(data => {
+
+    }, err => {
+      
+    })
   }
 
   onHitTheWriteReviewBtn() {

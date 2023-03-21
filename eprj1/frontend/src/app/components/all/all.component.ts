@@ -211,12 +211,8 @@ export class AllComponent implements OnInit {
     this.compareService.addBridgeToComparison(bridge);
   }
 
-  onAddBridgeToFavorite(bridge_id: string | number) {
-    this.favoritesService.addFavorite(this.user_id, bridge_id).subscribe(data => {
-
-    }, err => {
-
-    })
+  onAddBridgeToFavorites(bridge_id: string | number, bridgeName: string) {
+    this.favoritesService.addFavorite(this.user_id, bridge_id, bridgeName);
   }
 
 }

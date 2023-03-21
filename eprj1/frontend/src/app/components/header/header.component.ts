@@ -8,6 +8,7 @@ import { LoginService } from '../login-modal/login.service';
 import { SignupService } from '../signup-modal/signup.service';
 import { SuccessService } from '../success-modal/success.service';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { FavoritesNotiService } from '../favorites/favorites-noti/favorites-noti.service';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profileDropdownMenuState: boolean = false;
   compareModalState: boolean = false;
   compareNotiState: boolean = false;
+  favoritesNotiState: boolean = false;
   comparisonLength: number = 0;
-  favoriteLength: number = 0;
+  favoriteLength?: number;
   private loginModalStateChangeSub!: Subscription;
   private signupModalStateChangeSub!: Subscription;
   private successModalStateChangeSub!: Subscription;
@@ -43,14 +45,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   user_id!: number;
 
-  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private router: Router, private favoritesService: FavoritesService) { }
+  constructor(private loginService: LoginService, private signupService: SignupService, private successService: SuccessService, private compareService: CompareService, private tokenStorageService: TokenStorageService, private router: Router, private favoritesService: FavoritesService, private favoritesNotiService: FavoritesNotiService) { }
 
   ngOnInit(): void {
     this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((event: any) => {
-      this.isHomePage = event.url === '/' || event.url === '';
-    });
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.isHomePage = event.url === '/' || event.url === '';
+      });
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
@@ -59,8 +61,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.first_name = user.first_name;
       this.last_name = user.last_name;
       this.avatar = user.avatar;
-      this.favoritesService.getFavorites(this.user_id).subscribe((bridges: any[]) => {
-        this.favoriteLength = bridges.length;
+
+      // Initial the favoriteLength on first page load
+      this.favoritesService.getFavorites(this.user_id).subscribe((data: any[]) => {
+        this.favoriteLength = data.length;
+      })
+
+      // Update the favoriteLength each time a new item is added
+      this.favoritesService.favoritesLengthChanged.subscribe((length: number | undefined) => {
+        this.favoriteLength = length;
+      })
+
+      // Subscribe to favoritesNoti shown/hide
+      this.favoritesNotiService.favoritesNotiStateChanged.subscribe((state: boolean) => {
+        this.favoritesNotiState = state;
       })
     }
 
@@ -82,6 +96,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.compareService.compareNotiStateChanged.subscribe((state: boolean) => {
       this.compareNotiState = state;
     });
+
+
   }
 
   onDismissTopBar() {
@@ -108,8 +124,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.profileDropdownMenuState = !this.profileDropdownMenuState;
   }
 
-  onOpenCompareModal () {
+  onOpenCompareModal() {
     this.compareService.openCompareModal();
+  }
+
+  onOpenFavorites() {
+
   }
 
   logout(): void {
@@ -119,7 +139,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSubmit(searchTerm: string): void {
     this.router.navigate(['/search'], { queryParams: { q: searchTerm } });
-    
+
   }
 
   ngOnDestroy(): void {
@@ -128,6 +148,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.successModalStateChangeSub.unsubscribe();
     this.compareModalStateChangeSub.unsubscribe();
     this.compareNotiStateChangeSub.unsubscribe();
+    this.comparisonLengthChangeSub.unsubscribe();
   }
 
 }

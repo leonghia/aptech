@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2023 at 04:30 PM
+-- Generation Time: Mar 08, 2023 at 07:13 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -636,6 +636,54 @@ INSERT INTO `nhom1_bridges_images` (`id`, `bridge_id`, `src`, `alt`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nhom1_favorites`
+--
+
+CREATE TABLE `nhom1_favorites` (
+  `user_id` int(11) NOT NULL,
+  `bridge_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nhom1_favorites`
+--
+
+INSERT INTO `nhom1_favorites` (`user_id`, `bridge_id`) VALUES
+(14, 45),
+(14, 2),
+(14, 43),
+(14, 54),
+(14, 17),
+(14, 50),
+(14, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nhom1_reviews`
+--
+
+CREATE TABLE `nhom1_reviews` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `bridge_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `createdAt` datetime DEFAULT current_timestamp(),
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nhom1_reviews`
+--
+
+INSERT INTO `nhom1_reviews` (`id`, `user_id`, `bridge_id`, `rating`, `content`, `createdAt`, `title`) VALUES
+(7, 14, 45, 3, 'This is my first comment in Amazing Bridges. ', '2023-03-08 03:04:11', 'Hello world'),
+(8, 17, 1, 3, 'I visited this bridge last summer. It is very beatiful.', '2023-03-08 09:00:53', 'Beatiful bridge');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nhom1_roles`
 --
 
@@ -676,7 +724,8 @@ CREATE TABLE `nhom1_users` (
 --
 
 INSERT INTO `nhom1_users` (`id`, `first_name`, `last_name`, `username`, `email`, `password`, `avatar`, `createdAt`, `updatedAt`) VALUES
-(14, 'Nghia', 'La', 'leonghia1998', 'leonghiacnn@gmail.com', '$2a$08$PWlh6SdTFCOMTij3Sis02ev4Rc9Lo/4LkfM0trusOlie5r/J.rn9u', '../../assets/images/2023-02/nghia-avatar.jpg', '2023-03-06 18:23:43', '2023-03-06 18:23:43');
+(14, 'Nghia', 'La', 'leonghia1998', 'leonghiacnn@gmail.com', '$2a$08$PWlh6SdTFCOMTij3Sis02ev4Rc9Lo/4LkfM0trusOlie5r/J.rn9u', '../../assets/images/2023-02/nghia-avatar.jpg', '2023-03-06 18:23:43', '2023-03-06 18:23:43'),
+(17, 'Nghia', 'La', 'nghiala1998', 'leonghia2603@gmail.com', '$2a$08$jxkne4bCGD1bDMIHyUewP.LCvNUAwK6mywoVAcqW.zYGFoMe8Meoi', '../../assets/images/2023-02/nghia-avatar.jpg', '2023-03-08 01:56:20', '2023-03-08 01:56:20');
 
 -- --------------------------------------------------------
 
@@ -696,7 +745,8 @@ CREATE TABLE `nhom1_users_roles` (
 --
 
 INSERT INTO `nhom1_users_roles` (`createdAt`, `updatedAt`, `role_id`, `user_id`) VALUES
-('2023-03-05 05:24:54', '2023-03-05 05:24:54', 3, 14);
+('2023-03-05 05:24:54', '2023-03-05 05:24:54', 3, 14),
+('2023-03-08 01:56:20', '2023-03-08 01:56:20', 3, 17);
 
 -- --------------------------------------------------------
 
@@ -739,7 +789,12 @@ INSERT INTO `refreshtokens` (`id`, `token`, `expiryDate`, `createdAt`, `updatedA
 (20, '7ada1db8-24dd-40cd-b1d9-da3fdb08d3e0', '2023-04-05 18:24:23', '2023-03-06 18:24:23', '2023-03-06 18:24:23', NULL),
 (21, 'be1cc50b-dafc-464a-a514-4ffe1ec9a79c', '2023-04-06 05:19:45', '2023-03-07 05:19:45', '2023-03-07 05:19:45', NULL),
 (22, '6f5dc6a5-4fb7-4769-8a7c-147e7d1dee3e', '2023-04-06 07:19:16', '2023-03-07 07:19:16', '2023-03-07 07:19:16', NULL),
-(23, '50a77fa8-1521-4605-9bd2-b1fb2c4a4490', '2023-04-06 13:37:29', '2023-03-07 13:37:29', '2023-03-07 13:37:29', NULL);
+(23, '50a77fa8-1521-4605-9bd2-b1fb2c4a4490', '2023-04-06 13:37:29', '2023-03-07 13:37:29', '2023-03-07 13:37:29', NULL),
+(24, 'c5468b9c-9b88-4429-81ef-ffd60f21a819', '2023-04-06 18:51:16', '2023-03-07 18:51:16', '2023-03-07 18:51:16', NULL),
+(25, '37755b61-d9aa-41df-be3e-2ec9f46b16ee', '2023-04-07 01:56:46', '2023-03-08 01:56:46', '2023-03-08 01:56:46', NULL),
+(26, '2e1012f5-4d90-4932-93d6-5f78c272f969', '2023-04-07 01:59:35', '2023-03-08 01:59:35', '2023-03-08 01:59:35', NULL),
+(27, 'eef7c5d2-4077-40ef-bc28-3dac042d506c', '2023-04-07 08:23:41', '2023-03-08 08:23:41', '2023-03-08 08:23:41', NULL),
+(28, '43e587f2-ef74-4f52-aeda-9f5cd21e4818', '2023-04-07 16:51:48', '2023-03-08 16:51:48', '2023-03-08 16:51:48', NULL);
 
 --
 -- Indexes for dumped tables
@@ -757,6 +812,21 @@ ALTER TABLE `nhom1_bridges`
 --
 ALTER TABLE `nhom1_bridges_images`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `bridge_id` (`bridge_id`);
+
+--
+-- Indexes for table `nhom1_favorites`
+--
+ALTER TABLE `nhom1_favorites`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `bridge_id` (`bridge_id`);
+
+--
+-- Indexes for table `nhom1_reviews`
+--
+ALTER TABLE `nhom1_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `bridge_id` (`bridge_id`);
 
 --
@@ -799,6 +869,12 @@ ALTER TABLE `nhom1_bridges_images`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
+-- AUTO_INCREMENT for table `nhom1_reviews`
+--
+ALTER TABLE `nhom1_reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `nhom1_roles`
 --
 ALTER TABLE `nhom1_roles`
@@ -808,13 +884,13 @@ ALTER TABLE `nhom1_roles`
 -- AUTO_INCREMENT for table `nhom1_users`
 --
 ALTER TABLE `nhom1_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `refreshtokens`
 --
 ALTER TABLE `refreshtokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
@@ -825,6 +901,20 @@ ALTER TABLE `refreshtokens`
 --
 ALTER TABLE `nhom1_bridges_images`
   ADD CONSTRAINT `nhom1_bridges_images_ibfk_1` FOREIGN KEY (`bridge_id`) REFERENCES `nhom1_bridges` (`id`);
+
+--
+-- Constraints for table `nhom1_favorites`
+--
+ALTER TABLE `nhom1_favorites`
+  ADD CONSTRAINT `nhom1_favorites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `nhom1_users` (`id`),
+  ADD CONSTRAINT `nhom1_favorites_ibfk_2` FOREIGN KEY (`bridge_id`) REFERENCES `nhom1_bridges` (`id`);
+
+--
+-- Constraints for table `nhom1_reviews`
+--
+ALTER TABLE `nhom1_reviews`
+  ADD CONSTRAINT `nhom1_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `nhom1_users` (`id`),
+  ADD CONSTRAINT `nhom1_reviews_ibfk_2` FOREIGN KEY (`bridge_id`) REFERENCES `nhom1_bridges` (`id`);
 
 --
 -- Constraints for table `nhom1_users_roles`

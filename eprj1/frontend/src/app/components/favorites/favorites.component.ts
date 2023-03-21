@@ -3,11 +3,11 @@ import { FavoritesService } from 'src/app/services/favorites.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
-  selector: 'app-favorites-modal',
-  templateUrl: './favorites-modal.component.html',
-  styleUrls: ['./favorites-modal.component.css']
+  selector: 'app-favorites',
+  templateUrl: './favorites.component.html',
+  styleUrls: ['./favorites.component.css']
 })
-export class FavoritesModalComponent implements OnInit {
+export class FavoritesComponent implements OnInit {
   user_id!: number;
   bridges!: any[];
 

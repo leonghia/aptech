@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BridgeService } from 'src/app/services/bridge.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { CompareService } from '../compare/compare.service';
 
 @Component({
@@ -25,7 +27,10 @@ export class SearchResultComponent implements OnInit {
   orderText!: string;
   loading: boolean = true;
 
-  constructor(private bridgeService: BridgeService, private route: ActivatedRoute, private compareService: CompareService) {}
+  user_id!: number;
+  isLoggedIn: boolean = false;
+
+  constructor(private bridgeService: BridgeService, private route: ActivatedRoute, private compareService: CompareService, private tokenStorageService: TokenStorageService, private favoritesService: FavoritesService) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -47,7 +52,13 @@ export class SearchResultComponent implements OnInit {
           this.searchResultLength = this.bridges.length;
         });
       }, 1000);
-    })
+    });
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.user_id = user.id;
+    };
   }
 
   onVisibilityChange(status: boolean): void {
@@ -114,7 +125,11 @@ export class SearchResultComponent implements OnInit {
     this.compareService.addBridgeToComparison(bridge);
   }
 
-  onAddBridgeToFavorite() {
-    
+  onAddBridgeToFavorites(bridge_id: number | string, bridgeName: string) {
+    this.favoritesService.addFavorite(this.user_id, bridge_id, bridgeName)!.subscribe(data => {
+
+    }, err => {
+      
+    })
   }
 }
