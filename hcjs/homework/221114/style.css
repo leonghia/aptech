@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+html {
+    font-size: 15px;
+}
+
+body {
+    background-color: aliceblue;
+}
+
+.container {
+    margin: 5rem 30rem;
+    padding: 4rem 5rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 20px rgb(0 0 0 / 20%);
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+hr.dashed {
+    border-top: 2px dashed #b55353;
+}
+
+article {
+    margin-left: 2rem;
+}
+
+p {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.heading {
+    font-family: 'Open Sans', sans-serif;
+    color: #dd3939;
+    font-style: italic;
+    text-decoration: underline;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.info {
+    line-height: 0.8;
+    font-size: 13px;
+    text-align: right;
+}
+
+header {
+    display: flex;
+}
+
+.my-image-figure {
+    margin: 0;
+}
+
+.my-image {
+    max-width: 24%;
+}
+
+.near-line {
+    line-height: 1;
+}
