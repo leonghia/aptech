@@ -15,20 +15,20 @@ class Triangle extends Shape {
     private int c;
 
     public void input() {
-        System.out.println("Instantiating a new triangle.....");
+        System.out.println("Dang khoi tao hinh tam giac.....");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a: ");
+        System.out.print("Nhap do dai canh a: ");
         a = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter b: ");
+        System.out.println("Nhap do dai canh b: ");
         b = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter c: ");
+        System.out.println("Nhap do dai canh c: ");
         c = Integer.parseInt(scanner.nextLine());
     }
 
     public void getArea() {
         double p = (a + b + c) / 2;
         double area = Math.sqrt(p * (p - a) * (p - b) * (p - c));
-        System.out.printf("Area of triangle = %.1f%n", area);
+        System.out.printf("Dien tich hinh tam giac = %.1f%n", area);
     }
 }
 
@@ -38,17 +38,17 @@ class Rectangle extends Shape {
     private int b;
 
     public void input() {
-        System.out.println("Instantiating a new rectangle.....");
+        System.out.println("Dang khoi tao hinh chu nhat.....");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a: ");
+        System.out.print("Nhap chieu dai: ");
         a = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter b: ");
+        System.out.print("Nhap chieu rong: ");
         b = Integer.parseInt(scanner.nextLine());
     }
 
     public void getArea() {
         double area = a * b;
-        System.out.printf("Area of rectangle = %.1f%n", area);
+        System.out.printf("Dien tich hinh chu nhat = %.1f%n", area);
     }
 }
 
@@ -57,14 +57,14 @@ class Circle extends Shape {
     private int radius;
 
     public void input() {
-        System.out.println("Instantiating a new circle.....");
+        System.out.println("Dang khoi tao hinh tron.....");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter r: ");
+        System.out.print("Nhap ban kinh: ");
         radius = Integer.parseInt(scanner.nextLine());
     }
 
     public void getArea() {
         double area = Math.PI * radius * radius;
-        System.out.printf("Area of circle = %.1f%n", area);
+        System.out.printf("Dien tich hinh tron = %.1f%n", area);
     }
 }

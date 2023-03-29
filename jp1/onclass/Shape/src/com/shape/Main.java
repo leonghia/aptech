@@ -6,15 +6,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("===== Welcome to area program =====");
-        System.out.println("1. Area of triangle");
-        System.out.println("2. Area of rectangle");
-        System.out.println("3. Area of circle");
-        System.out.println("4. Exit");
+        System.out.println("===== Chao mung ban den voi phan mem tinh dien tich =====");
+        System.out.println("1. Tinh dien tich hinh tam giac");
+        System.out.println("2. Tinh dien tich hinh chu nhat");
+        System.out.println("3. Tinh dien tich hinh tron");
+        System.out.println("4. Thoat");
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter a menu (1 - 4): ");
+            System.out.print("Vui long chon menu (1 - 4): ");
             int selectedMenu = Integer.parseInt(scanner.nextLine());
 
             switch (selectedMenu) {
