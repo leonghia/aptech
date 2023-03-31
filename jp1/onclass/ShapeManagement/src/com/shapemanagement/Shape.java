@@ -45,7 +45,7 @@ class Rectangle extends Shape {
 
     @Override
     public String toString() {
-        return String.format("Hinh chu nhat [chieu dai = %d, chieu rong = %d]%n", length, width);
+        return String.format("Hinh chu nhat [chieu dai = %d,  chieu rong = %d]%n", length, width);
     }
 
     @Override

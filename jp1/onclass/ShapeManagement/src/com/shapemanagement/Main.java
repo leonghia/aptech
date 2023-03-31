@@ -18,7 +18,7 @@ public class Main {
         System.out.println("1. Tao/Sua hinh chu nhat");
         System.out.println("2. Tao/Sua hinh tam giac");
         System.out.println("3. Tao/Sua hinh tron");
-        System.out.println("4. Tra cuu hinh");
+        System.out.println("4. Tra cuu hinh bang ID");
         System.out.println("5. Thoat");
 
         Scanner scanner = new Scanner(System.in);
