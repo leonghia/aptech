@@ -14,7 +14,7 @@ public class Main {
         runMainMenu();
     }
 
-    public static void runMainMenu() {
+    private static void runMainMenu() {
         Scanner scanner = new Scanner(System.in);
         mainMenuLoop: while (true) {
             System.out.println();
@@ -46,7 +46,7 @@ public class Main {
         }
     }
 
-    public static void runMenu1To3(int menuNumber) {
+    private static void runMenu1To3(int menuNumber) {
         Scanner scanner = new Scanner(System.in);
         switch (menuNumber) {
             case 1 -> {
@@ -99,7 +99,7 @@ public class Main {
         }
     }
 
-    public static void runMenu4() {
+    private static void runMenu4() {
         Scanner scanner = new Scanner(System.in);
         menu4Loop: while (true) {
             System.out.println();
@@ -129,7 +129,7 @@ public class Main {
 
     }
 
-    public static Shape findShape(int id) {
+    private static Shape findShape(int id) {
         for (Shape shape : list) {
             if (shape.getId() == id) {
                 System.out.println("Tim thay 1 ket qua: " + shape);
