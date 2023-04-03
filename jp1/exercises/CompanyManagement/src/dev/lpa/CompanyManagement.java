@@ -8,7 +8,7 @@ public class CompanyManagement {
 
     private static List<Person> list = new ArrayList<Person>();
     private static Person person;
-    public void runMainMenu() {
+    public static void runMainMenu() {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -50,7 +50,7 @@ public class CompanyManagement {
         }
     }
 
-    public void createNewPerson() {
+    private static void createNewPerson() {
         Scanner scanner = new Scanner(System.in);
         int selectedMenu = 0;
         createNewPersonLoop: while (true) {
@@ -82,14 +82,14 @@ public class CompanyManagement {
 
     }
 
-    public void displayAllPeople() {
+    private static void displayAllPeople() {
         System.out.println("Dang hien thi " + list.size() + " nhan su..........");
         for (Person person : list) {
             person.display();
         }
     }
 
-    public void findPerson() {
+    private static void findPerson() {
         Scanner scanner = new Scanner(System.in);
         findPersonLoop: while (true) {
             System.out.println();
@@ -111,7 +111,7 @@ public class CompanyManagement {
 
     }
 
-    public Person findPersonById(int id) {
+    private static Person findPersonById(int id) {
         for (Person person : list) {
             if (person.getId() == id) {
                 return person;
@@ -120,7 +120,7 @@ public class CompanyManagement {
         return null;
     }
 
-    public void updatePerson() {
+    private static void updatePerson() {
         Scanner scanner = new Scanner(System.in);
         findPersonLoop: while (true) {
             System.out.println();
@@ -142,7 +142,7 @@ public class CompanyManagement {
         }
     }
 
-    public void checkSalary() {
+    private static void checkSalary() {
         Scanner scanner = new Scanner(System.in);
         findPersonLoop: while (true) {
             System.out.println();
@@ -163,7 +163,7 @@ public class CompanyManagement {
         }
     }
 
-    public void updateSalary() {
+    private static void updateSalary() {
         Scanner scanner = new Scanner(System.in);
         findPersonLoop: while (true) {
             System.out.println();
