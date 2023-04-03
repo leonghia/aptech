@@ -27,6 +27,10 @@ public abstract class Person {
     }
 
     public double getSalary() {
+        return salary;
+    }
+
+    public double getTotalSalary() {
         return bonus * salary + salary;
     }
 
@@ -35,9 +39,9 @@ public abstract class Person {
     public abstract void updatePerson();
     public void updateSalary() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Cap nhat luong moi: ");
-        bonus = Double.parseDouble(scanner.nextLine());
-        System.out.printf("Da cap nhat: Luong co ban moi = %f", salary);
+        System.out.print("Cap nhat luong moi ($): ");
+        salary = Double.parseDouble(scanner.nextLine());
+        System.out.printf("Da cap nhat: Luong co ban moi = $%.2f%n", salary);
     }
 }
 
@@ -46,7 +50,7 @@ class Director extends Person {
 
     public Director() {
         super();
-        bonus = 6.0;
+        bonus = 0.5;
     }
 
     public String getRole() {
@@ -55,12 +59,13 @@ class Director extends Person {
 
     @Override
     public void input() {
+        System.out.println("Dang khoi tao giam doc................");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhap ten: ");
         name = scanner.nextLine();
-        System.out.print("Nhap luong co ban: ");
+        System.out.print("Nhap luong co ban ($): ");
         salary = Double.parseDouble(scanner.nextLine());
-        System.out.print("Nhap vi tri: ");
+        System.out.print("Nhap chuc vu: ");
         role = scanner.nextLine();
         System.out.print("Da tao thanh cong: ");
         display();
@@ -68,7 +73,7 @@ class Director extends Person {
 
     @Override
     public void display() {
-        System.out.printf("Giam doc [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, vi tri = %s]", getId(), getName(), getSalary(), this.getBonus(), getRole());
+        System.out.printf("Giam doc [id = %d, ten = %s, chuc vu = %s, luong co ban = $%.2f, muc thuong = %.2f, tong luong = $%.2f]%n", getId(), getName(), role, getSalary(), getBonus(), getTotalSalary());
     }
 
     @Override
@@ -76,7 +81,7 @@ class Director extends Person {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Cap nhat ten: ");
         name = scanner.nextLine();
-        System.out.print("Cap nhat vi tri: ");
+        System.out.print("Cap nhat chuc vu: ");
         role = scanner.nextLine();
         System.out.print("Da cap nhat thanh cong: ");
         display();
@@ -88,7 +93,7 @@ class Manager extends Person {
 
     public Manager() {
         super();
-        bonus = 3.0;
+        bonus = 0.3;
     }
 
     public String getDepartment() {
@@ -97,18 +102,21 @@ class Manager extends Person {
 
     @Override
     public void input() {
+        System.out.println("Dang khoi tao truong phong................");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhap ten: ");
         name = scanner.nextLine();
-        System.out.print("Nhap luong co ban: ");
+        System.out.print("Nhap luong co ban ($): ");
         salary = Double.parseDouble(scanner.nextLine());
         System.out.print("Nhap phong ban: ");
         department = scanner.nextLine();
+        System.out.print("Da tao thanh cong: ");
+        display();
     }
 
     @Override
     public void display() {
-        System.out.printf("Truong phong [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, phong ban = %s]", getId(), getName(), getSalary(), this.getBonus(), getDepartment());
+        System.out.printf("Truong phong [id = %d, ten = %s, phong ban = %s, luong co ban = $%.2f, muc thuong = %.2f, tong luong = $%.2f]%n", getId(), getName(), department, getSalary(), getBonus(), getTotalSalary());
     }
 
     @Override
@@ -118,6 +126,8 @@ class Manager extends Person {
         name = scanner.nextLine();
         System.out.print("Cap nhat phong ban: ");
         department = scanner.nextLine();
+        System.out.print("Da cap nhat thanh cong: ");
+        display();
     }
 }
 
@@ -126,27 +136,32 @@ class Employee extends Person {
 
     public Employee() {
         super();
-        bonus = 1.0;
+        bonus = 0.1;
     }
 
     public String getSkill() {
         return skill;
     }
 
+
+
     @Override
     public void input() {
+        System.out.println("Dang khoi tao nhan vien................");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nhap ten: ");
         name = scanner.nextLine();
-        System.out.print("Nhap luong co ban: ");
+        System.out.print("Nhap luong co ban ($): ");
         salary = Double.parseDouble(scanner.nextLine());
         System.out.print("Nhap vi tri: ");
         skill = scanner.nextLine();
+        System.out.print("Da tao thanh cong: ");
+        display();
     }
 
     @Override
     public void display() {
-        System.out.printf("Nhan vien [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, vi tri = %s]", getId(), getName(), getSalary(), this.getBonus(), getSkill());
+        System.out.printf("Nhan vien [id = %d, ten = %s, vi tri = %s, luong co ban = $%.2f, muc thuong = %.2f, tong luong = $%.2f]%n", getId(), getName(), skill, getSalary(), getBonus(), getTotalSalary());
     }
 
     @Override
@@ -156,5 +171,7 @@ class Employee extends Person {
         name = scanner.nextLine();
         System.out.print("Cap nhat vi tri: ");
         skill = scanner.nextLine();
+        System.out.print("Da cap nhat thanh cong: ");
+        display();
     }
 }

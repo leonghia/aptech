@@ -18,7 +18,7 @@ public class CompanyManagement {
             System.out.println("1. Tao nhan su moi");
             System.out.println("2. Hien thi tat ca nhan su");
             System.out.println("3. Tim kiem nhan su theo ID");
-            System.out.println("4. Cap nhat nhan su");
+            System.out.println("4. Cap nhat thong tin nhan su");
             System.out.println("5. Xem luong cua nhan su");
             System.out.println("6. Cap nhat luong cho nhan su");
             System.out.println("7. Thoat");
@@ -52,15 +52,19 @@ public class CompanyManagement {
 
     public void createNewPerson() {
         Scanner scanner = new Scanner(System.in);
+        int selectedMenu = 0;
         createNewPersonLoop: while (true) {
             System.out.println();
             System.out.println("===== Tao nhan su moi =====");
             System.out.println("1. Giam doc");
             System.out.println("2. Truong phong");
             System.out.println("3. Nhan vien");
-            System.out.println("4. Quay lai");
-            System.out.print("Ban muon chon nhan su nao (1 - 3): ");
-            int selectedMenu = Integer.parseInt(scanner.nextLine());
+            System.out.print("Ban muon tao nhan su nao (1 - 3, hoac an Q de quay lai trang chu): ");
+            try {
+                selectedMenu = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException numberFormatException) {
+                break createNewPersonLoop;
+            }
             switch (selectedMenu) {
                 case 1 -> {
                     person = new Director();
@@ -70,9 +74,6 @@ public class CompanyManagement {
                 }
                 case 3 -> {
                     person = new Employee();
-                }
-                case 4 -> {
-                    break createNewPersonLoop;
                 }
             }
             person.input();
