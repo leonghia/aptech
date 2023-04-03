@@ -43,10 +43,10 @@ public abstract class Person {
 
 class Director extends Person {
     private String role;
-    private Double bonus = 6.0;
 
     public Director() {
         super();
+        bonus = 6.0;
     }
 
     public String getRole() {
@@ -68,7 +68,7 @@ class Director extends Person {
 
     @Override
     public void display() {
-        System.out.printf("Giam doc [id = %d, ten = %s, luong co ban = %f, muc thuong = %f, vi tri = %s", getId(), getName(), getSalary(), this.getBonus(), getRole());
+        System.out.printf("Giam doc [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, vi tri = %s]", getId(), getName(), getSalary(), this.getBonus(), getRole());
     }
 
     @Override
@@ -86,10 +86,9 @@ class Director extends Person {
 class Manager extends Person {
     private String department;
 
-    private Double bonus = 3.0;
-
     public Manager() {
         super();
+        bonus = 3.0;
     }
 
     public String getDepartment() {
@@ -109,7 +108,7 @@ class Manager extends Person {
 
     @Override
     public void display() {
-        System.out.printf("Truong phong [id = %d, ten = %s, luong co ban = %f, muc thuong = %f, phong ban = %s", getId(), getName(), getSalary(), this.getBonus(), getDepartment());
+        System.out.printf("Truong phong [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, phong ban = %s]", getId(), getName(), getSalary(), this.getBonus(), getDepartment());
     }
 
     @Override
@@ -125,10 +124,9 @@ class Manager extends Person {
 class Employee extends Person {
     private String skill;
 
-    private double bonus = 1.0;
-
     public Employee() {
         super();
+        bonus = 1.0;
     }
 
     public String getSkill() {
@@ -148,7 +146,7 @@ class Employee extends Person {
 
     @Override
     public void display() {
-        System.out.printf("Nhan vien [id = %d, ten = %s, luong co ban = %f, muc thuong = %f, vi tri = %s", getId(), getName(), getSalary(), this.getBonus(), getSkill());
+        System.out.printf("Nhan vien [id = %d, ten = %s, luong co ban = %.2f, muc thuong = %.2f, vi tri = %s]", getId(), getName(), getSalary(), this.getBonus(), getSkill());
     }
 
     @Override
