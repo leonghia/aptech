@@ -28,13 +28,10 @@ public class Main {
         boolean isDateValid = false;
         Scanner scanner = new Scanner(System.in);
         System.out.println();
-        System.out.println("====== Xac thuc sdt, email va ngay ======");
-        System.out.println("Ban co the an Q bat cu luc nao de thoat.........");
+        System.out.println("======== Xac thuc sdt, email va ngay thang nam ========");
         while (!isPhoneValid) {
             System.out.print("Nhap sdt: ");
             String phone = scanner.nextLine();
-            if (phone.trim().toLowerCase().equals("q"))
-                System.exit(0);
             try {
                 validatePhone(phone);
                 isPhoneValid = true;
@@ -46,8 +43,6 @@ public class Main {
         while (!isEmailValid) {
             System.out.print("Nhap email: ");
             String email = scanner.nextLine();
-            if (email.trim().toLowerCase().equals("q"))
-                System.exit(0);
             try {
                validateEmail(email);
                isEmailValid = true;
@@ -57,18 +52,16 @@ public class Main {
             }
         }
         while (!isDateValid) {
-            System.out.print("Nhap ngay: ");
+            System.out.print("Nhap ngay thang nam: ");
             String dateRaw = scanner.nextLine().trim();
-            if (dateRaw.toLowerCase().equals("q"))
-                System.exit(0);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             simpleDateFormat.setLenient(false);
             try {
                 Date dateFormatted = simpleDateFormat.parse(dateRaw);
                 isDateValid = true;
-                System.out.println("Ngay da duoc xac thuc thanh cong");
+                System.out.println("Ngay thang nam da duoc xac thuc thanh cong");
             } catch (Exception exception) {
-                System.out.println("Ngay phai dung dinh dang (ngay/thang/nam), vui long nhap lai");
+                System.out.println("Ngay thang nam phai dung dinh dang (dd/MM/yyyy), vui long nhap lai");
             }
         }
         System.out.println();
@@ -80,9 +73,9 @@ public class Main {
         String rawPattern = "[0-9]+";
 
         if (!isValid(phoneTrimmed, rawPattern)) {
-            throw new InvalidPhoneException("So dien thoai chi duoc chua chu so, vui long nhap lai");
+            throw new InvalidPhoneException("So dien thoai chi duoc chua chu so (0 - 9), vui long nhap lai");
         } else if (phoneTrimmed.length() != 10) {
-            throw new InvalidPhoneException("So dien thoai phai chua 10 chu so, vui long nhap lai");
+            throw new InvalidPhoneException("So dien thoai phai chua du 10 chu so, ban da nhap qua ngan hoac qua dai, vui long nhap lai");
         }
     }
 
@@ -91,7 +84,7 @@ public class Main {
         String rawPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (!isValid(emailTrimmed, rawPattern)) {
-            throw new InvalidEmailException("Email phai dung dinh dang (VD: nghia@aptech.com), vui long nhap lai");
+            throw new InvalidEmailException("Email phai dung dinh dang (VD: leonghia@aptech.vn), vui long nhap lai");
         }
     }
 
