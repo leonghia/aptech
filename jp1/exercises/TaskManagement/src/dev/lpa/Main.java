@@ -104,7 +104,7 @@ public class Main {
                     System.out.println();
                     List<Task> tasks = management.getTasks();
                     for (Task task : tasks) {
-                        System.out.printf("%-10s %-30s %-20s %-20s %-20s %-20s %-20s", task.getId(), task.getName(), task.getType(), task.getDate(), task.getTime(), task.getAssignee(), task.getReviewer());
+                        System.out.printf("%-10s %-30s %-20s %-20s %-20s %-20s %-20s", task.getId(), task.getName(), task.getType(), task.getDate(), String.format("%.2f", task.getTime()), task.getAssignee(), task.getReviewer());
                         System.out.println();
                     }
                     System.out.println();
