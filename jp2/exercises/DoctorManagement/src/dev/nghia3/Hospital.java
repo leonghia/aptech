@@ -3,11 +3,13 @@ package dev.nghia3;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class App {
+public class Hospital {
 
+    private String name;
     private HashMap<String, Doctor> doctors;
 
-    public App() {
+    public Hospital(String name) {
+        this.name = name;
         doctors = new HashMap<>();
     }
 

@@ -8,14 +8,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        App app = new App();
+        Hospital hospital = new Hospital("Bach Mai");
         Scanner scanner = new Scanner(System.in);
         boolean isExit = false;
 
         while (!isExit) {
             System.out.println();
             System.out.println("""
-                    =========== Doctor Management ===========
+                    =========== Welcome to Bach Mai hospital ===========
                     1. Add doctor
                     2. Update doctor
                     3. Delete doctor
@@ -70,7 +70,7 @@ public class Main {
                     }
                     Doctor doctor = new Doctor(code, name, specialization, availability);
                     try {
-                        app.addDoctor(doctor);
+                        hospital.addDoctor(doctor);
                         System.out.printf("Added successfully: Doctor[code = %s, name = %s, specialization = %s, availability = %d]\n", code, name, specialization, availability);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -122,7 +122,7 @@ public class Main {
                     }
                     Doctor doctor = new Doctor(code, name, specialization, availability);
                     try {
-                        app.updateDoctor(doctor);
+                        hospital.updateDoctor(doctor);
                         System.out.printf("Updated successfully: Doctor[code = %s, name = %s, specialization = %s, availability = %d]\n", code, name, specialization, availability);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -132,9 +132,9 @@ public class Main {
                     System.out.println("–".repeat(10) + " Delete doctor " + "–".repeat(10));
                     System.out.print("Enter code: ");
                     String code = scanner.nextLine();
-                    Doctor doctor = app.searchDoctorByCode(code);
+                    Doctor doctor = hospital.searchDoctorByCode(code);
                     try {
-                        app.deleteDoctor(doctor);
+                        hospital.deleteDoctor(doctor);
                         System.out.printf("Deleted successfully: Doctor[code = %s, name = %s, specialization = %s, availability = %d]\n", code, doctor.getName(), doctor.getSpecialization(), doctor.getAvailability());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -145,7 +145,7 @@ public class Main {
                     System.out.print("Enter text: ");
                     String input = scanner.nextLine();
                     try {
-                        HashMap<String, Doctor> results = app.searchDoctor(input);
+                        HashMap<String, Doctor> results = hospital.searchDoctor(input);
                         Collection<Doctor> doctors = results.values();
                         System.out.println();
                         System.out.println("=".repeat(90));
