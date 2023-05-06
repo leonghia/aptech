@@ -3,155 +3,174 @@ package com.nghia3.controller;
 import com.nghia3.Customer;
 import com.nghia3.util.DBUtil;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.Types;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CustomerController {
 
-    public void addNewCustomer(Customer customer) throws Exception {
+    public static Map<Integer, Customer> getCustomers() {
+
+        Connection conn = null;
+        CallableStatement stmt = null;
+
+        Map<Integer, Customer> customers = new LinkedHashMap<>();
 
         try {
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(
-                    "INSERT INTO Customer(CustomerId, Name, City, Country, Phone, Email) VALUES (?, ?, ?, ?, ?, ?)"
-            );
-            preparedStatement.setInt(1, customer.getId());
-            preparedStatement.setString(2, customer.getName());
-            preparedStatement.setString(3, customer.getCity());
-            preparedStatement.setString(4, customer.getCountry());
-            preparedStatement.setString(5, customer.getPhone());
-            preparedStatement.setString(6, customer.getEmail());
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareCall("{call getCustomers}");
 
-            int updated = preparedStatement.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
 
-            if (updated > 0) {
-                System.out.println("Inserted successfully");
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String city = rs.getString(3);
+                String country = rs.getString(4);
+                String phone = rs.getString(5);
+                String email = rs.getString(6);
+                Customer customer = new Customer(id, name, city, country, phone, email);
+                customers.put(id, customer);
             }
-
-            preparedStatement.close();
-            conn.close();
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    public void getAllCustomers() {
-
-        try {
-
-            // 1. Register JDBC & Create connection
-            Connection conn = DBUtil.getConnection();
-
-            // 2. Create statement
-            Statement statement = conn.createStatement();
-
-            // 3. Execute statement
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Customer");
-
-            while (resultSet.next()) {
-                System.out.println("=".repeat(20) + " Customer " + "=".repeat(20));
-                Customer customer = new Customer(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6)
-                );
-
-                System.out.println(customer);
-            }
-
-            resultSet.close();
-            statement.close();
-            conn.close();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void updateCustomerCity(int id, String city) throws Exception {
-
-        try {
-
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("""
-                    UPDATE Customer
-                    SET City = ?
-                    WHERE CustomerId = ?""");
-            preparedStatement.setString(1, city);
-            preparedStatement.setInt(2, id);
-
-            int updated = preparedStatement.executeUpdate();
-            if (updated > 0) {
-                System.out.println("Updated customer successfully");
-            }
-
-            preparedStatement.close();
-            conn.close();
-
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    public void deleteCustomer(int id) throws Exception {
-
-        try {
-
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("""
-                    DELETE FROM Customer
-                    WHERE CustomerId = ?""");
-            preparedStatement.setInt(1, id);
-
-            int updated = preparedStatement.executeUpdate();
-            if (updated > 0) {
-                System.out.println("Deleted customer successfully");
-            }
-
-            preparedStatement.close();
-            conn.close();
-
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    public void getCustomerById(int id) {
-
-        try {
-
-            Connection conn = DBUtil.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement("""
-                    SELECT * FROM Customer
-                    WHERE CustomerId = ?""");
-            preparedStatement.setInt(1, id);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            System.out.println("=".repeat(20) + " Result " + "=".repeat(20));
-            while (resultSet.next()) {
-                Customer customer = new Customer(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6)
-                );
-                System.out.println(customer);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-            conn.close();
-
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return customers;
     }
+
+    public static boolean addNewCustomer(Customer customer) {
+
+        Connection conn = null;
+        CallableStatement stmt = null;
+        boolean isSuccessful = false;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareCall("{call addNewCustomer(?, ?, ? , ?, ?)}");
+            stmt.setString(1, customer.getName());
+            stmt.setString(2, customer.getCity());
+            stmt.setString(3, customer.getCountry());
+            stmt.setString(4, customer.getPhone());
+            stmt.setString(5, customer.getEmail());
+
+            if (stmt.executeUpdate() > 0) {
+                isSuccessful = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public static boolean deleteCustomer(int id) {
+
+        Connection conn = null;
+        CallableStatement stmt = null;
+        boolean isSuccessful = false;
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareCall("{call deleteCustomer(?)}");
+            stmt.setInt(1, id);
+
+            if (stmt.executeUpdate() > 0) {
+                isSuccessful = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public static boolean updateCustomer(Customer customer) {
+
+        Connection conn = null;
+        CallableStatement stmt = null;
+        boolean isSuccessful = false;
+
+        int id = customer.getId();
+        String name = customer.getName();
+        String city = customer.getCity();
+        String country = customer.getCountry();
+        String phone = customer.getPhone();
+        String email = customer.getEmail();
+
+        try {
+            conn = DBUtil.getConnection();
+            stmt = conn.prepareCall("{call updateCustomer(?, ?, ?, ?, ?, ?)}");
+            stmt.setInt(1, id);
+
+            if (name.isEmpty()) {
+                stmt.setNull(2, Types.NVARCHAR);
+            } else {
+                stmt.setString(2, name);
+            }
+
+            if (city.isEmpty()) {
+                stmt.setNull(3, Types.NVARCHAR);
+            } else {
+                stmt.setString(3, city);
+            }
+
+            if (country.isEmpty()) {
+                stmt.setNull(4, Types.NVARCHAR);
+            } else {
+                stmt.setString(4, country);
+            }
+
+            if (phone.isEmpty()) {
+                stmt.setNull(5, Types.NVARCHAR);
+            } else {
+                stmt.setString(5, phone);
+            }
+
+            if (email.isEmpty()) {
+                stmt.setNull(6, Types.NVARCHAR);
+            } else {
+                stmt.setString(6, email);
+            }
+
+            if (stmt.executeUpdate() > 0) {
+                isSuccessful = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+
+
 }
