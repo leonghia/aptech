@@ -3,6 +3,7 @@ package dev.lpa;
 import dev.lpa.controller.TaskController;
 import dev.lpa.controller.TypeController;
 
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -197,6 +198,118 @@ public class Management {
 
     public void refreshTypes() {
         types = TypeController.getTypes();
+    }
+
+    public boolean saveTypes() {
+        FileOutputStream fileOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        boolean isSuccessful = false;
+
+        try {
+            fileOutputStream = new FileOutputStream("types.dat", false);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(types);
+            isSuccessful = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                objectOutputStream.close();
+                fileOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public boolean saveTasks() {
+        FileOutputStream fileOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        boolean isSuccessful = false;
+
+        try {
+            fileOutputStream = new FileOutputStream("tasks.dat", false);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(tasks);
+            isSuccessful = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                objectOutputStream.close();
+                fileOutputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public boolean saveData() {
+        return saveTypes() && saveTasks();
+    }
+
+    public boolean loadTypes() {
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+        boolean isSuccessful = false;
+
+        try {
+            fileInputStream = new FileInputStream("types.dat");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+
+            types = (List<Type>) objectInputStream.readObject();
+            if (types != null) {
+                isSuccessful = true;
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Sorry, types.dat is not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                objectInputStream.close();
+                fileInputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public boolean loadTasks() {
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+        boolean isSuccessful = false;
+
+        try {
+            fileInputStream = new FileInputStream("tasks.dat");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+
+            tasks = (List<Task>) objectInputStream.readObject();
+            if (tasks != null) {
+                isSuccessful = true;
+            }
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("Sorry, tasks.dat is not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                objectInputStream.close();
+                fileInputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccessful;
+    }
+
+    public boolean loadData() {
+        return loadTypes() & loadTasks();
     }
 }
 

@@ -64,9 +64,8 @@ public class TaskController {
 
             stmt.setInt(1, id);
 
-            if (stmt.executeUpdate() > 0) {
-                isSuccessful = true;
-            }
+            stmt.executeUpdate();
+            isSuccessful = true;
 
         } catch (Exception e) {
             e.printStackTrace();

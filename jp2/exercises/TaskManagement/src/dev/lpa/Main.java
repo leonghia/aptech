@@ -21,8 +21,9 @@ public class Main {
                 4. Them cong viec moi
                 5. Xoa cong viec
                 6. Hien thi tat ca cong viec
-                7. Thoat""");
-            System.out.print("Vui long chon menu (1 - 7): ");
+                7. Doc/Ghi du lieu tu file
+                8. Thoat""");
+            System.out.print("Vui long chon menu (1 - 8): ");
             String select = scanner.nextLine().trim();
             switch (select) {
                 case "1" -> {
@@ -110,6 +111,37 @@ public class Main {
                     System.out.println();
                 }
                 case "7" -> {
+                    boolean isBack = false;
+                    while (!isBack) {
+                        System.out.println();
+                        System.out.println("-".repeat(10) + " Doc/Ghi du lieu tu file " + "-".repeat(10));
+                        System.out.println("""
+                            (D)oc du lieu
+                            (G)hi du lieu
+                            (Q)uay lai""");
+                        System.out.print("Nhap lua chon cua ban: ");
+                        String selection = scanner.nextLine();
+                        switch (selection.toUpperCase()) {
+                            case "D" -> {
+                                System.out.println("Dang doc du lieu" + ".".repeat(20));
+                                if (management.loadData()) {
+                                    System.out.println("Doc du lieu thanh cong !");
+                                }
+                            }
+                            case "G" -> {
+                                System.out.println("Dang ghi du lieu" + ".".repeat(20));
+                                if (management.saveData()) {
+                                    System.out.println("Ghi du lieu thanh cong !");
+                                }
+                            }
+                            case "Q" -> {
+                                isBack = true;
+                            }
+                        }
+                    }
+
+                }
+                case "8" -> {
                     isQuit = true;
                 }
             }

@@ -1,6 +1,8 @@
 package dev.lpa;
 
-public class Type {
+import java.io.Serializable;
+
+public class Type implements Serializable {
 
     private static int count = 0;
     private int id;

@@ -1,6 +1,8 @@
 package dev.lpa;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
 
     private static int count = 0;
     private int id;
