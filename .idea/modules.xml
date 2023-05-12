@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/AtmManagement/AtmManagement.iml" filepath="$PROJECT_DIR$/jp1/exercises/AtmManagement/AtmManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/CompanyManagement/CompanyManagement.iml" filepath="$PROJECT_DIR$/jp2/exercises/CompanyManagement/CompanyManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/CompanyManagement/CompanyManagement1.iml" filepath="$PROJECT_DIR$/jp1/exercises/CompanyManagement/CompanyManagement1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/CountOccurencesOfWordAndSearchByWord/CountOccurencesOfWordAndSearchByWord.iml" filepath="$PROJECT_DIR$/jp2/exercises/CountOccurencesOfWordAndSearchByWord/CountOccurencesOfWordAndSearchByWord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/DictionaryProgram/DictionaryProgram.iml" filepath="$PROJECT_DIR$/jp2/exercises/DictionaryProgram/DictionaryProgram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/DoctorManagement/DoctorManagement.iml" filepath="$PROJECT_DIR$/jp2/exercises/DoctorManagement/DoctorManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/JDBC/JDBC.iml" filepath="$PROJECT_DIR$/jp2/exercises/JDBC/JDBC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/Person/Person.iml" filepath="$PROJECT_DIR$/jp1/exercises/Person/Person.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/PersonWallet/PersonWallet.iml" filepath="$PROJECT_DIR$/jp1/exercises/PersonWallet/PersonWallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/PhoneEmailDateValidation/PhoneEmailDateValidation.iml" filepath="$PROJECT_DIR$/jp1/exercises/PhoneEmailDateValidation/PhoneEmailDateValidation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/Rectangle/Rectangle.iml" filepath="$PROJECT_DIR$/jp1/exercises/Rectangle/Rectangle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/Shape/Shape.iml" filepath="$PROJECT_DIR$/jp1/exercises/Shape/Shape.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/ShapeManagement/ShapeManagement.iml" filepath="$PROJECT_DIR$/jp1/exercises/ShapeManagement/ShapeManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/Staff/Staff.iml" filepath="$PROJECT_DIR$/jp1/exercises/Staff/Staff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exercises/TaskManagement/TaskManagement.iml" filepath="$PROJECT_DIR$/jp1/exercises/TaskManagement/TaskManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp2/exercises/TaskManagement/TaskManagement1.iml" filepath="$PROJECT_DIR$/jp2/exercises/TaskManagement/TaskManagement1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/aptech.iml" filepath="$PROJECT_DIR$/.idea/aptech.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jp1/exam/exam.iml" filepath="$PROJECT_DIR$/jp1/exam/exam.iml" />
+    </modules>
+  </component>
+</project>
