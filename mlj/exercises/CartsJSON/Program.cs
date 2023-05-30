@@ -1,14 +1,12 @@
-﻿using System.Threading.Tasks;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Text.Json;
 
-namespace ProductsJSON
+namespace CartsJSON
 {
     internal class Program
     {
         public static async Task Main(string[] args)
         {
-            string url = "https://dummyjson.com/products";
+            string url = "https://dummyjson.com/carts";
 
             using (HttpClient client = new HttpClient())
             {
@@ -19,16 +17,16 @@ namespace ProductsJSON
                     string responBody = await response.Content.ReadAsStringAsync();
 
                     // Deserialize the JSON response
-                    ProductsData? productsData = JsonSerializer.Deserialize<ProductsData>(responBody);
+                    CartsData? cartsData = JsonSerializer.Deserialize<CartsData>(responBody);
 
                     // Access and process the JSON data as needed
-                    productsData.DisplayProducts();
+                    cartsData.Display();
                 }
                 catch (HttpRequestException ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }
-                
+
             }
         }
     }

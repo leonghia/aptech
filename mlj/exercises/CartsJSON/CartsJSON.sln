@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartsJSON", "CartsJSON.csproj", "{F884E143-6FE7-47BB-9702-19EC0BCF2C56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F884E143-6FE7-47BB-9702-19EC0BCF2C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F884E143-6FE7-47BB-9702-19EC0BCF2C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F884E143-6FE7-47BB-9702-19EC0BCF2C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F884E143-6FE7-47BB-9702-19EC0BCF2C56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF1F3696-4E46-45C7-A89A-6BA43B3A5991}
+	EndGlobalSection
+EndGlobal
