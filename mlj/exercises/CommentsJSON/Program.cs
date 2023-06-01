@@ -1,13 +1,13 @@
-﻿using ProductsJSON.controller;
+﻿using CommentsJSON.controller;
 using System.Text.Json;
 
-namespace ProductsJSON
+namespace CommentsJSON
 {
     internal class Program
     {
         public static async Task Main(string[] args)
         {
-            string url = "https://dummyjson.com/products";
+            string url = "https://dummyjson.com/comments";
 
             using (HttpClient client = new HttpClient())
             {
@@ -18,17 +18,16 @@ namespace ProductsJSON
                     string responBody = await response.Content.ReadAsStringAsync();
 
                     // Deserialize the JSON response
-                    ProductsData? productsData = JsonSerializer.Deserialize<ProductsData>(responBody);
+                    CommentsData? commentsData = JsonSerializer.Deserialize<CommentsData>(responBody);
 
                     // Access and process the JSON data as needed
-                    HashSet<string> categories = productsData.GetCategories();
-                    CategoryController.AddCategories(categories);
 
-                    Product[] products = productsData.products;
-                    ProductController.AddProducts(products);
+                    //LinkedList<User> users = commentsData.GetUsers();
+                    //UserController.AddUsers(users);
 
-                    LinkedList<Image> images = productsData.GetImages();
-                    ImageController.AddImages(images);
+                    Comment[] comments = commentsData.comments;
+                    CommentController.AddComments(comments);
+                    
                 }
                 catch (HttpRequestException ex)
                 {

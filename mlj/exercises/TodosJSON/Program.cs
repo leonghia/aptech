@@ -1,13 +1,13 @@
-﻿using ProductsJSON.controller;
-using System.Text.Json;
+﻿using System.Text.Json;
+using TodosJSON.controller;
 
-namespace ProductsJSON
+namespace TodosJSON
 {
     internal class Program
     {
         public static async Task Main(string[] args)
         {
-            string url = "https://dummyjson.com/products";
+            string url = "https://dummyjson.com/todos";
 
             using (HttpClient client = new HttpClient())
             {
@@ -18,19 +18,13 @@ namespace ProductsJSON
                     string responBody = await response.Content.ReadAsStringAsync();
 
                     // Deserialize the JSON response
-                    ProductsData? productsData = JsonSerializer.Deserialize<ProductsData>(responBody);
+                    TodosData? todosData = JsonSerializer.Deserialize<TodosData>(responBody);
 
                     // Access and process the JSON data as needed
-                    HashSet<string> categories = productsData.GetCategories();
-                    CategoryController.AddCategories(categories);
-
-                    Product[] products = productsData.products;
-                    ProductController.AddProducts(products);
-
-                    LinkedList<Image> images = productsData.GetImages();
-                    ImageController.AddImages(images);
+                    Todo[] todos = todosData.todos;
+                    TodoController.AddTodos(todos);
                 }
-                catch (HttpRequestException ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }

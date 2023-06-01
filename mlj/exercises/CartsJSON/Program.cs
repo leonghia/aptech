@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using CartsJSON.controller;
+using System.Text.Json;
 
 namespace CartsJSON
 {
@@ -20,7 +21,11 @@ namespace CartsJSON
                     CartsData? cartsData = JsonSerializer.Deserialize<CartsData>(responBody);
 
                     // Access and process the JSON data as needed
-                    cartsData.Display();
+                    Product[] products = cartsData.GetProducts();
+                    ProductController.AddProducts(products);
+
+                    Cart[] carts = cartsData.carts;
+                    CartController.AddCarts(carts);
                 }
                 catch (HttpRequestException ex)
                 {
