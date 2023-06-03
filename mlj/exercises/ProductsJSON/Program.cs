@@ -20,6 +20,9 @@ namespace ProductsJSON
                     // Deserialize the JSON response
                     ProductsData? productsData = JsonSerializer.Deserialize<ProductsData>(responBody);
 
+
+                   
+
                     // Access and process the JSON data as needed
                     HashSet<string> categories = productsData.GetCategories();
                     CategoryController.AddCategories(categories);

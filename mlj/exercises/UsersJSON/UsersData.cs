@@ -82,25 +82,42 @@ namespace UsersJSON
                     $"userAgent: {userAgent}\n";
             }
 
-            internal class Hair
+            internal class Hair : IEquatable<Hair>
             {
                 public string color { get; set; }
                 public string type { get; set; }
+
+                public bool Equals(Hair? other)
+                {
+                    return this.color.Equals(other.color) && this.type.Equals(other.type);
+                }
 
                 public override string ToString()
                 {
                     return $"\tcolor: {color}\n" +
                         $"\ttype: {type}\n";
                 }
+
+
             }
 
-            internal class Address
+            internal class Address : IEquatable<Address>
             {
                 public string address { get; set; }
                 public string city { get; set; }
                 public Coordinates coordinates { get; set; }
                 public string postalCode { get; set; }
                 public string state { get; set; }
+
+                public Address()
+                {
+                    coordinates = new Coordinates();
+                }
+
+                public bool Equals(Address? other)
+                {
+                    return this.coordinates.Equals(other.coordinates) && this.postalCode.Equals(other.postalCode);
+                }
 
                 public string ToString(int tabs)
                 {
@@ -125,10 +142,15 @@ namespace UsersJSON
                     
                 }
 
-                internal class Coordinates
+                internal class Coordinates : IEquatable<Coordinates>
                 {
                     public decimal lat { get; set; }
                     public decimal lng { get; set; }
+
+                    public bool Equals(Coordinates? other)
+                    {
+                        return 1 == 1;
+                    }
 
                     public string ToString(int tabs)
                     {
@@ -152,13 +174,18 @@ namespace UsersJSON
                 }
             }
 
-            internal class Bank
+            internal class Bank : IEquatable<Bank>
             {
                 public string cardExpire { get; set; }
                 public string cardNumber { get; set; }
                 public string cardType { get; set; }
                 public string currency { get; set; }
                 public string iban { get; set; }
+
+                public bool Equals(Bank? other)
+                {
+                    return this.cardNumber.Equals(other.cardNumber) && this.iban.Equals(other.iban);
+                }
 
                 public override string ToString()
                 {
@@ -170,12 +197,22 @@ namespace UsersJSON
                 }
             }
 
-            internal class Company
+            internal class Company : IEquatable<Company>
             {
                 public Address address { get; set; }
                 public string department { get; set; }
                 public string name { get; set; }
                 public string title { get; set; }
+
+                public Company()
+                {
+                    address = new Address();
+                }
+
+                public bool Equals(Company? other)
+                {
+                    return this.name.Equals(other.name) && this.address.Equals(other.address);
+                }
 
                 public override string ToString()
                 {
@@ -185,6 +222,8 @@ namespace UsersJSON
                         $"\tname: {name}\n" +
                         $"\ttitle: {title}\n";
                 }
+
+
             }
         }
 
