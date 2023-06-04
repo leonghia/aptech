@@ -14,7 +14,7 @@ namespace UsersJSON.controller
     internal static class DataController
     {
 
-        private static bool CheckExistence(HashSet<UsersData.User.Hair> set, UsersData.User.Hair e)
+        private static bool CheckExistence<T>(HashSet<T> set, T e) where T : IEquatable<T>
         {
             foreach(var item in set)
             {
@@ -26,20 +26,9 @@ namespace UsersJSON.controller
             return false;
         }
 
+      
 
-        private static bool CheckExistence(HashSet<UsersData.User.Company> set, UsersData.User.Company e)
-        {
-            foreach (var item in set)
-            {
-                if (item.Equals(e))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static int CheckExistence(Dictionary<UsersData.User.Hair, int> dict, UsersData.User.Hair e)
+        private static int CheckExistence<T>(Dictionary<T, int> dict, T e) where T : IEquatable<T>
         {
             foreach (var item in dict)
             {
@@ -52,56 +41,7 @@ namespace UsersJSON.controller
         }
 
 
-        private static int CheckExistence(Dictionary<string, int> dict, string e)
-        {
-            foreach(var item in dict)
-            {
-                if (item.Key.Equals(e))
-                {
-                    return item.Value;
-                }
-            }
-            throw new KeyNotFoundException();
-        }
-
-        private static int CheckExistence(Dictionary<UsersData.User.Address, int> dict, UsersData.User.Address e)
-        {
-            
-            foreach (var item in dict)
-            {
-                if (item.Key.Equals(e))
-                {
-                    return item.Value;
-                }
-            }
-            throw new KeyNotFoundException();
-        }
-
-        private static int CheckExistence(Dictionary<UsersData.User.Bank, int> dict, UsersData.User.Bank e)
-        {
-            foreach (var item in dict)
-            {
-                if (item.Key.Equals(e))
-                {
-                    return item.Value;
-                }
-            }
-            throw new KeyNotFoundException();
-        }
-
-        private static int CheckExistence(Dictionary<UsersData.User.Company, int> dict, UsersData.User.Company e)
-        {
-            
-            foreach (var item in dict)
-            {
-                
-                if (item.Key.Equals(e))
-                {
-                    return item.Value;
-                }
-            }
-            throw new KeyNotFoundException();
-        }
+        
 
         public static void ImportData(UsersData usersData)
         {
