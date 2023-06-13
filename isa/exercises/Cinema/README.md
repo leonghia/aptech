@@ -14,6 +14,8 @@
 
 ## 4. Class Diagrams
 
+![cinema_class_diagrams drawio](https://github.com/leonghia/aptech/assets/112583996/7cb18dd9-76e9-404d-a230-33da1bd54246)
+
 ## 5. Sequence Diagrams
 
 ## 6. Screen Design
