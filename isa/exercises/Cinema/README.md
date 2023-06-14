@@ -1,4 +1,4 @@
-# Cinema Management System
+# Cinema Management Software
 
 The Cinema Management Software is a comprehensive solution designed to streamline and enhance the operations of a modern cinema. This software aims to automate various aspects of cinema management, from ticket sales and seat reservations to inventory management and financial tracking. By leveraging advanced technology, this software empowers cinema administrators and staff with efficient tools to deliver exceptional customer experiences while optimizing business processes.
 
