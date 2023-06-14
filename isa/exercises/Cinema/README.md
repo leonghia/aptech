@@ -14,7 +14,7 @@
 
 ## 4. Class Diagrams
 
-![cinema_class_diagrams drawio](https://github.com/leonghia/aptech/assets/112583996/7cb18dd9-76e9-404d-a230-33da1bd54246)
+![cinema_class_diagrams drawio](https://github.com/leonghia/aptech/assets/112583996/5677101c-a1ec-4801-921b-3ba15eca03a7)
 
 ## 5. Sequence Diagrams
 
