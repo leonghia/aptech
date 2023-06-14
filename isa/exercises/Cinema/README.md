@@ -1,5 +1,7 @@
 # Cinema Management System
 
+The Cinema Management Software is a comprehensive solution designed to streamline and enhance the operations of a modern cinema. This software aims to automate various aspects of cinema management, from ticket sales and seat reservations to inventory management and financial tracking. By leveraging advanced technology, this software empowers cinema administrators and staff with efficient tools to deliver exceptional customer experiences while optimizing business processes.
+
 ## 1. Use Cases
 
 ![cinema_use_cases drawio](https://github.com/leonghia/aptech/assets/112583996/cffd6f20-8690-4511-89cd-076d660294b9)
