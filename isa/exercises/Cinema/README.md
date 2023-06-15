@@ -20,4 +20,8 @@ The Cinema Management Software is a comprehensive solution designed to streamlin
 
 ## 5. Sequence Diagrams
 
+### Sell Tickets
+
+![cinema_sequence_diagram drawio](https://github.com/leonghia/aptech/assets/112583996/8ae8de00-fe06-4b71-b543-3df25a121980)
+
 ## 6. Screen Design
