@@ -16,7 +16,7 @@ The Cinema Management Software is a comprehensive solution designed to streamlin
 
 ## 4. Class Diagrams
 
-![Uploading cinema_class_diagrams.drawio.png…]()
+![cinema_class_diagrams](https://nghia.b-cdn.net/images/cinema_class_diagrams.drawio.png)
 
 ## 5. Sequence Diagrams
 
