@@ -16,12 +16,12 @@ The Cinema Management Software is a comprehensive solution designed to streamlin
 
 ## 4. Class Diagrams
 
-![cinema_class_diagrams drawio](https://github.com/leonghia/aptech/assets/112583996/5677101c-a1ec-4801-921b-3ba15eca03a7)
+![Uploading cinema_class_diagrams.drawio.png…]()
 
 ## 5. Sequence Diagrams
 
 ### Sell Tickets
 
-![cinema_sequence_diagram drawio](https://github.com/leonghia/aptech/assets/112583996/8ae8de00-fe06-4b71-b543-3df25a121980)
+![cinema_sequence_diagram drawio](https://github.com/leonghia/aptech/assets/112583996/da24ec86-0b8b-4793-bf11-8282ee9c9391)
 
 ## 6. Screen Design
