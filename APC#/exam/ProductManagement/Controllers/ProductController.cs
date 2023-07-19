@@ -15,6 +15,11 @@ public class ProductController
     {
         try
         {
+            var result = _products.FirstOrDefault(p => p.ProductId == product.ProductId || p.Name == product.Name);
+            if (result is not null)
+            {
+                throw new Exception("Product is already existing");
+            }
             _products.Add(product);
             Console.WriteLine("Add product successfully");
         }
