@@ -15,7 +15,7 @@ public class Program
             Console.WriteLine("Press any key to continue");
             Console.ReadLine();
             Console.Clear();
-            Console.WriteLine("======== Product Mangement ========" +
+            Console.WriteLine("\n======== Product Mangement ========" +
                             "\n1. Add new product" +
                             "\n2. Display all products" +
                             "\n3. Delete a product" +
@@ -27,6 +27,7 @@ public class Program
             switch (selection)
             {
                 case "1":
+                    Console.Clear();
                     Console.WriteLine("======== Add new product ========");
                     Console.Write("Enter product ID: ");
                     string productId = Console.ReadLine();
@@ -40,14 +41,16 @@ public class Program
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Invalid price number");
+                        Console.WriteLine("Add product failed: Invalid price number");
                     }
                     break;
                 case "2":
+                    Console.Clear();
                     Console.WriteLine("======== Display all products ========");
                     productController.Display();
                     break;
                 case "3":
+                    Console.Clear();
                     Console.WriteLine("======== Delete a product ========");
                     Console.Write("Enter product ID to delete: ");
                     string productIdToDelete = Console.ReadLine();
@@ -58,7 +61,7 @@ public class Program
                     isExit = true;
                     break;
                 default:
-                    Console.WriteLine("Invalid selection, try again !");
+                    Console.WriteLine("Invalid selection, try again");
                     break;
             }
         }

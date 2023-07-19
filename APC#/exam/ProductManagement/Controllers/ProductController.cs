@@ -26,11 +26,11 @@ public class ProductController
 
     public void Display()
     {
-        Console.WriteLine(String.Format("|{0,10}|{1,10}|{2,10}|", "Product ID", "Product Name", "Price"));
+        Console.WriteLine(String.Format("{0,-20}{1,-20}{2,-20}", "Product ID", "Product Name", "Price"));
 
         foreach (var p in _products)
         {
-            Console.WriteLine(String.Format("|{0,10}|{1,10}|{2,10}|", p.ProductId, p.Name, p.Price));
+            Console.WriteLine(String.Format("{0,-20}{1,-20}{2,-20}", p.ProductId, p.Name, "$" + p.Price));
         }
     }
 
@@ -39,6 +39,10 @@ public class ProductController
         try
         {
             var result = _products.FirstOrDefault(p => p.ProductId == id);
+            if (result is null)
+            {
+                throw new Exception("Product ID not found");
+            }
             _products.Remove(result);
             Console.WriteLine("Delete product successfully");
         }
