@@ -12,7 +12,7 @@ public class Program
 
         while (!isExit)
         {
-            Console.WriteLine("Press any key to continue");
+            Console.Write("Press any key to continue: ");
             Console.ReadLine();
             Console.Clear();
             Console.WriteLine("\n======== Product Mangement ========" +
