@@ -57,11 +57,11 @@ $result = $conn->query($sql);
             echo "<tr><td colspan='6'>No books found</td></tr>";
         }
         // Handle search query
-if (isset($_GET['search'])) {
-    $searchTerm = $_GET['search'];
-    $sql = "SELECT * FROM books WHERE title LIKE '%$searchTerm%'";
-    $result = $conn->query($sql);
-}
+        if (isset($_GET['search'])) {
+            $searchTerm = $_GET['search'];
+            $sql = "SELECT * FROM books WHERE title LIKE '%$searchTerm%'";
+            $result = $conn->query($sql);
+        }
         ?>
     </table>
     <h2>Search Results</h2>

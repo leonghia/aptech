@@ -19,7 +19,7 @@ INSERT INTO books (author_id, title, isbn, pub_year, available)
 VALUES
     (1, 'The Great Gatsby', '978-0-7432-7356-5', 1925, 1),
     (2, 'To Kill a Mockingbird', '0-06-112008-1', 1960, 1),
-    (3, '1984', '978-0-452-28423-4', 1949, 1),
+    (3, 'Twenty Thousand Leagues Under the Sea', '978-0-452-28423-4', 1949, 1),
     (4, 'Pride and Prejudice', '978-1-59308-324-0', 1813, 1),
     (5, 'The Catcher in the Rye', '978-0-316-76948-7', 1951, 0),
     (6, 'Lord of the Rings', '978-0-618-26030-7', 1954, 1),
