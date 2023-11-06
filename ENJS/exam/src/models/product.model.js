@@ -21,7 +21,7 @@ const product_schema = new mongoose.Schema({
         required:true,
         min: 0
     },
-    Quantity: {
+    ProductQuantity: {
         type: Number,
         required:true,
         min: 0

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const server = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`;
+const connectionString = process.env.CONNECTION_STRING;
 const db_name = process.env.DB_NAME;
 class Database{
     constructor(){
-        mongoose.connect(`${server}/${db_name}`)
+        mongoose.connect(connectionString)
         .then(()=>{
-            console.log(`Connected database ${db_name}`);
+            console.log(`Connected database`);
         }).catch(err=>{
             console.log(err);
         })

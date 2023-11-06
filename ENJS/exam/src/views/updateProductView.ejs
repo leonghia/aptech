@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <title>Update Product</title>
+    <link href="/output.css" rel="stylesheet">
 </head>
 
 <body class="h-full">
@@ -335,7 +335,7 @@
                 <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
 
                 <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-                    <form class="relative flex flex-1" action="#" method="GET">
+                    <form class="relative flex flex-1" action="" method="GET">
                         <label for="search-field" class="sr-only">Search</label>
                         <svg class="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400"
                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -407,14 +407,14 @@
             <main class="py-10">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <!-- Main content goes here -->
-                    <form>
+                    <form method="post" id="form">
                         <div class="space-y-12 sm:space-y-16">
                             <div>
-                                <h2 class="text-base font-semibold leading-7 text-gray-900">Add New Product</h2>
+                                <h2 class="text-base font-semibold leading-7 text-gray-900">Edit Product</h2>
                                 <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-600">This information will be
                                     displayed publicly so be careful what you share.</p>
 
-                                <div
+                                    <div
                                     class="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                         <label for="name"
@@ -423,7 +423,58 @@
                                             <div
                                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                                 
-                                                <input type="text" name="name" id="name" autocomplete="name"
+                                                <input type="text" minlength="6" name="name" id="name" autocomplete="name"
+                                                    class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    >
+                                            </div>
+                                            <div class="mt-4" id="name-error-container">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                        <label for="product-code"
+                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Product Code</label>
+                                        <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                            <div
+                                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                
+                                                <input type="text" required minlength="3" name="product-code" id="product-code" autocomplete="product-code"
+                                                    class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    >
+                                            </div>
+                                            <div class="mt-4" id="product-code-error-container">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                        <label for="product-date"
+                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Product Date</label>
+                                        <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                            <div
+                                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                
+                                                <input type="date" required name="product-date" id="product-date" autocomplete="product-date"
+                                                    class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                    >
+                                            </div>
+                                            <div class="mt-4" id="product-date-error-container">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                        <label for="product-store-code"
+                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Product Store Code</label>
+                                        <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                            <div
+                                                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                
+                                                <input type="text" required minlength="3" name="product-store-code" id="product-store-code" autocomplete="product-store-code"
                                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                     >
                                             </div>
@@ -447,16 +498,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-                                        <label for="description"
-                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Description</label>
-                                        <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                            <textarea id="description" name="description" rows="3"
-                                                class="block w-full max-w-2xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                                            <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about
-                                                this product.</p>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:py-6">
                                         <label for="photo"
@@ -507,12 +549,12 @@
 
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                         <label for="price"
-                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Price ($)</label>
+                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Product Origin Price ($)</label>
                                         <div class="mt-2 sm:col-span-2 sm:mt-0">
                                             <div
                                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                                 
-                                                <input type="number" name="price" id="price" autocomplete="price"
+                                                <input type="number" min="0" name="price" id="price" autocomplete="price"
                                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                     >
                                             </div>
@@ -522,12 +564,12 @@
 
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                         <label for="quantity"
-                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Quantity</label>
+                                            class="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5">Product Quantity</label>
                                         <div class="mt-2 sm:col-span-2 sm:mt-0">
                                             <div
                                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                                 
-                                                <input type="number" name="quantity" id="quantity" autocomplete="quantity"
+                                                <input type="number" min="0" name="quantity" id="quantity" autocomplete="quantity"
                                                     class="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                                     >
                                             </div>
@@ -540,7 +582,7 @@
                         </div>
 
                         <div class="mt-6 flex items-center justify-end gap-x-6">
-                            <a href="all" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+                            <a href="/product/all" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
                             <button type="button"
                                 class="save-btn inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                         </div>
@@ -550,8 +592,7 @@
         </div>
     </div>
     <script type="module">
-        import { BASE_URL } from "/config.js";
-        import { validateName, validateNumber } from "/helper.js";
+        const BASE_URL = "http://localhost:3306";
 
         const saveButton = document.querySelector(".save-btn");
         const nameInput = document.querySelector("#name");
@@ -559,27 +600,41 @@
         const descriptionInput = document.querySelector("#description");
         const priceInput = document.querySelector("#price");
         const quantityInput = document.querySelector("#quantity");
-        const nameErrorContainer = document.querySelector("#name-error-container");
-        const priceErrorContainer = document.querySelector("#price-error-container");
-        const quantityErrorContainer = document.querySelector("#quantity-error-container");
+        const productCodeInput = document.querySelector("#product-code");
+        const productStoreCodeInput = document.querySelector("#product-store-code");
+        const productDateInput = document.querySelector("#product-date");
+
+        const url = window.location.href;
+        const id = url.slice(url.lastIndexOf("/") + 1);
+
+        const populateFields = function (product) {
+            form.setAttribute("action", "/product/update/" + id);
+            nameInput.value = product.ProductName;
+            thumbnailInput.value = product.thumbnail;         
+            priceInput.value = product.ProductOriginPrice;
+            quantityInput.value = product.ProductQuantity;
+            productCodeInput.value = product.ProductCode;
+            productStoreCodeInput.value = product.ProductStoreCode;
+            productDateInput.value = product.ProductDate;
+        }
+        
+        fetch("/product/api/" + id)
+            .then(res => res.json())
+            .then(data => populateFields(data.data));
 
         saveButton.addEventListener("click", function () {
             const data = {
-                name: nameInput.value,
-                thumbnail: thumbnailInput.value || null,
-                description: descriptionInput.value || null,
-                price: Number(priceInput.value),
-                quantity: Number(quantityInput.value)
+                ProductName: nameInput.value || null,
+                thumbnail: thumbnailInput.value || null,             
+                ProductOriginPrice: priceInput.value || null,
+                ProductQuantity: quantityInput.value || null,
+                ProductCode: productCodeInput.value,
+                ProductStoreCode: productStoreCodeInput.value,
+                ProductDate: productDateInput.value
             };
 
-            const nameErrorMessage = validateName(data.name, nameErrorContainer);
-            const priceErrorMessage = validateNumber(data.price, priceErrorContainer);
-            const quantityErrorMessage = validateNumber(data.quantity, quantityErrorContainer);
-
-            if (nameErrorMessage || priceErrorMessage || quantityErrorMessage) return;
-
-            fetch("/product/api", {
-                method: "POST",
+            fetch("/product/api/" + id, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -587,7 +642,9 @@
             })
             .then(res => res.json())
             .then(data => {
-                if (data.succeeded) window.location.replace(BASE_URL + "/product/all");
+                if (data.succeeded) {
+                    window.location.replace(BASE_URL + "/product/all");
+                }
             });
         });
     </script>

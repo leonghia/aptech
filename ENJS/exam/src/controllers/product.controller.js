@@ -3,21 +3,25 @@ const Product = require("../models/product.model.js");
 
 // Renderers
 exports.renderAllView = (req, res) => {
-    res.render("product/allProductsView");
+    res.render("allProductsView");
 };
 
 exports.renderAddView = (req, res) => {
-    res.render("product/addProductView");
+    res.render("addProductView");
 };
 
 exports.renderUpdateView = (req, res) => {
-    res.render("product/updateProductView");
+    res.render("updateProductView");
 };
 
 // APIs
 exports.get = async (req, res) => {
+    let query = {};
+    if (req.query.storeCode) query.ProductStoreCode = req.query.storeCode;
     const serverResponse = new ServerResponse();
-    const products = await Product.find().limit(20);
+    const products = await Product.find(query).exec();
+    if (req.query.order === "asc") products.sort((a, b) => Number(a.ProductOriginPrice) - Number(b.ProductOriginPrice));
+    else if (req.query.order === "desc") products.sort((a, b) => Number(b.ProductOriginPrice) - Number(a.ProductOriginPrice));
     serverResponse.data = products;
     res.status(200).json(serverResponse);
 };
