@@ -1,4 +1,4 @@
-﻿namespace AspNetMvc.Utilities
+﻿namespace AspNetMvc.Enums
 {
     public enum OrderType
     {

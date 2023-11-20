@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace AspNetMvc.Controllers
 {
-    [Route("[controller]")]
+    [Route("")]
     public class CategoryController : GenericController<Category>
     {
         private readonly IShopService _shopRepository;
@@ -20,37 +20,38 @@ namespace AspNetMvc.Controllers
             _shopRepository = shopRepository;
         }
 
+        [HttpGet("category")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("get", Name = "GetCategories")]
+        [HttpGet("api/category", Name = "GetCategories")]
         public async Task<IActionResult> Get([FromQuery] RequestParams? requestParams)
         {
             return await base.Get<CategoryGetDto>("GetCategories", requestParams, null, _shopRepository.CategorySearchPredicate(requestParams), new List<string> { "Products" }, null);
         }
 
-        [HttpGet("get/{id}", Name = "GetCategory")]
+        [HttpGet("api/category/{id}", Name = "GetCategory")]
         public async Task<ActionResult<ServiceResponse<CategoryGetDto>>> Get([FromRoute] int id)
         {
             Expression<Func<Category, bool>> filter = c => c.Id == id;
             return await base.Get<CategoryGetDto>(filter, new List<string> { "Products" });
         }
 
-        [HttpPost]
+        [HttpPost("api/category")]
         public async Task<ActionResult<ServiceResponse<object>>> Create([FromBody] CategoryCreateDto categoryCreateDto)
         {
             return await base.Create<CategoryGetDto, CategoryCreateDto>(categoryCreateDto, "GetCategory");
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("api/category/{id}")]
         public async Task<ActionResult<ServiceResponse<object>>> Update([FromRoute] int id, [FromBody] CategoryUpdateDto categoryUpdateDto)
         {
             return await base.Update<CategoryUpdateDto>(id, categoryUpdateDto);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("api/category/{id}")]
         public async Task<ActionResult<ServiceResponse<object>>> Delete([FromRoute] int id)
         {
             return await base.Delete(id);

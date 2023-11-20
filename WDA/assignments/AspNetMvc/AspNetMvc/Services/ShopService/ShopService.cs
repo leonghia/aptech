@@ -1,6 +1,6 @@
 ﻿using AspNetMvc.Entities;
+using AspNetMvc.Enums;
 using AspNetMvc.Models;
-using AspNetMvc.Utilities;
 using LinqKit;
 using System.Linq.Expressions;
 using System.Security.Policy;
@@ -142,48 +142,6 @@ namespace AspNetMvc.Services.ShopService
             else throw new ArgumentException($"Cannot parse '{orderByString}' as a valid {nameof(orderByString)} argument.");
         }
 
-        public string? GetPageLink<T>(PageType pageType, string routeName, RequestParams? requestParams)
-        {
-            RequestParams rP;
-            switch (typeof(T).Name)
-            {
-                case "Product":
-                    requestParams ??= new ProductRequestParams();
-                    var temp = (ProductRequestParams)requestParams;
-                    rP = new ProductRequestParams
-                    {
-                        Category = temp.Category,
-                        Price = temp.Price,
-                        Stock = temp.Stock,
-                        SalesPerDay = temp.SalesPerDay,
-                        SalesPerMonth = temp.SalesPerMonth,
-                        Rating = temp.Rating,
-                        Sales = temp.Sales,
-                        Revenue = temp.Revenue,
-                    };
-                    break;
-                case "Category":
-                default:
-                    requestParams ??= new RequestParams();
-                    rP = new RequestParams(); ;
-                    break;
-            }
-            rP.SearchQuery = requestParams.SearchQuery;
-            rP.OrderBy = requestParams.OrderBy;
-            rP.Fields = requestParams.Fields;
-            rP.PageSize = requestParams.PageSize;
-            rP.PageNumber = requestParams.PageNumber;
-            switch (pageType)
-            {
-                case PageType.PreviousPage:
-                    rP.PageNumber--;
-                    return Url.Link(routeName, rP);
-                case PageType.NextPage:
-                    rP.PageNumber++;
-                    return Url.Link(routeName, rP);
-                default:
-                    return Url.Link(routeName, rP);
-            }
-        }
+        
     }
 }

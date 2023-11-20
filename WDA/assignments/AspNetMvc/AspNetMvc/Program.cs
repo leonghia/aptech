@@ -1,6 +1,4 @@
-using AspNetMvc.Data;
-using AspNetMvc.Utilities;
-using Microsoft.EntityFrameworkCore;
+using AspNetMvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

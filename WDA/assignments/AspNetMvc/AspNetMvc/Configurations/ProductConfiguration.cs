@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AspNetMvc.Utilities
+namespace AspNetMvc.Configurations
 {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
@@ -58,7 +58,7 @@ namespace AspNetMvc.Utilities
                     Name = "Apple iPad Air",
                     Price = 559.00m,
                     Image = "https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/apple-ipad-air.png",
-                    CategoryId= 3,
+                    CategoryId = 3,
                     Stock = 287,
                     SalesPerDay = 0.47,
                     SalesPerMonth = 1.00,
@@ -67,7 +67,7 @@ namespace AspNetMvc.Utilities
                     Revenue = 425_000
                 },
                 new Product
-                { 
+                {
                     CategoryId = 4,
                     Id = 5,
                     Name = "Xbox Series S",
@@ -86,7 +86,7 @@ namespace AspNetMvc.Utilities
                     Name = "PlayStation 5",
                     Price = 479.00m,
                     Image = "https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/playstation-5.png",
-                    CategoryId= 4,
+                    CategoryId = 4,
                     Stock = 2345,
                     SalesPerDay = 1.41,
                     SalesPerMonth = 0.11,

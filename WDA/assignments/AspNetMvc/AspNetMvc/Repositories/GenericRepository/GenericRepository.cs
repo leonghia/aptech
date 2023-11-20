@@ -1,6 +1,7 @@
-﻿using AspNetMvc.Data;
+﻿using AspNetMvc.DatabaseContexts;
+using AspNetMvc.Enums;
+using AspNetMvc.Extensions;
 using AspNetMvc.Models;
-using AspNetMvc.Utilities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

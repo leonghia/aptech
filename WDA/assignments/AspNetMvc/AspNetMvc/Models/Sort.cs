@@ -1,4 +1,4 @@
-﻿using AspNetMvc.Utilities;
+﻿using AspNetMvc.Enums;
 using System.Linq.Expressions;
 
 namespace AspNetMvc.Models

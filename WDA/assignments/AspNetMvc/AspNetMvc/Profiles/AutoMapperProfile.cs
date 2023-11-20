@@ -2,11 +2,11 @@
 using AspNetMvc.Entities;
 using AutoMapper;
 
-namespace AspNetMvc.Utilities
+namespace AspNetMvc.Profiles
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile() 
+        public AutoMapperProfile()
         {
             CreateMap<Product, ProductGetDto>().AfterMap((p, pdto) => pdto.Category.Products = null);
             CreateMap<ProductCreateDto, Product>();

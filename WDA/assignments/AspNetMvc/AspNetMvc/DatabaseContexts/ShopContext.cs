@@ -1,14 +1,14 @@
-﻿using AspNetMvc.Entities;
-using AspNetMvc.Utilities;
+﻿using AspNetMvc.Configurations;
+using AspNetMvc.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetMvc.Data;
+namespace AspNetMvc.DatabaseContexts;
 
 public class ShopContext : DbContext
 {
     public ShopContext(DbContextOptions options) : base(options)
     {
-        
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

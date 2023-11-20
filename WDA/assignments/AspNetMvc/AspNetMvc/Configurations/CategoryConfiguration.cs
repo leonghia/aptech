@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AspNetMvc.Utilities
+namespace AspNetMvc.Configurations
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
@@ -15,7 +15,7 @@ namespace AspNetMvc.Utilities
                 new Category { Id = 4, Name = "Console" },
                 new Category { Id = 5, Name = "Watch" },
                 new Category { Id = 6, Name = "Photo/Video" },
-                new Category { Id = 7, Name = "TV/Monitor"}
+                new Category { Id = 7, Name = "TV/Monitor" }
                 );
         }
     }
