@@ -1,0 +1,17 @@
+{
+  "name": "aspnetmvc",
+  "version": "1.0.0",
+  "description": "ASP.NET MVC application for learning purpose.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nghia La",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "flowbite": "^2.0.0"
+  }
+}
