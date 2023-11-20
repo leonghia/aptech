@@ -6,6 +6,9 @@
 # Library folders
 lib/
 
+# Node modules
+node_modules/
+
 # User-specific files
 *.rsuser
 *.suo
