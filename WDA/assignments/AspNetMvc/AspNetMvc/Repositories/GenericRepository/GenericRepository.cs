@@ -2,7 +2,6 @@
 using AspNetMvc.Enums;
 using AspNetMvc.Extensions;
 using AspNetMvc.Models;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -11,34 +10,28 @@ namespace AspNetMvc.Repositories.GenericRepository
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly ShopContext _context;
-        private readonly DbSet<T> _table;
+        private readonly DbSet<T> _dbSet;
         
 
         public GenericRepository(ShopContext context)
         {
             _context = context;
-            _table = _context.Set<T>();     
+            _dbSet = _context.Set<T>();     
         }
 
-        public async Task Create(T entityToCreate)
+        public void Create(T entityToCreate)
         {
-            await _table.AddAsync(entityToCreate);
-            await _context.SaveChangesAsync();
+            _dbSet.Add(entityToCreate);           
         }
 
-        public async Task Delete(object id)
+        public void Delete(T entityToDelete)
         {
-            var entity = await _table.FindAsync(id);
-            if (entity is not null)
-            {
-                _table.Remove(entity);
-            }
-            await _context.SaveChangesAsync();
+            _dbSet.Remove(entityToDelete);
         }
 
         public async Task<PagedList<T>> Get(RequestParams? requestParams, Expression<Func<T, bool>>? filter, Expression<Func<T, bool>>? searchPredicate, List<string>? includes, Sort<T>[]? sortPredicates)
         {
-            IQueryable<T> query = _table;
+            IQueryable<T> query = _dbSet;
             requestParams ??= new RequestParams();
             if (filter is not null)
             {
@@ -72,7 +65,7 @@ namespace AspNetMvc.Repositories.GenericRepository
 
         public async Task<T?> Get(Expression<Func<T, bool>> predicate, List<string>? includes)
         {
-            IQueryable<T> query = _table;
+            IQueryable<T> query = _dbSet;
             query = query.Where<T>(predicate);
             if (includes is not null)
             {
@@ -85,9 +78,18 @@ namespace AspNetMvc.Repositories.GenericRepository
             return entity;
         }
 
-        public async Task Update(T entityToUpdate)
+        public void Update(T entityToUpdate)
         {
-            _table.Update(entityToUpdate);
+            _dbSet.Update(entityToUpdate);         
+        }
+
+        public async Task<T?> FindById(object id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task SaveAsync()
+        {
             await _context.SaveChangesAsync();
         }
     }

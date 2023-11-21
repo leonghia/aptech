@@ -13,6 +13,7 @@ namespace AspNetMvc.Profiles
             CreateMap<ProductUpdateDto, Product>();
             CreateMap<CategoryCreateDto, Category>();
             CreateMap<Category, CategoryGetDto>();
+            CreateMap<CategoryUpdateDto, Category>();
         }
     }
 }

@@ -8,8 +8,10 @@ namespace AspNetMvc.Repositories.GenericRepository
     {
         Task<PagedList<T>> Get(RequestParams? requestParams, Expression<Func<T, bool>>? filter, Expression<Func<T, bool>>? searchPredicate, List<string>? includes, Sort<T>[]? sortPredicates);
         Task<T?> Get(Expression<Func<T, bool>> predicate, List<string>? includes);
-        Task Create(T entityToCreate);
-        Task Update(T entityToUpdate);
-        Task Delete(object id);
+        void Create(T entityToCreate);
+        void Update(T entityToUpdate);
+        void Delete(T entityToDelete);
+        Task<T?> FindById(object id);
+        Task SaveAsync();
     }
 }

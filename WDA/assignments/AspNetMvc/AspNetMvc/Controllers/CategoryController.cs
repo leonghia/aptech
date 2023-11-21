@@ -33,26 +33,28 @@ namespace AspNetMvc.Controllers
         }
 
         [HttpGet("api/category/{id}", Name = "GetCategory")]
-        public async Task<ActionResult<ServiceResponse<CategoryGetDto>>> Get([FromRoute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
             Expression<Func<Category, bool>> filter = c => c.Id == id;
             return await base.Get<CategoryGetDto>(filter, new List<string> { "Products" });
         }
 
         [HttpPost("api/category")]
-        public async Task<ActionResult<ServiceResponse<object>>> Create([FromBody] CategoryCreateDto categoryCreateDto)
+        [Consumes("application/json")]
+        [Produces("application/json", "application/vnd.nghia.hateoas+json")]
+        public async Task<IActionResult> Create([FromBody] CategoryCreateDto categoryCreateDto)
         {
             return await base.Create<CategoryGetDto, CategoryCreateDto>(categoryCreateDto, "GetCategory");
         }
 
         [HttpPut("api/category/{id}")]
-        public async Task<ActionResult<ServiceResponse<object>>> Update([FromRoute] int id, [FromBody] CategoryUpdateDto categoryUpdateDto)
+        public async Task<IActionResult> FullyUpdate([FromRoute] int id, [FromBody] CategoryUpdateDto categoryUpdateDto)
         {
-            return await base.Update<CategoryUpdateDto>(id, categoryUpdateDto);
+            return await base.FullyUpdate<CategoryUpdateDto>(id, categoryUpdateDto);
         }
 
         [HttpDelete("api/category/{id}")]
-        public async Task<ActionResult<ServiceResponse<object>>> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return await base.Delete(id);
         }

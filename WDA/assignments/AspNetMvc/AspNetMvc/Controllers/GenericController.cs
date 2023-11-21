@@ -4,6 +4,9 @@ using AspNetMvc.Models;
 using AspNetMvc.Repositories.GenericRepository;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
 using System.Dynamic;
 using System.Linq.Expressions;
 using System.Text.Json;
@@ -22,10 +25,8 @@ public class GenericController<T> : Controller where T : class
     }
 
     protected async Task<IActionResult> Get<TGetDto>(string routeName, RequestParams? requestParams, Expression<Func<T, bool>>? filter, Expression<Func<T, bool>>? searchPredicate, List<string>? includes, Sort<T>[]? sortPredicates)
-    {
-        var serviceResponse = new ServiceResponse<object>();
+    {     
         var pagedList = await _repository.Get(requestParams, filter, searchPredicate, includes, sortPredicates);
-
         var paginationMetadata = new PaginationMetadata
         {
             Count = pagedList.Count,
@@ -35,15 +36,15 @@ public class GenericController<T> : Controller where T : class
         };
         Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
-        var isHateoasRequested = Request.Headers.Accept.Contains("application/vnd.nghia.hateoas+json");     
+        var isHateoasRequested = IsHateoasRequested(Request);     
 
         if (!isHateoasRequested && requestParams?.Fields is null)
         {             
-            serviceResponse.Data = pagedList.Select(e => _mapper.Map<TGetDto>(e));
+            var data = pagedList.Select(e => _mapper.Map<TGetDto>(e));
+            return Ok(data);
         }
         else if (!isHateoasRequested && requestParams?.Fields is not null)
-        {
-            
+        {        
             try
             {
                 var shapedData = new List<ExpandoObject>();
@@ -51,13 +52,11 @@ public class GenericController<T> : Controller where T : class
                 {
                     shapedData.Add(e.Shape(requestParams?.Fields));
                 }
-                serviceResponse.Data = shapedData;
+                return Ok(shapedData);
             }
             catch (ArgumentException ex)
-            {
-                serviceResponse.Succeeded = false;
-                serviceResponse.Message = ex.Message;
-                return BadRequest(serviceResponse);
+            {               
+                return BadRequest(ex.Message);
             }         
             
         }
@@ -71,22 +70,15 @@ public class GenericController<T> : Controller where T : class
                     var temp = e.Shape(requestParams?.Fields);
                     temp.TryAdd("links", CreateHateoasLinksForItem(e));
                     shapedData.Add(temp);
-                }
-                serviceResponse.Data = shapedData;
-                var shapedServiceResponse = serviceResponse.Shape();
-                shapedServiceResponse.TryAdd("links", CreateHateoasLinksForCollection(routeName, pagedList.HasNextPage, pagedList.HasPreviousPage, requestParams));
-                return Ok(shapedServiceResponse);
+                }                             
+                return Ok(new { Data = shapedData, Links = CreateHateoasLinksForCollection(routeName, pagedList.HasNextPage, pagedList.HasPreviousPage, requestParams) });
             }
             catch (ArgumentException ex)
-            {
-                serviceResponse.Succeeded = false;
-                serviceResponse.Message = ex.Message;
-                return BadRequest(serviceResponse);
+            {              
+                return BadRequest(ex.Message);
             }
             
-        }      
-
-        return Ok(serviceResponse);
+        }            
     }
 
     private IEnumerable<HateoasLink> CreateHateoasLinksForCollection(string routeName, bool hasNextPage, bool hasPreviousPage, RequestParams? requestParams)
@@ -139,8 +131,8 @@ public class GenericController<T> : Controller where T : class
             },
             new HateoasLink
             {
-                Href = Url.Link($"FullUpdate{typeName}", new { id }),
-                Rel = "full-update",
+                Href = Url.Link($"FullyUpdate{typeName}", new { id }),
+                Rel = "fully-update",
                 Method = "PUT"
             },
             new HateoasLink
@@ -154,24 +146,56 @@ public class GenericController<T> : Controller where T : class
         return links;
     }
 
-    protected async Task<ActionResult<ServiceResponse<TGetDto>>> Get<TGetDto>(Expression<Func<T, bool>> filter, List<string>? includes)
+    protected async Task<IActionResult> Get<TGetDto>(Expression<Func<T, bool>> predicate, List<string>? includes)
     {
-        throw new NotImplementedException();
+        var entity = await _repository.Get(predicate, includes);
+        if (entity is null) 
+            return NotFound("Cannot find a result with that Id");      
+        if (IsHateoasRequested(Request)) 
+            return Ok(new { Data = _mapper.Map<TGetDto>(entity), Links = CreateHateoasLinksForItem(entity) });
+        else 
+            return Ok(_mapper.Map<TGetDto>(entity));
     }
 
-    protected async Task<ActionResult<ServiceResponse<object>>> Create<TGetDto, TCreateDto>(TCreateDto createDto, string routeName)
+    protected async Task<IActionResult> Create<TGetDto, TCreateDto>(TCreateDto createDto, string routeName)
     {
-        throw new NotImplementedException();
+        if (!ModelState.IsValid)
+            return ValidationProblem(ModelState);
+        var entity = _mapper.Map<T>(createDto);
+        _repository.Create(entity);
+        await _repository.SaveAsync();
+        var getDto = _mapper.Map<TGetDto>(entity);
+        var shapedGetDto = getDto.Shape(null) as IDictionary<string, object?>;
+        shapedGetDto.Add("links", CreateHateoasLinksForItem(entity));
+        return CreatedAtRoute(routeName, new { id = shapedGetDto["Id"] }, shapedGetDto);
     }
 
-    protected async Task<ActionResult<ServiceResponse<object>>> Update<TUpdateDto>(object id, TUpdateDto updateDto)
+    private bool IsHateoasRequested(HttpRequest request)
     {
-        throw new NotImplementedException();
+        return request.Headers.Accept.Contains("application/vnd.nghia.hateoas+json");
     }
 
-    protected async Task<ActionResult<ServiceResponse<object>>> Delete(object id)
+    protected async Task<IActionResult> FullyUpdate<TUpdateDto>(object id, TUpdateDto updateDto)
     {
-        throw new NotImplementedException();
+        if (!ModelState.IsValid)
+            return ValidationProblem(ModelState);
+        var entity = await _repository.FindById(id);
+        if (entity is null)
+            return NotFound();     
+        _mapper.Map(updateDto, entity);
+        _repository.Update(entity);
+        await _repository.SaveAsync();
+        return NoContent();
+    }
+
+    protected async Task<IActionResult> Delete(object id)
+    {
+        var entity = await _repository.FindById(id);
+        if (entity is null)
+            return NotFound();
+        _repository.Delete(entity);
+        await _repository.SaveAsync();
+        return NoContent();
     }
 
     private string? CreateResourceUrl(PageType pageType, string routeName, RequestParams? requestParams)
@@ -216,5 +240,12 @@ public class GenericController<T> : Controller where T : class
             default:
                 return Url.Link(routeName, rP);
         }
+    }
+
+    public override ActionResult ValidationProblem([ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
+    {
+        var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
+
+        return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
     }
 }
