@@ -50,6 +50,16 @@ namespace ExamWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update([FromRoute] int id)
+        {
+            Expression<Func<Department, bool>> predicate = d => d.Id == id;
+            var departmentToUpdate = await _departmentRepository.GetAsync(predicate, null);
+            if (departmentToUpdate is null)
+                return NotFound();
+            return View(departmentToUpdate);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] DepartmentUpdateModel departmentUpdateModel)
         {
