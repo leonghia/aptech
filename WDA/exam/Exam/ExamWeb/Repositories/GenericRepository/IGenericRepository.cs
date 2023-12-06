@@ -1,7 +1,7 @@
 ﻿using ExamWeb.Utilities;
 using System.Linq.Expressions;
 
-namespace ExamonimyWeb.Repositories.GenericRepository
+namespace ExamWeb.Repositories.GenericRepository
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {

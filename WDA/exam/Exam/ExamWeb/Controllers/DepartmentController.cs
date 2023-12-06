@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ExamonimyWeb.Repositories.GenericRepository;
+using ExamWeb.Repositories.GenericRepository;
 using ExamWeb.Entities;
 using ExamWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +42,7 @@ namespace ExamWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] DepartmentCreateModel departmentCreateModel)
+        public async Task<IActionResult> Create(DepartmentCreateModel departmentCreateModel)
         {
             var departmentToCreate = _mapper.Map<Department>(departmentCreateModel);
             await _departmentRepository.InsertAsync(departmentToCreate);
@@ -54,14 +54,16 @@ namespace ExamWeb.Controllers
         public async Task<IActionResult> Update([FromRoute] int id)
         {
             Expression<Func<Department, bool>> predicate = d => d.Id == id;
-            var departmentToUpdate = await _departmentRepository.GetAsync(predicate, null);
-            if (departmentToUpdate is null)
+            var department = await _departmentRepository.GetAsync(predicate, null);
+            if (department is null)
                 return NotFound();
+            var departmentToUpdate = _mapper.Map<DepartmentUpdateModel>(department);
+            ViewData["Id"] = id;
             return View(departmentToUpdate);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] DepartmentUpdateModel departmentUpdateModel)
+        public async Task<IActionResult> Update([FromRoute] int id, DepartmentUpdateModel departmentUpdateModel)
         {
             Expression<Func<Department, bool>> predicate = d => d.Id == id;
             var department = await _departmentRepository.GetAsync(predicate, null);
@@ -70,10 +72,10 @@ namespace ExamWeb.Controllers
             _mapper.Map(departmentUpdateModel, department);
             _departmentRepository.Update(department);
             await _departmentRepository.SaveAsync();
-            return RedirectToAction("Single", new { id = department.Id });
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             Expression<Func<Department, bool>> predicate = d => d.Id == id;

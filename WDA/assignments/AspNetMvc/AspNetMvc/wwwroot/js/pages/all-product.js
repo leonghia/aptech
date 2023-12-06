@@ -1,31 +1,24 @@
 ﻿// Imports
 import { getRatingMarkup, getStockIconColor, utcToAnotherTimezone } from "../helper.js";
 import { Product } from "../models/product.js";
+import { BASE_URL, REGIONS } from "../config.js";
 // DOM selectors
 const tableBody = document.querySelector("tbody");
+const filterDropdownButton = document.querySelector("#filterDropdownButton");
+const filterDropdown = document.querySelector("#filterDropdown");
 // States and rules
-const BASE_URL = "https://localhost:7005/product";
-const REGIONS = {
-    vietnam: {
-        locales: "vi-VN",
-        offsetHours: 7
-    },
-    usa: {
-        locales: "en-US"
-    }
-}
 
 let products;
 // Function expressions
 const fetchProducts = async () => {
-    const response = await fetch(BASE_URL + "/get", {
+    const response = await fetch(BASE_URL + "/product", {
         method: "GET",
         headers: {
-            "Accept": "application/json" 
+            "Accept": "application/json"
         },
     });
-    const body = await response.json();
-    return body.data;
+    const data = await response.json();
+    return data;
 }
 
 const populateProducts = (products = [new Product()]) => {

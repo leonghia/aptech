@@ -10,10 +10,10 @@ namespace ExamWeb.Profiles
         {
             CreateMap<Department, DepartmentGetModel>();
             CreateMap<DepartmentCreateModel, Department>();
-            CreateMap<DepartmentUpdateModel, Department>();
+            CreateMap<DepartmentUpdateModel, Department>().ReverseMap();
             CreateMap<Employee, EmployeeGetModel>();
             CreateMap<EmployeeCreateModel, Employee>();
-            CreateMap<EmployeeUpdateModel, Employee>();
+            CreateMap<EmployeeUpdateModel, Employee>().ReverseMap();
         }
     }
 }

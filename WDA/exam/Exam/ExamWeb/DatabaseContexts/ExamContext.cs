@@ -1,4 +1,5 @@
-﻿using ExamWeb.Entities;
+﻿using ExamWeb.Configurations;
+using ExamWeb.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamWeb.DatabaseContexts
@@ -12,6 +13,8 @@ namespace ExamWeb.DatabaseContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration<Department>(new DepartmentConfiguration());
+            modelBuilder.ApplyConfiguration<Employee>(new EmployeeConfiguration());
         }
 
         public DbSet<Department> Department_Tbl { get; set; }

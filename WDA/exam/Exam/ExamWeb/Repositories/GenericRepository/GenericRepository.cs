@@ -4,7 +4,7 @@ using ExamWeb.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace ExamonimyWeb.Repositories.GenericRepository
+namespace ExamWeb.Repositories.GenericRepository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
